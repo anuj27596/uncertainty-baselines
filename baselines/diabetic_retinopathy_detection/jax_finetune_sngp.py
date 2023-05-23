@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,12 +42,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection
-import input_utils  # local file import from baselines.diabetic_retinopathy_detection
-import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection
-import train_utils  # local file import from baselines.diabetic_retinopathy_detection
-from utils import results_storage_utils
-from utils import vit_utils
+# import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection  # anuj
+# import input_utils  # local file import from baselines.diabetic_retinopathy_detection  # anuj
+# import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection  # anuj
+# import train_utils  # local file import from baselines.diabetic_retinopathy_detection  # anuj
+# from utils import results_storage_utils  # anuj
+# from utils import vit_utils  # anuj
+import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # anuj
+import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # anuj
+import baselines.diabetic_retinopathy_detection.preprocess_utils as preprocess_utils  # anuj
+import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # anuj
+from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # anuj
+from baselines.diabetic_retinopathy_detection.utils import vit_utils  # anuj
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -82,6 +88,7 @@ def main(argv):
 
   # Wandb and Checkpointing Setup
   output_dir = FLAGS.output_dir
+  config.output_dir = FLAGS.output_dir  # anuj
   wandb_run, output_dir = vit_utils.maybe_setup_wandb(config)
   tf.io.gfile.makedirs(output_dir)
   logging.info('Saving checkpoints at %s', output_dir)
@@ -471,8 +478,8 @@ def main(argv):
            train_batch['labels'],
            rng=train_loop_rngs)
 
-    if jax.process_index() == 0:
-      profiler(step)
+    # if jax.process_index() == 0:  # anuj
+    #   profiler(step)
 
     # Checkpoint saving
     if train_utils.itstime(

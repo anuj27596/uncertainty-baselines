@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import jax.numpy as jnp
 import numpy as np
 import tensorflow as tf
 import tensorflow_probability as tfp
+import tensorflow.keras.backend as K
 
 tfd = tfp.distributions
 """Binary classification utilities.
@@ -79,6 +80,54 @@ def binary_entropy_jax(array):
   return jax.scipy.special.entr(array) + jax.scipy.special.entr(1 - array)
 
 
+def sigmoid(x):  # anuj (def)
+  return 1 / (1 + np.exp(-x))
+
+def logit(x):  # anuj (def)
+  return np.log(x) - np.log(1 - x)
+
+def average_logit(samples):  # anuj (def)
+  avg_s = np.mean(sigmoid(samples), axis = 0)
+  pos = avg_s > 0.5
+  avg_s[pos] = np.mean(sigmoid(-samples[:, pos]), axis = 0)
+  avg_l = logit(avg_s)
+  avg_l[pos] *= -1
+  return avg_l
+
+def average_logit_tf(samples):  # anuj (def)
+  avg_s = K.mean(tf.nn.sigmoid(samples), axis = 0)
+  pos = avg_s > 0.5
+  avg_s[pos] = K.mean(tf.nn.sigmoid(-samples[:, pos]), axis = 0)
+  avg_l = logit(avg_s)
+  avg_l[pos] *= -1
+  return avg_l
+
+def _nl_elbo(inputs, outputs):  # anuj (def)
+  reconstruction, mean, logvar = outputs['reconstruction'], outputs['mean'], outputs['logvar']
+  rec_nll = K.mean(K.binary_crossentropy(inputs, reconstruction, from_logits=True),
+                   axis = range(1, len(inputs.shape)))
+  rec_nll -= K.mean(K.binary_crossentropy(inputs, inputs),
+                    axis = range(1, len(inputs.shape))) # debias
+  latent_kl = K.mean(tf.square(mean) + tf.exp(logvar) - logvar,
+                     axis = range(1, len(mean.shape))) / 2
+  return rec_nll + latent_kl
+
+def nll_impsample(**args):  # anuj (def)
+  inputs = args['inputs']
+  reconstruction = args['reconstruction']
+  latent_sample = args['latent_sample']
+  mean = args['mean']
+  logvar = args['logvar']
+
+  rec_nll = K.mean(K.binary_crossentropy(inputs, reconstruction, from_logits=True),
+                   axis = tuple(range(1, len(inputs.shape))))
+  rec_nll -= K.mean(K.binary_crossentropy(inputs, inputs),
+                    axis = tuple(range(1, len(inputs.shape)))) # debias
+  prior_nll = K.mean(tf.square(latent_sample), axis = tuple(range(1, len(latent_sample.shape)))) / 2
+  var_posterior_nll = K.mean(tf.square(latent_sample - mean) * tf.exp(-logvar), axis = tuple(range(1, len(mean.shape)))) / 2 + K.mean(logvar, axis = tuple(range(1, len(logvar.shape)))) / 2
+  return rec_nll + prior_nll - var_posterior_nll
+
+
 # Model Wrappers: Using a set of MC samples, produce the prediction and
 # uncertainty estimates: predictive entropy, predictive variance, epistemic
 # uncertainty (MI), and aleatoric uncertainty (expected entropy).
@@ -102,6 +151,9 @@ def predict_and_decompose_uncertainty_tf(mc_samples: tf.Tensor):
       aleatoric_uncertainty: `tf.Tensor`, expected entropy, with shape [B].
     }
   """
+  
+  # logit = average_logit_tf(mc_samples_logits)  # anuj
+
   # Prediction: mean of sigmoid probabilities over MC samples
   prediction = tf.reduce_mean(mc_samples, axis=0)
 
@@ -119,6 +171,7 @@ def predict_and_decompose_uncertainty_tf(mc_samples: tf.Tensor):
 
   return {
       'prediction': prediction,
+      # 'logit': logit,  # anuj
       'predictive_entropy': predictive_entropy,
       'predictive_variance': predictive_variance,
       'epistemic_uncertainty': predictive_entropy - expected_entropy,  # MI
@@ -126,7 +179,7 @@ def predict_and_decompose_uncertainty_tf(mc_samples: tf.Tensor):
   }
 
 
-def predict_and_decompose_uncertainty_np(mc_samples: np.ndarray):
+def predict_and_decompose_uncertainty_np(mc_samples: np.ndarray, mc_samples_logits: np.ndarray):  # anuj
   """Using a set of MC samples, produce the prediction and uncertainty
 
     estimates: predictive entropy, predictive variance, epistemic uncertainty
@@ -146,9 +199,12 @@ def predict_and_decompose_uncertainty_np(mc_samples: np.ndarray):
       aleatoric_uncertainty: `numpy.ndarray`, expected entropy, with shape [B].
     }
   """
+
+  logit = average_logit(mc_samples_logits)  # anuj
+
   # Prediction: mean of sigmoid probabilities over MC samples
   prediction = mc_samples.mean(axis=0)
-
+  # if np.isnan(prediction).any(): np.save('/troy/anuj/gub-mod/mc_samples-B150.npy', mc_samples)  # anuj
   # Compute predictive entropy H[p(y|x)], with predictive mean p(y|x)
   predictive_entropy = binary_entropy_np(probs=prediction)
 
@@ -163,6 +219,7 @@ def predict_and_decompose_uncertainty_np(mc_samples: np.ndarray):
 
   return {
       'prediction': prediction,
+      'logit': logit,  # anuj
       'predictive_entropy': predictive_entropy,
       'predictive_variance': predictive_variance,
       'epistemic_uncertainty': predictive_entropy - expected_entropy,  # MI
@@ -205,11 +262,22 @@ def variational_predict_and_decompose_uncertainty_np(x, model, training_setting,
 
   # Monte Carlo samples from different dropout mask at test time
   # See note in docstring regarding `training` mode
-  mc_samples = np.asarray([
-      model(x, training=training_setting) for _ in range(num_samples)
-  ]).reshape(-1, b)
 
-  return predict_and_decompose_uncertainty_np(mc_samples=mc_samples)
+  # mc_samples = np.asarray([
+  #     model(x, training=training_setting) for _ in range(num_samples)
+  # ]).reshape(-1, b)  # anuj
+
+  prob_list, logit_list = [], []  # anuj
+
+  for _ in range(num_samples):  # anuj
+    prob, logit = model(x, training=training_setting)  # anuj
+    prob_list.append(prob)  # anuj
+    logit_list.append(logit)  # anuj
+
+  mc_samples = np.asarray(prob_list).reshape(-1, b)  # anuj
+  mc_samples_logits = np.asarray(logit_list).reshape(-1, b)  # anuj
+
+  return predict_and_decompose_uncertainty_np(mc_samples=mc_samples, mc_samples_logits=mc_samples_logits)  # anuj
 
 
 def variational_predict_and_decompose_uncertainty_tf(x, model, training_setting,
@@ -244,17 +312,26 @@ def variational_predict_and_decompose_uncertainty_tf(x, model, training_setting,
   # Get shapes of data
   b = tf.shape(x)[0]
 
+  # prob_list, logit_list = [], []  # anuj
+
   # Monte Carlo samples from different dropout mask at test time
   # See note in docstring regarding `training` mode
   if num_samples > 1:
     mc_samples = tf.convert_to_tensor(
-        [model(x, training=training_setting) for _ in range(num_samples)])
+        [model(x, training=training_setting) for _ in range(num_samples)])  # EDIT(anuj)
+    # prob, logit = model(x, training=training_setting)  # anuj
+    # prob_list.append(prob)  # anuj
+    # logit_list.append(logit)  # anuj
 
   else:
     mc_samples = model(x, training=training_setting)
 
-  mc_samples = tf.reshape(mc_samples, [-1, b])
-  return predict_and_decompose_uncertainty_tf(mc_samples=mc_samples)
+  mc_samples = tf.reshape(mc_samples, [-1, b])  # EDIT(anuj)
+  
+  # mc_samples = tf.reshape(tf.convert_to_tensor(prob_list), [-1, b])  # EDIT(anuj)
+  # mc_samples_logits = tf.reshape(tf.convert_to_tensor(logit_list), [-1, b])  # EDIT(anuj)
+
+  return predict_and_decompose_uncertainty_tf(mc_samples=mc_samples)  # EDIT(anuj)
 
 
 def variational_ensemble_predict_and_decompose_uncertainty_np(
@@ -380,11 +457,12 @@ def deterministic_predict_and_decompose_uncertainty_np(x, model,
       aleatoric_uncertainty: None
     }
   """
-  prediction, predictive_entropy = deterministic_predict_np(
+  prediction, logit, predictive_entropy = deterministic_predict_np(  # anuj
       x=x, model=model, training_setting=training_setting)
 
   return {
       'prediction': prediction,
+      'logit': logit,  # anuj
       'predictive_entropy': predictive_entropy,
       'predictive_variance': None,
       'epistemic_uncertainty': None,
@@ -418,11 +496,12 @@ def deterministic_predict_and_decompose_uncertainty_tf(x, model,
       aleatoric_uncertainty: None
     }
   """
-  prediction, predictive_entropy = deterministic_predict_tf(
+  prediction, predictive_entropy = deterministic_predict_tf(  # EDIT(anuj)
       x=x, model=model, training_setting=training_setting)
 
   return {
       'prediction': prediction,
+      # 'logit': logit,  # EDIT(anuj)
       'predictive_entropy': predictive_entropy,
       'predictive_variance': None,
       'epistemic_uncertainty': None,
@@ -526,12 +605,12 @@ def deterministic_predict_np(x, model, training_setting):
     predictive_entropy: `numpy.ndarray`, predictive entropy, with shape [B].
   """
   # Single forward pass from the deterministic model
-  prediction = model(x, training=training_setting)
+  prediction, logit = model(x, training=training_setting)  # anuj
 
   # Compute predictive entropy H[p(y|x)], with predictive mean p(y|x)
   predictive_entropy = binary_entropy_np(probs=prediction)
 
-  return prediction, predictive_entropy
+  return prediction, logit, predictive_entropy  # anuj
 
 
 def deterministic_predict_tf(x, model, training_setting):
@@ -552,12 +631,12 @@ def deterministic_predict_tf(x, model, training_setting):
     predictive_entropy: `tf.Tensor`, predictive entropy, with shape [B].
   """
   # Single forward pass from the deterministic model
-  prediction = model(x, training=training_setting)
+  prediction = model(x, training=training_setting)  # EDIT(anuj)
 
   # Compute predictive entropy H[p(y|x)], with predictive mean p(y|x)
   predictive_entropy = binary_entropy_tf(probs=prediction)
 
-  return prediction, predictive_entropy
+  return prediction, predictive_entropy  # EDIT(anuj)
 
 
 def fsvi_predict_and_decompose_uncertainty_jax(
@@ -693,6 +772,212 @@ def predict_and_decompose_uncertainty_jax(mc_samples):
   }
 
 
+def ssvae_m1_predict_and_decompose_uncertainty_tf(x, model, training_setting):
+  outputs = model(x, training=training_setting)
+
+  prediction = tf.squeeze(tf.nn.sigmoid(outputs['logits']))
+  predictive_entropy = binary_entropy_tf(probs=prediction)
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None
+  }
+
+
+def ssvae_m2_predict_and_decompose_uncertainty_tf(x, model, training_setting):
+  y_placeholder = 0.5 * tf.ones(x.shape[0])
+  outputs = model(dict(image=x, label=y_placeholder), training=training_setting)
+
+  prediction = tf.squeeze(tf.nn.sigmoid(outputs['logits']))
+  predictive_entropy = binary_entropy_tf(probs=prediction)
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None
+  }
+
+
+def ssvae_m2_predict_and_decompose_uncertainty_np(x, model, training_setting, num_samples):
+  enc_input_nodes = model.input['image']
+  enc_output_nodes = dict(
+    logit=model.output['logits'],
+    mean=model.output['mean'],
+    logvar=model.output['logvar'],
+  )
+  dec_input_nodes = dict(
+    mean=model.output['mean'],
+    logvar=model.output['logvar'],
+    label=model.layers[195].input,
+  )
+  dec_output_nodes = dict(
+    reconstruction=model.output['reconstruction'],
+    latent_sample=model.layers[196].output,
+  )
+  encoder_classifier = tf.keras.Model(inputs=enc_input_nodes, outputs=enc_output_nodes)
+  decoder = tf.keras.Model(inputs=dec_input_nodes, outputs=dec_output_nodes)
+
+  enc_outputs = encoder_classifier(x)
+  logit = enc_outputs['logit'].numpy()
+  mean, logvar = enc_outputs['mean'], enc_outputs['logvar']
+
+  y_zero = -tf.ones(x.shape[0])
+  y_one = tf.ones(x.shape[0])
+  nl_prior_y = [0.2177419503550854, 1.6313409048600758] # -log([28253/35126, 6873/35126]) : from train set
+
+  input_nll_zero, input_nll_one = [], []
+
+  for _ in range(num_samples):
+    outputs_zero = decoder(dict(mean=mean, logvar=logvar, label=y_zero))
+    input_nll_zero.append(nll_impsample(inputs=x, **enc_outputs, **outputs_zero))
+
+    outputs_one = decoder(dict(mean=mean, logvar=logvar, label=y_one))
+    input_nll_one.append(nll_impsample(inputs=x, **enc_outputs, **outputs_one))
+
+  input_nll_zero = tf.reduce_logsumexp(input_nll_zero, axis=0).numpy()
+  input_nll_one = tf.reduce_logsumexp(input_nll_one, axis=0).numpy()
+
+  prediction = sigmoid(logit)
+  predictive_entropy = binary_entropy_np(probs=prediction)
+
+  return {
+      'logit': logit,
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None,
+      'input_nll_zero': input_nll_zero,
+      'input_nll_one': input_nll_one,
+      # 'rec_nll_0': rec_nll_0,
+      # 'rec_nll_1': rec_nll_1,
+      # 'lp_nll_0': lp_nll_0,
+      # 'lp_nll_1': lp_nll_1,
+      # 'vp_nll_0': vp_nll_0,
+      # 'vp_nll_1': vp_nll_1,
+  }
+
+
+def cvae_predict_and_decompose_uncertainty_tf(x, model, training_setting):
+  outputs = model(x, training=training_setting)
+  latent_means = outputs['mean']
+  logit = tf.reduce_mean(latent_means, axis = tuple(range(1, len(latent_means.shape))))
+
+  prediction = tf.squeeze(tf.nn.sigmoid(logit))
+  predictive_entropy = binary_entropy_tf(probs=prediction)
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None,
+  }
+
+
+def cvae_predict_and_decompose_uncertainty_np(x, model, training_setting, num_samples):
+
+  input_nll_zero, input_nll_one = [], []
+
+  for _ in range(num_samples):
+    outputs = model(x, training=training_setting)
+    input_nll_zero.append(nll_impsample(
+       inputs=x,
+       mean=outputs['mean'] - outputs['mean_zero'],
+       latent_sample=outputs['latent_sample'] - outputs['mean_zero'],
+       logvar=outputs['logvar'],
+       reconstruction=outputs['reconstruction'],
+    ))
+    input_nll_one.append(nll_impsample(
+       inputs=x,
+       mean=outputs['mean'] - outputs['mean_one'],
+       latent_sample=outputs['latent_sample'] - outputs['mean_one'],
+       logvar=outputs['logvar'],
+       reconstruction=outputs['reconstruction'],
+    ))
+
+  logit = outputs['logit'].numpy()
+  prediction = sigmoid(logit)
+  predictive_entropy = binary_entropy_np(probs=prediction)
+
+  input_nll_zero = tf.reduce_logsumexp(input_nll_zero, axis=0).numpy()
+  input_nll_one = tf.reduce_logsumexp(input_nll_one, axis=0).numpy()
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None,
+      'logit': logit,
+      'input_nll_zero': input_nll_zero,
+      'input_nll_one': input_nll_one,
+  }
+
+
+def cvaex_predict_and_decompose_uncertainty_tf(x, model, training_setting, num_samples=1):
+  y_zero = tf.zeros(x.shape[0])
+  y_one = tf.ones(x.shape[0])
+
+  input_nll_zero, input_nll_one = [], []
+
+  for _ in range(num_samples):
+    input_nll_zero.append(nll_impsample(inputs=x, **model(dict(image=x, label=y_zero), training=training_setting)))
+    input_nll_one.append(nll_impsample(inputs=x, **model(dict(image=x, label=y_one), training=training_setting)))
+
+  input_nll_zero = tf.reduce_logsumexp(input_nll_zero, axis=0)
+  input_nll_one = tf.reduce_logsumexp(input_nll_one, axis=0)
+
+  logit = input_nll_zero - input_nll_one
+  prediction = tf.squeeze(tf.nn.sigmoid(logit))
+  predictive_entropy = binary_entropy_tf(probs=prediction)
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None,
+      'logit': logit,
+      'input_nll_zero': input_nll_zero,
+      'input_nll_one': input_nll_one,
+  }
+
+
+def cvaex_predict_and_decompose_uncertainty_np(x, model, training_setting, num_samples):
+  y_zero = tf.zeros(x.shape[0])
+  y_one = tf.ones(x.shape[0])
+
+  input_nll_zero, input_nll_one = [], []
+
+  for _ in range(num_samples):
+    input_nll_zero.append(nll_impsample(inputs=x, **model(dict(image=x, label=y_zero), training=training_setting)))
+    input_nll_one.append(nll_impsample(inputs=x, **model(dict(image=x, label=y_one), training=training_setting)))
+
+  input_nll_zero = tf.reduce_logsumexp(input_nll_zero, axis=0).numpy()
+  input_nll_one = tf.reduce_logsumexp(input_nll_one, axis=0).numpy()
+
+  logit = input_nll_zero - input_nll_one
+  prediction = sigmoid(logit)
+  predictive_entropy = binary_entropy_np(probs=prediction)
+
+  return {
+      'prediction': prediction,
+      'predictive_entropy': predictive_entropy,
+      'predictive_variance': None,
+      'epistemic_uncertainty': None,
+      'aleatoric_uncertainty': None,
+      'logit': logit,
+      'input_nll_zero': input_nll_zero,
+      'input_nll_one': input_nll_one,
+  }
+
+
 # Format:
 # (model_type, use_ensemble): predict_and_decompose_uncertainty_fn
 RETINOPATHY_MODEL_TO_DECOMPOSED_UNCERTAINTY_ESTIMATOR = {
@@ -724,6 +1009,16 @@ RETINOPATHY_MODEL_TO_DECOMPOSED_UNCERTAINTY_ESTIMATOR = {
         fsvi_predict_and_decompose_uncertainty_jax,
     ('fsvi', True):
         fsvi_ensemble_predict_and_decompose_uncertainty_jax,
+    # ('ssvae_m1', False):
+    #     ssvae_m1_predict_and_decompose_uncertainty_np,
+    ('ssvae_m2', False):
+        ssvae_m2_predict_and_decompose_uncertainty_np,
+    ('resnet50_ssvae_m2', False):
+        ssvae_m2_predict_and_decompose_uncertainty_np,
+    ('cvae', False):
+        cvae_predict_and_decompose_uncertainty_np,
+    ('cvaex', False):
+        cvaex_predict_and_decompose_uncertainty_np,
 }
 
 # (model_type, use_ensemble): predict_and_decompose_uncertainty_fn
@@ -752,7 +1047,15 @@ RETINOPATHY_MODEL_TO_TF_DECOMPOSED_UNCERTAINTY_ESTIMATOR = {
     ('swag', False):
         None,  # SWAG requires sampling outside the dataset loop
     ('swag', True):
-        None
+        None,
+    ('ssvae_m1', False):
+        ssvae_m1_predict_and_decompose_uncertainty_tf,
+    ('ssvae_m2', False):
+        ssvae_m2_predict_and_decompose_uncertainty_tf,
+    ('cvae', False):
+        cvae_predict_and_decompose_uncertainty_tf,
+    ('cvaex', False):
+        cvaex_predict_and_decompose_uncertainty_tf,
 }
 """Prediction and Loss computation.
 """
@@ -792,6 +1095,23 @@ def wrap_retinopathy_estimator(estimator,
       return probs.numpy()
     else:
       return probs
+
+  return functools.partial(estimator_wrapper, estimator=estimator)
+
+
+def wrap_retinopathy_cvae_estimator(estimator, coeff, dims, numpy_outputs=False):
+
+  mean_zero = tf.constant(- coeff * (np.arange(2048) < dims)) # TODO(anuj): remove hardcode
+  mean_one = tf.constant(coeff * (np.arange(2048) < dims)) # TODO(anuj): remove hardcode
+
+  def estimator_wrapper(inputs, training, estimator):
+    outputs = estimator(inputs, training=training)
+    outputs['logit'] = tf.reduce_mean(outputs['mean'][..., :dims], axis = tuple(range(1, len(outputs['mean'].shape))))
+    outputs['mean_zero'] = tf.cast(mean_zero, outputs['latent_sample'].dtype)
+    outputs['mean_one'] = tf.cast(mean_one, outputs['latent_sample'].dtype)
+    if numpy_outputs:
+      outputs = {key: value.numpy() for key, value in outputs.items()}
+    return outputs
 
   return functools.partial(estimator_wrapper, estimator=estimator)
 

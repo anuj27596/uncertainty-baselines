@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ import numpy as np
 import scipy
 
 import uncertainty_baselines as ub
-import input_utils  # local file import from baselines.diabetic_retinopathy_detection
+# import input_utils  # local file import from baselines.diabetic_retinopathy_detection
+import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # anuj
 from . import eval_utils  # local file import
 from . import metric_utils  # local file import
 from . import results_storage_utils  # local file import
@@ -174,6 +175,33 @@ def initialize_deterministic_model(config):
   }
 
 
+def initialize_simclr_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_simclr(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
+def initialize_local_spatial_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_local_spatial(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
+def initialize_dan_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -210,6 +238,9 @@ VIT_MODEL_INIT_MAP = {
     'deterministic': initialize_deterministic_model,
     'sngp': initialize_sngp_model,
     'batchensemble': initialize_batchensemble_model,
+    'simclr': initialize_simclr_model,  # EDIT(anuj)
+    'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
+    'dan': initialize_dan_model,  # EDIT(anuj)
 }
 
 
@@ -349,7 +380,8 @@ MODEL_TYPE_TO_INIT_PARAMS_FN = {
 }
 
 
-def init_evaluation_datasets(use_validation,
+def init_evaluation_datasets(use_train,  # EDIT(anuj)
+                             use_validation,
                              use_test,
                              dataset_names,
                              split_names,
@@ -372,6 +404,10 @@ def init_evaluation_datasets(use_validation,
         local_batch_size_eval)
 
   datasets = {}
+  if use_train:  # EDIT(anuj)
+    datasets['train'] = get_dataset(
+        dataset_name=dataset_names['in_domain_dataset'],
+        split_name=split_names['train_split'])
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],

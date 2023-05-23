@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -290,3 +290,64 @@ def get_minibatch_reweighted_loss_fn(labels: tf.Tensor, loss_fn_type='keras'):
     raise NotImplementedError
 
   return batch_loss_fn
+
+
+def m1_generative_loss_fn(inputs, outputs, from_logits=True):
+  reconstruction, mean, logvar = outputs['x_rec'], outputs['mean'], outputs['logvar']
+  rec_nll = K.mean(
+      K.binary_crossentropy(
+          inputs,
+          reconstruction,
+          from_logits=from_logits))
+  latent_kl = K.mean(tf.square(mean) + tf.exp(logvar) - logvar) / 2
+  return rec_nll + latent_kl
+
+
+def m2_generative_loss_fn(inputs, outputs, from_logits=True):
+  reconstruction, mean, logvar = outputs['reconstruction'], outputs['mean'], outputs['logvar']
+  rec_nll = K.mean(
+      K.binary_crossentropy(
+          inputs,
+          reconstruction,
+          from_logits=from_logits))
+  latent_kl = K.mean(tf.square(mean) + tf.exp(logvar) - logvar) / 2
+  return rec_nll + latent_kl
+
+
+def get_cvae_generative_loss_fn(coeff = 1, dims = 2048):
+  dim_mask = tf.constant([float(i < dims) for i in range(2048)]) # TODO(anuj): remove hardcode
+
+  def cond_mean(means, labels):
+    labels = tf.cast(labels, means.dtype)
+    conds = coeff * (2 * labels - 1)
+    conds = tf.reshape(conds, (-1, *[1] * (len(means.shape) - 1)))
+    return means - (conds * dim_mask)
+
+  def loss_fn(inputs, outputs, from_logits=True):
+    images, labels = inputs['features'], inputs['labels']
+    reconstruction, mean, logvar = outputs['reconstruction'], outputs['mean'], outputs['logvar']
+    rec_nll = K.mean(
+        K.binary_crossentropy(
+            images,
+            reconstruction,
+            from_logits=from_logits))
+    latent_kl = K.mean(tf.square(cond_mean(mean, labels)) + tf.exp(logvar) - logvar) / 2
+    return rec_nll + latent_kl
+
+  return loss_fn
+
+
+def get_cvaex_generative_loss_fn():
+
+  def loss_fn(inputs, outputs, from_logits=True):
+    images, labels = inputs['features'], inputs['labels']
+    reconstruction, mean, logvar = outputs['reconstruction'], outputs['mean'], outputs['logvar']
+    rec_nll = K.mean(
+        K.binary_crossentropy(
+            images,
+            reconstruction,
+            from_logits=from_logits))
+    latent_kl = K.mean(tf.square(mean) + tf.exp(logvar) - logvar) / 2
+    return rec_nll + latent_kl
+
+  return loss_fn

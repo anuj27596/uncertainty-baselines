@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ from absl import flags
 from absl import logging
 import tensorflow as tf
 import uncertainty_baselines as ub
-import utils  # local file import
+# import utils  # local file import
+import baselines.diabetic_retinopathy_detection.utils as utils  # anuj
 import wandb
 
 from tensorboard.plugins.hparams import api as hp
@@ -122,12 +123,17 @@ flags.DEFINE_integer('num_cores', 8, 'Number of TPU cores or number of GPUs.')
 flags.DEFINE_string(
     'tpu', None,
     'Name of the TPU. Only used if force_use_cpu and use_gpu are both False.')
+
+flags.DEFINE_float('ber_coeff', 0, 'balanced entropy regularization coefficient')
+
 FLAGS = flags.FLAGS
 
 
 def main(argv):
   del argv  # unused arg
   tf.random.set_seed(FLAGS.seed)
+
+  os.environ['NCCL_DEBUG'] = 'INFO'  # anuj
 
   # Wandb Setup
   if FLAGS.use_wandb:
@@ -274,7 +280,7 @@ def main(argv):
 
   # Wrap our estimator to predict probabilities (apply sigmoid on logits)
   eval_estimator = utils.wrap_retinopathy_estimator(
-      model, use_mixed_precision=FLAGS.use_bfloat16, numpy_outputs=False)
+      model, use_mixed_precision=FLAGS.use_bfloat16, numpy_outputs=False)  # EDIT(anuj)
 
   @tf.function
   def train_step(iterator):
@@ -303,14 +309,37 @@ def main(argv):
                 y_pred=logits,
                 from_logits=True))
         l2_loss = sum(model.losses)
-        loss = negative_log_likelihood + (FLAGS.l2 * l2_loss)
+        
+        loss = negative_log_likelihood + (FLAGS.l2 * l2_loss)  # anuj
+        
+        # probs = tf.squeeze(tf.nn.sigmoid(logits))  # anuj
+        
+        # entminreg = -tf.reduce_mean(probs * tf.math.log(probs + 1e-15) + (1 - probs) * tf.math.log(1 - probs + 1e-15))  # anuj
+        
+        # loss = negative_log_likelihood + (FLAGS.l2 * l2_loss) + FLAGS.ber_coeff * entminreg  # anuj
+        
+        # logit_signs = tf.math.sign(logits)
+        
+        # n_pos_logits = tf.math.count_nonzero(tf.math.greater_equal(logit_signs, 0))
+        # total_n_logits = logits.get_shape()[0]
+        
+        # positive_predictive_prob = n_pos_logits / total_n_logits
+        # weight_neg, weight_pos = utils.get_diabetic_retinopathy_class_balance_weights(positive_predictive_prob)
+        
+        # m = (weight_neg + weight_pos) / 2
+        # c = (-weight_neg + weight_pos) / 2
+        
+        # bal_ent_weights = logit_signs * m + c
+        # balentreg = tf.reduce_mean(bal_ent_weights * (0.69315 + probs * tf.math.log(probs + 1e-15) + (1 - probs) * tf.math.log(1 - probs + 1e-15))) ** 2  # anuj
+        
+        # loss = negative_log_likelihood + (FLAGS.l2 * l2_loss) + FLAGS.ber_coeff * balentreg  # anuj
 
         # Scale the loss given the TPUStrategy will reduce sum all gradients.
         scaled_loss = loss / strategy.num_replicas_in_sync
 
       grads = tape.gradient(scaled_loss, model.trainable_variables)
       optimizer.apply_gradients(zip(grads, model.trainable_variables))
-      probs = tf.squeeze(tf.nn.sigmoid(logits))
+      probs = tf.squeeze(tf.nn.sigmoid(logits))  # anuj
 
       metrics['train/loss'].update_state(loss)
       metrics['train/negative_log_likelihood'].update_state(

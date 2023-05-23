@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,8 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 
-import checkpoint_utils  # local file import from baselines.jft
+# import checkpoint_utils  # local file import from baselines.jft  # anuj
+import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # anuj
 
 # TODO(zmariet, dusenberrymw): create separate typing module.
 Params = checkpoint_utils.Params
@@ -53,6 +54,67 @@ def softmax_xent(*, logits, labels, reduction=True, kl=False):
   if kl:
     nll += jnp.sum(labels * jnp.log(jnp.clip(labels, 1e-8)), axis=-1)
   return jnp.mean(nll) if reduction else nll
+
+
+def reweighted_softmax_xent(class_weights):  # EDIT(anuj): def reweighted softmax_xent
+  def loss_fn(*, logits, labels, reduction=True):
+    log_p = jax.nn.log_softmax(logits)
+    nll = -jnp.sum(class_weights * labels * log_p, axis=-1)
+    return jnp.mean(nll) if reduction else nll
+  return loss_fn
+
+
+def simclr_loss(*, projections, temp=0.1, reduction=True):  # EDIT(anuj): def simclr loss
+  n, d = projections.shape
+  projections = projections / jnp.linalg.norm(projections, axis=1, keepdims=True)
+  cossim = projections @ projections.T
+  cossim = cossim - jnp.diagflat(1e9 * jnp.ones(n))
+  cossim_log_softmax = jax.nn.log_softmax(cossim / temp)
+  positive_idx = (jnp.arange(n) + n // 2) % n
+  loss = -cossim_log_softmax[jnp.arange(n), positive_idx]
+  loss = jnp.reshape(loss, (2, n // 2))
+  loss = jnp.mean(loss, axis=0)
+  return jnp.mean(loss) if reduction else loss
+
+
+class LocalSpatialLoss:  # EDIT(anuj): def get_local_spatial loss
+  def __init__(self, neg_mode='linf_2'):
+    self.neg_mode = neg_mode
+    self.neg_ids_1 = jnp.array([-2, -2, -2, -2, -2, -1, -1,  0,  0,  1,  1,  2,  2,  2,  2,  2])
+    self.neg_ids_2 = jnp.array([-2, -1,  0,  1,  2, -2,  2, -2,  2, -2,  2, -2, -1,  0,  1,  2])
+
+  def __call__(self, projections, temp=0.1, reduction=True):
+    b, ss, d = projections.shape
+
+    if self.neg_mode == 'random':
+      projections = projections[:, np.random.permutation(ss)]
+    
+    s = int(np.sqrt(ss))
+    projections = projections.reshape(b, s, s, d)
+    projections = projections / jnp.linalg.norm(projections, axis=3, keepdims=True)
+
+    # positives = projections[jnp.arange(1, b + 1) % b]  # positives[b,s] = projections[b+1,s]
+    # negative_ids = jax.random.choice(jax.random.PRNGKey(0), s - 1, (b, s, num_negatives))
+    # negative_ids = negative_ids + (negative_ids >= jnp.arange(s).reshape(s, 1))
+    # negatives = projections[jnp.arange(b).reshape(b, 1, 1), negative_ids]  # negatives[b,s,n] = projections[b,negative_ids[b,s,n]]
+
+    positives = projections[jnp.arange(1, b + 1) % b]  # positives[b,i,j] = projections[b+1,i,j]
+    negatives = projections[
+        jnp.arange(b).reshape(b, 1, 1, 1),
+        (jnp.arange(s).reshape(s, 1, 1) + self.neg_ids_1) % s,
+        (jnp.arange(s).reshape(s, 1) + self.neg_ids_2) % s,
+    ]  # negatives[b,i,j,n] = projections[b,i+offset1(n),j+offset2(n)]
+
+    keys = jnp.concatenate([
+        positives.reshape(b, s, s, 1, d),
+        negatives], axis=3)
+    queries = projections.reshape(b, s, s, 1, d)
+    cossim = jnp.sum(queries * keys, axis=4)
+    cossim_log_softmax = jax.nn.log_softmax(cossim / temp)
+    
+    loss = -jnp.mean(cossim_log_softmax[..., 0], axis=(1, 2))
+
+    return jnp.mean(loss) if reduction else loss
 
 
 def accumulate_gradient(loss_and_grad_fn, params, images, labels, accum_steps):

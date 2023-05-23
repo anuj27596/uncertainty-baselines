@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@ import jax
 import numpy as np
 import tensorflow as tf
 import torch
-import utils  # local file import
+# import utils  # local file import
+import baselines.diabetic_retinopathy_detection.utils as utils  # anuj
 import wandb
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
@@ -129,9 +130,14 @@ flags.DEFINE_string('chkpt_bucket', 'drd-final-eval-multi-seeds',
                     'The name of the bucket containing checkpoints.')
 flags.DEFINE_string('output_bucket', 'drd-final-results-multi-seeds',
                     'The name of the output bucket.')
+flags.DEFINE_string(
+    'preproc_builder_config', 'btgraham-300', 'preproc_builder_config')
 flags.DEFINE_integer(
     'blur', 30, 'The value of Gaussian blur applied in the preprocessing.')
 FLAGS = flags.FLAGS
+
+flags.DEFINE_float('cvae_coeff', 1, 'CVAE coefficient') # anuj
+flags.DEFINE_integer('cvae_dims', 2048, 'CVAE coefficient') # anuj
 
 
 def main(argv):
@@ -141,11 +147,12 @@ def main(argv):
   pathlib.Path(FLAGS.wandb_dir).mkdir(parents=True, exist_ok=True)
   wandb_args = dict(
       project=FLAGS.project,
-      entity='uncertainty-baselines',
+      # entity='uncertainty-baselines',  # anuj
       dir=FLAGS.wandb_dir,
       reinit=True,
       name=FLAGS.exp_name,
       group=FLAGS.exp_group)
+  wandb.login(key='14122e6f0adf06c09a1f832da16f0d19c5322cf3')  # anuj
   wandb_run = wandb.init(**wandb_args)
   wandb.config.update(FLAGS, allow_val_change=True)
 
@@ -267,6 +274,13 @@ def main(argv):
           estimator = [m.model for m in model]
         else:
           estimator = model.model
+      elif 'ssvae' in model_type: # anuj
+        estimator = model
+      elif 'cvae' in model_type: # anuj
+        estimator = [
+            utils.wrap_retinopathy_cvae_estimator(m, FLAGS.cvae_coeff, FLAGS.cvae_dims)
+            for m in model
+        ]
       else:
         if use_ensemble or single_model_multi_train_seeds:
           # pylint: disable=g-complex-comprehension
@@ -274,6 +288,7 @@ def main(argv):
               utils.wrap_retinopathy_estimator(
                   loaded_model,
                   use_mixed_precision=FLAGS.use_bfloat16,
+                  return_logits=True,  # anuj
                   numpy_outputs=not FLAGS.use_distribution_strategy)
               for loaded_model in model
           ]
@@ -282,6 +297,7 @@ def main(argv):
           estimator = utils.wrap_retinopathy_estimator(
               model,
               use_mixed_precision=FLAGS.use_bfloat16,
+              return_logits=True,  # anuj
               numpy_outputs=not FLAGS.use_distribution_strategy)
 
   assert (not sample_from_ensemble or len(estimator) >= k_ensemble_members), (
@@ -292,13 +308,14 @@ def main(argv):
   estimator_args = {}
 
   is_deterministic_single_model = (
-      model_type == 'deterministic' and not use_ensemble)
+      model_type == 'deterministic' and not use_ensemble
+      or model_type in ('resnet50_ssvae_m2', 'cvae')) # anuj: (ss/c)vae gives deterministic prediction (only elbo is variational)
 
   if model_type != 'deterministic':
     # Argument for stochastic forward passes
     # we don't sample MC samples
     # for either a single deterministic model or deep ensemble
-    estimator_args['num_samples'] = num_mc_samples
+    estimator_args['num_samples'] = num_mc_samples  # anuj: need mc samples for ssvae elbo
   if 'fsvi' in model_type:
     if use_ensemble or single_model_multi_train_seeds:
       estimator_args['params'] = [m.params for m in model]
@@ -432,7 +449,8 @@ def construct_input_and_output_dir(model_type, dist_shift, tuning_domain,
         f'gs://{FLAGS.output_bucket}/{dist_shift}/'
         f'model-type_{model_type}__blur_{FLAGS.blur}__domain_{tuning_domain}__mc_{n_samples}/{output_suffix}'
     )
-  elif FLAGS.chkpt_bucket == 'drd-final-eval-multi-seeds':
+  # elif FLAGS.chkpt_bucket == 'drd-final-eval-multi-seeds':
+  elif FLAGS.chkpt_bucket.startswith('ue-usrl-anuj/checkpoints') or FLAGS.chkpt_bucket == 'gresearch/reliable-deep-learning/checkpoints/baselines/diabetic_retinopathy_shifts':  # anuj
     checkpoint_dir = (f'gs://{FLAGS.chkpt_bucket}/{dist_shift}/'
                       f'{model_type}_k{k}_{tuning_domain}')
     output_dir = (

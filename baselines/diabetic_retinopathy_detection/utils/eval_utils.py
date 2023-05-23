@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -423,6 +423,11 @@ def evaluate_model_on_datasets_np(
     y_true = list()
     y_pred = list()
     y_pred_entropy = list()
+    
+    y_logit = list() # anuj
+    nl_elbo = list() # anuj
+    input_nll_zero = list() # anuj
+    input_nll_one = list() # anuj
 
     if not is_deterministic:
       y_pred_variance = list()
@@ -454,7 +459,13 @@ def evaluate_model_on_datasets_np(
       names.append(inputs['name'])
       y_true.append(labels.numpy())
       y_pred.append(pred_and_uncert['prediction'])
+      y_logit.append(pred_and_uncert['logit'])  # anuj
       y_pred_entropy.append(pred_and_uncert['predictive_entropy'])
+
+      if 'nl_elbo' in pred_and_uncert: nl_elbo.append(pred_and_uncert['nl_elbo']) # anuj
+      if 'input_nll_zero' in pred_and_uncert: input_nll_zero.append(pred_and_uncert['input_nll_zero']) # anuj
+      if 'input_nll_one' in pred_and_uncert: input_nll_one.append(pred_and_uncert['input_nll_one']) # anuj
+    
       if not is_deterministic:
         y_pred_variance.append(pred_and_uncert['predictive_variance'])
         y_aleatoric_uncert.append(pred_and_uncert['aleatoric_uncertainty'])
@@ -472,10 +483,16 @@ def evaluate_model_on_datasets_np(
     dataset_split_dict['y_pred'] = np.concatenate(y_pred).flatten()
     dataset_split_dict['y_pred'] = dataset_split_dict['y_pred'].astype(
         'float64')
+    dataset_split_dict['y_logit'] = np.concatenate(y_logit).flatten()  # anuj
+    dataset_split_dict['y_logit'] = dataset_split_dict['y_logit'].astype('float64')  # anuj
 
     # Use vectorized NumPy containers
     dataset_split_dict['y_pred_entropy'] = (
         np.concatenate(y_pred_entropy).flatten())
+
+    if len(nl_elbo) > 0: dataset_split_dict['nl_elbo'] = np.concatenate(nl_elbo).flatten()  # anuj
+    if len(input_nll_zero) > 0: dataset_split_dict['input_nll_zero'] = np.concatenate(input_nll_zero).flatten()  # anuj
+    if len(input_nll_one) > 0: dataset_split_dict['input_nll_one'] = np.concatenate(input_nll_one).flatten()  # anuj
 
     if not is_deterministic:
       dataset_split_dict['y_pred_variance'] = (
@@ -543,7 +560,8 @@ def eval_model_numpy(datasets,
 
   if distribution_shift == 'aptos':
     # TODO(nband): generalize
-    aptos_metadata_path = 'gs://ub-data/aptos/metadata.csv'
+    # aptos_metadata_path = 'gs://ub-data/aptos/metadata.csv'
+    aptos_metadata_path = 'gs://ue-usrl-anuj/data/diabetic_retinopathy_diagnosis/downloads/manual/train.csv'  # anuj
     eval_results['ood_test_balanced'] = compute_rebalanced_aptos_dataset(
         aptos_dataset=eval_results['ood_test'],
         aptos_metadata_path=aptos_metadata_path,
@@ -678,7 +696,12 @@ def compute_log_loss_arr(results, labels=np.asarray([0, 1]), eps=1e-15):
     Dict containing unaggregated log loss `np.ndarray`.
   """
   y_pred, y_true = results['y_pred'], results['y_true']
-  y_pred = check_array(y_pred, ensure_2d=False)
+  try:  # anuj
+    y_pred = check_array(y_pred, ensure_2d=False)
+  except Exception as e:  # anuj
+    print('nan:', np.isnan(y_pred).any())  # anuj
+    print('inf:', np.isinf(y_pred).any())  # anuj
+    exit(1)
   check_consistent_length(y_pred, y_true, None)
 
   lb = LabelBinarizer()
@@ -803,7 +826,7 @@ def compute_rebalanced_aptos_dataset(aptos_dataset,
   for key, value in aptos_dataset.items():
     try:
       new_aptos_dataset[key] = value[new_indices]
-    except IndexError:
+    except (IndexError, TypeError):  # anuj
       new_aptos_dataset[key] = value
 
   return new_aptos_dataset
@@ -1050,6 +1073,15 @@ def compute_dataset_eval_metrics_with_precomputed_arrs(
   return eval_metrics
 
 
+def splitreferral_uncertainty(x):  # EDIT(anuj)
+  unc = np.zeros(x.size)
+  neg = x < 0.5
+  pos = ~neg
+  unc[neg] = (x[neg].argsort().argsort() + 1) / (neg.sum() + 1)
+  unc[pos] = 1 - (x[pos].argsort().argsort() + 1) / (pos.sum() + 1)
+  return unc
+
+
 def compute_dataset_eval_metrics(
     dataset_key,
     results,
@@ -1147,6 +1179,17 @@ def compute_dataset_eval_metrics(
             y_true=y_true,
             uncertainty=y_pred_entropy,
             auc_str='prc'))
+
+    sr_unc = splitreferral_uncertainty(y_pred)  # EDIT(anuj)
+    eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean(
+        compute_retention_curve_on_accuracies(
+            accuracies=results['accuracy_arr'], uncertainty=sr_unc))  # EDIT(anuj)
+    eval_metrics[f'{dataset_key}/retention_auroc_auc_splitreferral'] = np.mean(
+        compute_auc_retention_curve(
+            y_pred=y_pred,
+            y_true=y_true,
+            uncertainty=sr_unc,
+            auc_str='roc'))  # EDIT(anuj)
 
   return eval_metrics
 

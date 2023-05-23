@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,12 +43,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection
-import input_utils  # local file import from baselines.diabetic_retinopathy_detection
-import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection
-import train_utils  # local file import from baselines.diabetic_retinopathy_detection
-from utils import results_storage_utils
-from utils import vit_utils
+# import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import input_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import train_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# from utils import results_storage_utils  # EDIT(anuj)
+# from utils import vit_utils  # EDIT(anuj)
+import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # EDIT(anuj)
+import baselines.diabetic_retinopathy_detection.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # EDIT(anuj)
+from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # EDIT(anuj)
+from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -81,6 +87,7 @@ def main(argv):
 
   # Wandb and Checkpointing Setup
   output_dir = FLAGS.output_dir
+  config.output_dir = FLAGS.output_dir  # EDIT(anuj)
   wandb_run, output_dir = vit_utils.maybe_setup_wandb(config)
   tf.io.gfile.makedirs(output_dir)
   logging.info('Saving checkpoints at %s', output_dir)
@@ -110,13 +117,22 @@ def main(argv):
   # else:
   #   class_weights = None
 
+  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
+    class_weights = 0.5 * 35126 / jnp.array([28253, 6873])  # TODO(anuj): remove hardcode
+    if config.loss == 'softmax_xent':
+      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
+    else:
+      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
+  else:
+    base_loss_fn = getattr(train_utils, config.loss)
+
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
   # In a TPU runtime this will be 8 cores.
   print('Number of Jax local devices:', jax.local_devices())
 
   # TODO(nband): fix sigmoid loss issues.
-  assert config.get('loss', None) == 'softmax_xent'
+  # assert config.get('loss', None) == 'softmax_xent'  # EDIT(anuj)
 
   seed = config.get('seed', 0)
   rng = jax.random.PRNGKey(seed)
@@ -126,10 +142,11 @@ def main(argv):
     logging.info('data_dir=%s', config.data_dir)
   logging.info('Output dir: %s', output_dir)
   tf.io.gfile.makedirs(output_dir)
+  tf.io.gfile.makedirs(os.path.join(output_dir, 'checkpoints'))  # EDIT(anuj)
 
   save_checkpoint_path = None
   if config.get('checkpoint_steps'):
-    save_checkpoint_path = os.path.join(output_dir, 'checkpoint.npz')
+    save_checkpoint_path = os.path.join(output_dir, 'checkpoints', 'checkpoint.npz')  # EDIT(anuj)
 
   # Create an asynchronous multi-metric writer.
   writer = metric_writers.create_default_writer(
@@ -199,6 +216,7 @@ def main(argv):
   # Please specify the desired shift (Country Shift or Severity Shift)
   # in the config.
   eval_iter_splits = vit_utils.init_evaluation_datasets(
+      use_train=config.eval_on_train,  # EDIT(anuj)
       use_validation=config.use_validation,
       use_test=config.use_test,
       dataset_names=dataset_names,
@@ -263,8 +281,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = getattr(train_utils, config.get('loss', 'softmax_xent'))(
-        logits=logits, labels=labels, reduction=False)
+    losses = base_loss_fn(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -299,8 +316,7 @@ def main(argv):
       logits, _ = model.apply(
           {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      return getattr(train_utils, config.get('loss', 'sigmoid_xent'))(
-          logits=logits, labels=labels)
+      return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -408,6 +424,8 @@ def main(argv):
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
+        if train_loop_rngs.shape[0] == 1 and train_loop_rngs.shape[0] < jax.device_count():  # EDIT(anuj): temp fix
+          train_loop_rngs = jax.random.split(train_loop_rngs[0])
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
@@ -415,8 +433,8 @@ def main(argv):
             train_batch['labels'],
             rng=train_loop_rngs)
 
-    if jax.process_index() == 0:
-      profiler(step)
+    # if jax.process_index() == 0:  # EDIT(anuj)
+    #   profiler(step)
 
     # Checkpoint saving
     if not config.get('only_eval', False) and train_utils.itstime(
@@ -447,7 +465,7 @@ def main(argv):
 
       checkpoint_writer = pool.apply_async(
           checkpoint_utils.checkpoint_trained_model,
-          (checkpoint_data, save_checkpoint_path, copy_step))
+          (checkpoint_data, f'{save_checkpoint_path[:-4]}_{step}.npz', copy_step))  # EDIT(anuj)
       chrono.resume()
 
     # Report training progress
@@ -480,8 +498,10 @@ def main(argv):
         results_arrs = {
             'y_true': [],
             'y_pred': [],
-            'y_pred_entropy': []
+            'y_pred_entropy': [],
         }
+        if config.only_eval:  # EDIT(anuj)
+          results_arrs['pre_logits'] = []
 
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
@@ -496,7 +516,7 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, _ = batch_metric_args
+          logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
           probs = jax.nn.softmax(logits)
 
@@ -508,6 +528,8 @@ def main(argv):
           y_pred = probs[:, 1]
           results_arrs['y_true'].append(int_labels)
           results_arrs['y_pred'].append(y_pred)
+          if config.only_eval:  # EDIT(anuj)
+            results_arrs['pre_logits'].append(pre_logits)
 
           # Entropy is computed at the per-epoch level (see below).
           results_arrs['y_pred_entropy'].append(probs)
@@ -517,6 +539,8 @@ def main(argv):
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
+        if config.only_eval:  # EDIT(anuj)
+          results_arrs['pre_logits'] = np.concatenate(results_arrs['pre_logits'], axis=0)
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3

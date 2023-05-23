@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,39 +25,39 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from uncertainty_baselines.datasets.aptos import APTOSDataset
 from uncertainty_baselines.datasets.base import BaseDataset
-from uncertainty_baselines.datasets.cifar import Cifar100Dataset
-from uncertainty_baselines.datasets.cifar import Cifar10CorruptedDataset
-from uncertainty_baselines.datasets.cifar import Cifar10Dataset
-from uncertainty_baselines.datasets.cifar import Cifar10NDataset
-from uncertainty_baselines.datasets.cifar import Cifar100NDataset
-from uncertainty_baselines.datasets.cifar100_corrupted import Cifar100CorruptedDataset
-from uncertainty_baselines.datasets.cityscapes import CityscapesDataset
-from uncertainty_baselines.datasets.clinc_intent import ClincIntentDetectionDataset
-from uncertainty_baselines.datasets.criteo import CriteoDataset
+# from uncertainty_baselines.datasets.cifar import Cifar100Dataset
+# from uncertainty_baselines.datasets.cifar import Cifar10CorruptedDataset
+# from uncertainty_baselines.datasets.cifar import Cifar10Dataset
+# from uncertainty_baselines.datasets.cifar100_corrupted import Cifar100CorruptedDataset
+# from uncertainty_baselines.datasets.cityscapes import CityscapesDataset
+# from uncertainty_baselines.datasets.clinc_intent import ClincIntentDetectionDataset
+# from uncertainty_baselines.datasets.criteo import CriteoDataset
 from uncertainty_baselines.datasets.diabetic_retinopathy_detection import UBDiabeticRetinopathyDetectionDataset
 from uncertainty_baselines.datasets.diabetic_retinopathy_severity_shift_mild import DiabeticRetinopathySeverityShiftMildDataset
 from uncertainty_baselines.datasets.diabetic_retinopathy_severity_shift_moderate import DiabeticRetinopathySeverityShiftModerateDataset
-from uncertainty_baselines.datasets.dialog_state_tracking import MultiWoZSynthDataset
-from uncertainty_baselines.datasets.dialog_state_tracking import SGDDataset
-from uncertainty_baselines.datasets.dialog_state_tracking import SGDDADataset
-from uncertainty_baselines.datasets.dialog_state_tracking import SGDSynthDataset
-from uncertainty_baselines.datasets.dialog_state_tracking import SimDialDataset
-from uncertainty_baselines.datasets.dtd import DtdDataset
-from uncertainty_baselines.datasets.genomics_ood import GenomicsOodDataset
-from uncertainty_baselines.datasets.glue import GlueDatasets
-from uncertainty_baselines.datasets.imagenet import ImageNetDataset
-from uncertainty_baselines.datasets.imagenet import ImageNetCorruptedDataset
-from uncertainty_baselines.datasets.mnist import MnistDataset
-from uncertainty_baselines.datasets.mnli import MnliDataset
-from uncertainty_baselines.datasets.movielens import MovieLensDataset
-from uncertainty_baselines.datasets.places import Places365Dataset
+# from uncertainty_baselines.datasets.dialog_state_tracking import MultiWoZSynthDataset
+# from uncertainty_baselines.datasets.dialog_state_tracking import SGDDataset
+# from uncertainty_baselines.datasets.dialog_state_tracking import SGDDADataset
+# from uncertainty_baselines.datasets.dialog_state_tracking import SGDSynthDataset
+# from uncertainty_baselines.datasets.dialog_state_tracking import SimDialDataset
+# from uncertainty_baselines.datasets.genomics_ood import GenomicsOodDataset
+# from uncertainty_baselines.datasets.glue import GlueDatasets
+# from uncertainty_baselines.datasets.imagenet import ImageNetDataset
+# from uncertainty_baselines.datasets.imagenet import ImageNetCorruptedDataset
+# from uncertainty_baselines.datasets.mnist import MnistDataset
+# from uncertainty_baselines.datasets.mnli import MnliDataset
+# from uncertainty_baselines.datasets.movielens import MovieLensDataset
+# from uncertainty_baselines.datasets.places import Places365Dataset
 from uncertainty_baselines.datasets.random import RandomGaussianImageDataset
 from uncertainty_baselines.datasets.random import RandomRademacherImageDataset
-from uncertainty_baselines.datasets.svhn import SvhnDataset
-from uncertainty_baselines.datasets.toxic_comments import CivilCommentsDataset
-from uncertainty_baselines.datasets.toxic_comments import CivilCommentsIdentitiesDataset
-from uncertainty_baselines.datasets.toxic_comments import WikipediaToxicityDataset
+# from uncertainty_baselines.datasets.svhn import SvhnDataset
+# from uncertainty_baselines.datasets.toxic_comments import CivilCommentsDataset
+# from uncertainty_baselines.datasets.toxic_comments import CivilCommentsIdentitiesDataset
+# from uncertainty_baselines.datasets.toxic_comments import WikipediaToxicityDataset
 # pylint: enable=g-bad-import-order
+
+from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
+from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -88,50 +88,49 @@ except OSError:
 
 DATASETS = {
     'aptos': APTOSDataset,
-    'cifar100': Cifar100Dataset,
-    'cifar10': Cifar10Dataset,
-    'cifar10n': Cifar10NDataset,
-    'cifar100n': Cifar100NDataset,
-    'cifar10_corrupted': Cifar10CorruptedDataset,
-    'cifar100_corrupted': Cifar100CorruptedDataset,
-    'cityscapes': CityscapesDataset,
-    'civil_comments': CivilCommentsDataset,
-    'civil_comments_identities': CivilCommentsIdentitiesDataset,
-    'clinic_intent': ClincIntentDetectionDataset,
-    'criteo': CriteoDataset,
+    # 'cifar100': Cifar100Dataset,
+    # 'cifar10': Cifar10Dataset,
+    # 'cifar10_corrupted': Cifar10CorruptedDataset,
+    # 'cifar100_corrupted': Cifar100CorruptedDataset,
+    # 'cityscapes': CityscapesDataset,
+    # 'civil_comments': CivilCommentsDataset,
+    # 'civil_comments_identities': CivilCommentsIdentitiesDataset,
+    # 'clinic_intent': ClincIntentDetectionDataset,
+    # 'criteo': CriteoDataset,
     'ub_diabetic_retinopathy_detection': UBDiabeticRetinopathyDetectionDataset,
     'diabetic_retinopathy_severity_shift_mild':
         (DiabeticRetinopathySeverityShiftMildDataset),
     'diabetic_retinopathy_severity_shift_moderate':
         (DiabeticRetinopathySeverityShiftModerateDataset),
-    'dtd': DtdDataset,
-    'imagenet': ImageNetDataset,
-    'imagenet_corrupted': ImageNetCorruptedDataset,
-    'mnist': MnistDataset,
-    'mnli': MnliDataset,
-    'movielens': MovieLensDataset,
-    'multiwoz': MultiWoZDataset,
-    'multiwoz_synth': MultiWoZSynthDataset,
-    'places365': Places365Dataset,
+    # 'imagenet': ImageNetDataset,
+    # 'imagenet_corrupted': ImageNetCorruptedDataset,
+    # 'mnist': MnistDataset,
+    # 'mnli': MnliDataset,
+    # 'movielens': MovieLensDataset,
+    # 'multiwoz': MultiWoZDataset,
+    # 'multiwoz_synth': MultiWoZSynthDataset,
+    # 'places365': Places365Dataset,
     'random_gaussian': RandomGaussianImageDataset,
     'random_rademacher': RandomRademacherImageDataset,
-    'sgd': SGDDataset,
-    'sgd_domain_adapation': SGDDADataset,
-    'sgd_synth': SGDSynthDataset,
-    'simdial': SimDialDataset,
-    'smcalflow': SMCalflowDataset,
-    'speech_commands': SpeechCommandsDataset,
-    'svhn_cropped': SvhnDataset,
-    'glue/cola': GlueDatasets['glue/cola'],
-    'glue/sst2': GlueDatasets['glue/sst2'],
-    'glue/mrpc': GlueDatasets['glue/mrpc'],
-    'glue/qqp': GlueDatasets['glue/qqp'],
-    'glue/qnli': GlueDatasets['glue/qnli'],
-    'glue/rte': GlueDatasets['glue/rte'],
-    'glue/wnli': GlueDatasets['glue/wnli'],
-    'glue/stsb': GlueDatasets['glue/stsb'],
-    'wikipedia_toxicity': WikipediaToxicityDataset,
-    'genomics_ood': GenomicsOodDataset,
+    # 'sgd': SGDDataset,
+    # 'sgd_domain_adapation': SGDDADataset,
+    # 'sgd_synth': SGDSynthDataset,
+    # 'simdial': SimDialDataset,
+    # 'smcalflow': SMCalflowDataset,
+    # 'speech_commands': SpeechCommandsDataset,
+    # 'svhn_cropped': SvhnDataset,
+    # 'glue/cola': GlueDatasets['glue/cola'],
+    # 'glue/sst2': GlueDatasets['glue/sst2'],
+    # 'glue/mrpc': GlueDatasets['glue/mrpc'],
+    # 'glue/qqp': GlueDatasets['glue/qqp'],
+    # 'glue/qnli': GlueDatasets['glue/qnli'],
+    # 'glue/rte': GlueDatasets['glue/rte'],
+    # 'glue/wnli': GlueDatasets['glue/wnli'],
+    # 'glue/stsb': GlueDatasets['glue/stsb'],
+    # 'wikipedia_toxicity': WikipediaToxicityDataset,
+    # 'genomics_ood': GenomicsOodDataset,
+    'chest_xray8': ChestXray8Dataset,  # anuj
+    'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj
 }
 
 

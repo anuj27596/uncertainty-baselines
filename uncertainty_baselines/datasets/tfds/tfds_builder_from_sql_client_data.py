@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ from absl import logging
 import pandas as pd
 import tensorflow as tf
 import tensorflow_datasets as tfds
-import tensorflow_federated as tff
+# import tensorflow_federated as tff
 
 
 class TFDSBuilderFromSQLClientData(tfds.core.DatasetBuilder):

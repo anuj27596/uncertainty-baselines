@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,11 +46,9 @@ from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp
 from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp_add_last_layer
 from uncertainty_baselines.models.resnet50_radial import resnet50_radial
 from uncertainty_baselines.models.resnet50_rank1 import resnet50_rank1
-from uncertainty_baselines.models.resnet50_resizable_width import resnet50_resizable_width
 from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp
 from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp_add_last_layer
 from uncertainty_baselines.models.resnet50_sngp_be import resnet50_sngp_be
-from uncertainty_baselines.models.resnet50_tram import resnet50_tram
 from uncertainty_baselines.models.resnet50_variational import resnet50_variational
 from uncertainty_baselines.models.textcnn import textcnn
 from uncertainty_baselines.models.unet import unet
@@ -68,8 +66,14 @@ from uncertainty_baselines.models.wide_resnet_posterior_network import wide_resn
 from uncertainty_baselines.models.wide_resnet_rank1 import wide_resnet_rank1
 from uncertainty_baselines.models.wide_resnet_sngp import wide_resnet_sngp
 from uncertainty_baselines.models.wide_resnet_sngp_be import wide_resnet_sngp_be
-from uncertainty_baselines.models.wide_resnet_tram import wide_resnet_tram
 from uncertainty_baselines.models.wide_resnet_variational import wide_resnet_variational
+
+from uncertainty_baselines.models.cnn_ssvae_m1 import ssvae_m1 # anuj
+from uncertainty_baselines.models.cnn_ssvae_m2 import ssvae_m2 # anuj
+from uncertainty_baselines.models.resnet50_ssvae_m2 import resnet50_ssvae_m2 # anuj
+from uncertainty_baselines.models.resnet50_vae import resnet50_vae # anuj
+from uncertainty_baselines.models.resnet50_cvae import resnet50_cvae # anuj
+from uncertainty_baselines.models.vit_keras import vit_keras # anuj
 
 
 # pylint: disable=g-import-not-at-top
@@ -87,7 +91,9 @@ try:
   from uncertainty_baselines.models.vit_hetgp import vision_transformer_hetgp
   from uncertainty_baselines.models.vit_mimo import vision_transformer_mimo
   from uncertainty_baselines.models.vit_heteroscedastic import vision_transformer_het
-  from uncertainty_baselines.models.vit_tram import vision_transformer_tram
+  from uncertainty_baselines.models.vit_simclr import vision_transformer_simclr  # EDIT(anuj)
+  from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
+  from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
 except ImportError:
   logging.warning('Skipped ViT models due to ImportError.', exc_info=True)
 except tf.errors.NotFoundError:

@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ from typing import List, Optional, Tuple, Union
 
 from clu import preprocess_spec
 import tensorflow as tf
+import cv2  # EDIT(anuj)
+import tensorflow_addons as tfa  # EDIT(anuj)
+import numpy as np  # EDIT(anuj)
 
 Features = preprocess_spec.Features
 
@@ -434,3 +437,62 @@ class Keep:
 
   def __call__(self, features: Features) -> Features:
     return {k: v for k, v in features.items() if k in self.keys}
+
+
+@dataclasses.dataclass
+class SimclrAug:  # EDIT(anuj)
+
+  image_key: str = "image"
+  label_key: str = "labels"
+  area_min: int = 80
+  area_max: int = 100
+  rotation_max: int = 10
+  jitter_strength: float = 0.02
+  res_key_1: str = "image_aug_1"
+  res_key_2: str = "image_aug_2"
+
+  def augment(self, image):
+    # crop and resize
+    aug = image
+    aug = tf.keras.layers.RandomRotation(
+        factor=self.rotation_max / 360,
+        fill_mode='constant',
+        fill_value=128/255)(aug)
+    begin, size, _ = tf.image.sample_distorted_bounding_box(
+        image_size=tf.shape(image),
+        bounding_boxes=tf.zeros([0, 0, 4], tf.float32),
+        area_range=(self.area_min / 100, self.area_max / 100),
+        min_object_covered=0,
+        use_image_if_no_bounding_boxes=True)
+    begin = tf.concat([begin[:2], [0]], axis=0)
+    size = tf.concat([size[:2], [tf.shape(image)[-1]]], axis=0)
+    aug = tf.slice(aug, begin, size)
+    aug = tf.image.resize(aug, tf.shape(image)[:2])
+    # flip
+    aug = tf.image.random_flip_left_right(aug)
+    aug = tf.image.random_flip_up_down(aug)
+    # color distortion
+    aug = tf.image.random_brightness(
+        image=aug,
+        max_delta=0.8 * self.jitter_strength)
+    aug = tf.image.random_contrast(
+        image=aug,
+        lower=1 - 0.8 * self.jitter_strength,
+        upper=1 + 0.8 * self.jitter_strength)
+    aug = tf.image.random_saturation(
+        image=aug,
+        lower=1 - 0.8 * self.jitter_strength,
+        upper=1 + 0.8 * self.jitter_strength)
+    aug = tf.image.random_hue(
+        image=aug,
+        max_delta=0.2 * self.jitter_strength)
+    aug = tf.clip_by_value(aug, 0, 1)
+    aug = tf.image.convert_image_dtype(aug, tf.float32)
+    return aug
+
+  def __call__(self, features: Features) -> Features:
+    image = features[self.image_key]
+    features[self.res_key_1] = self.augment(image)
+    features[self.res_key_2] = self.augment(image)
+    return features
+

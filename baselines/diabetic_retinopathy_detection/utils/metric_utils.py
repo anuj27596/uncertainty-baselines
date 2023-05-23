@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -179,10 +179,10 @@ def log_vit_validation_metrics(eval_results):
 
     eval_values.append(dataset_values)
 
-  eval_table = tabulate(eval_values, eval_columns,
-                        tablefmt='simple', floatfmt='8.4f')
-  print('\n')
-  print(eval_table)
+  # eval_table = tabulate(eval_values, eval_columns,
+  #                       tablefmt='simple', floatfmt='8.4f')
+  # print('\n')
+  # print(eval_table)  # anuj
   return metrics_to_return
 
 
@@ -217,11 +217,11 @@ def log_epoch_metrics(metrics, eval_results, use_tpu, dataset_splits):
       train_values.append(metrics['train/ece'].result()['ece'] * 100)
       train_metrics.append('ece')
 
-    train_table = tabulate([train_values],
-                           train_columns,
-                           tablefmt='simple',
-                           floatfmt='8.4f')
-    print(train_table)
+    # train_table = tabulate([train_values],
+    #                        train_columns,
+    #                        tablefmt='simple',
+    #                        floatfmt='8.4f')
+    # print(train_table)  # anuj
 
     # Log to the metrics dict which we will return (for TensorBoard)
     for train_metric, train_value in zip(train_metrics, train_values):
@@ -258,10 +258,10 @@ def log_epoch_metrics(metrics, eval_results, use_tpu, dataset_splits):
 
     eval_values.append(dataset_values)
 
-  eval_table = tabulate(
-      eval_values, eval_columns, tablefmt='simple', floatfmt='8.4f')
-  print('\n')
-  print(eval_table)
+  # eval_table = tabulate(
+  #     eval_values, eval_columns, tablefmt='simple', floatfmt='8.4f')
+  # print('\n')
+  # print(eval_table)  # anuj
   return metrics_to_return
 
 

@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -113,6 +113,7 @@ def load_kaggle_severity_shift_dataset(train_batch_size,
         dataset_name,
         split=split,
         data_dir=data_dir,
+        download_data=True,  # anuj
         cache=(flags.cache_eval_datasets and split != 'train'),
         drop_remainder=not load_for_eval,
         builder_config=f'{dataset_name}/{flags.preproc_builder_config}')
@@ -179,6 +180,7 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
       dr_dataset_name,
       split='validation',
       data_dir=data_dir,
+      download_data=True,  # anuj
       is_training=not flags.use_validation,
       decision_threshold=flags.dr_decision_threshold,
       cache=flags.cache_eval_datasets,
@@ -198,6 +200,7 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
         'aptos',
         split='validation',
         data_dir=data_dir,
+        download_data=True,  # anuj
         decision_threshold=flags.dr_decision_threshold,
         cache=flags.cache_eval_datasets,
         drop_remainder=not load_for_eval,
@@ -220,6 +223,7 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
         dr_dataset_name,
         split='train',
         data_dir=data_dir,
+        download_data=True,  # anuj
         decision_threshold=flags.dr_decision_threshold,
         builder_config=f'{dr_dataset_name}/{flags.preproc_builder_config}')
     dataset_train = dataset_train_builder.load(batch_size=train_batch_size)
@@ -244,6 +248,7 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
         dr_dataset_name,
         split='test',
         data_dir=data_dir,
+        download_data=True,  # anuj
         decision_threshold=flags.dr_decision_threshold,
         cache=flags.cache_eval_datasets,
         drop_remainder=not load_for_eval,
@@ -259,6 +264,7 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
         'aptos',
         split='test',
         data_dir=data_dir,
+        download_data=True,  # anuj
         decision_threshold=flags.dr_decision_threshold,
         cache=flags.cache_eval_datasets,
         drop_remainder=not load_for_eval,
@@ -269,6 +275,108 @@ def load_kaggle_aptos_country_shift_dataset(train_batch_size,
           dataset_ood_test)
 
     split_to_dataset['ood_test'] = dataset_ood_test
+
+  return split_to_dataset, split_to_steps_per_epoch
+
+
+def load_swapped_country_shift_dataset(  # EDIT(anuj)
+  train_batch_size,
+  eval_batch_size,
+  flags,
+  strategy,
+  load_for_eval=False,
+):
+
+  data_dir = flags.data_dir
+  load_train_split = flags.load_train_split
+
+  split_to_steps_per_epoch = {}
+
+  if load_for_eval:
+    split_to_steps_per_epoch['ood_validation'] = 10906 // eval_batch_size
+    split_to_steps_per_epoch['ood_test'] = 42670 // eval_batch_size
+    split_to_steps_per_epoch['in_domain_test'] = 733 // eval_batch_size
+
+  split_to_steps_per_epoch['in_domain_validation'] = 733 // eval_batch_size
+  if load_train_split:
+    split_to_steps_per_epoch['train'] = 2929 // eval_batch_size
+
+  split_to_dataset = {}
+
+  dr_dataset_name = 'ub_diabetic_retinopathy_detection'
+
+  # Load validation data
+  if load_for_eval:
+    dataset_ood_validation_builder = ub.datasets.get(
+        dr_dataset_name,
+        split='validation',
+        data_dir=data_dir,
+        download_data=True,  # anuj
+        is_training=not flags.use_validation,
+        decision_threshold=flags.dr_decision_threshold,
+        cache=flags.cache_eval_datasets,
+        drop_remainder=not load_for_eval,
+        builder_config=f'{dr_dataset_name}/{flags.preproc_builder_config}')
+    dataset_ood_validation = dataset_ood_validation_builder.load(
+        batch_size=eval_batch_size)
+
+  aptos_validation_builder = ub.datasets.get(
+      'aptos',
+      split='validation',
+      data_dir=data_dir,
+      download_data=True,  # anuj
+      decision_threshold=flags.dr_decision_threshold,
+      cache=flags.cache_eval_datasets,
+      drop_remainder=not load_for_eval,
+      builder_config=f'aptos/{flags.preproc_builder_config}')
+  dataset_id_validation = aptos_validation_builder.load(
+      batch_size=eval_batch_size)
+
+  if strategy is not None:
+    if load_for_eval:
+      dataset_ood_validation = strategy.experimental_distribute_dataset(
+          dataset_ood_validation)
+    dataset_id_validation = strategy.experimental_distribute_dataset(
+        dataset_id_validation)
+
+  split_to_dataset['in_domain_validation'] = dataset_id_validation
+  if load_for_eval:
+    split_to_dataset['in_domain_test'] = dataset_id_validation
+    split_to_dataset['ood_validation'] = dataset_ood_validation
+
+  if load_for_eval:
+    # In-Domain Test
+    dataset_test_builder = ub.datasets.get(
+        dr_dataset_name,
+        split='test',
+        data_dir=data_dir,
+        download_data=True,  # anuj
+        decision_threshold=flags.dr_decision_threshold,
+        cache=flags.cache_eval_datasets,
+        drop_remainder=not load_for_eval,
+        builder_config=f'{dr_dataset_name}/{flags.preproc_builder_config}')
+    ood_dataset_test = dataset_test_builder.load(batch_size=eval_batch_size)
+    if strategy is not None:
+      ood_dataset_test = strategy.experimental_distribute_dataset(ood_dataset_test)
+
+    split_to_dataset['ood_test'] = ood_dataset_test
+
+  if load_train_split:
+    aptos_train_builder = ub.datasets.get(
+        'aptos',
+        split='test',
+        data_dir=data_dir,
+        download_data=True,  # anuj
+        decision_threshold=flags.dr_decision_threshold,
+        cache=flags.cache_eval_datasets,
+        drop_remainder=not load_for_eval,
+        builder_config=f'aptos/{flags.preproc_builder_config}')
+    dataset_train = aptos_train_builder.load(batch_size=eval_batch_size)
+    if strategy is not None:
+      dataset_train = strategy.experimental_distribute_dataset(
+          dataset_train)
+
+    split_to_dataset['train'] = dataset_train
 
   return split_to_dataset, split_to_steps_per_epoch
 
@@ -304,6 +412,13 @@ def load_dataset(train_batch_size,
         load_for_eval=load_for_eval)
   elif distribution_shift == 'aptos' or distribution_shift is None:
     datasets, steps = load_kaggle_aptos_country_shift_dataset(
+        train_batch_size,
+        eval_batch_size,
+        flags=flags,
+        strategy=strategy,
+        load_for_eval=load_for_eval)
+  elif distribution_shift == 'swapped_country':  # EDIT(anuj)
+    datasets, steps = load_swapped_country_shift_dataset(
         train_batch_size,
         eval_batch_size,
         flags=flags,

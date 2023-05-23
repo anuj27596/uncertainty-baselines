@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import torch
 
-import torch_utils  # local file import
+import baselines.diabetic_retinopathy_detection.torch_utils as torch_utils  # local file import  # anuj
 import uncertainty_baselines as ub
-import utils  # local file import
+import baselines.diabetic_retinopathy_detection.utils as utils  # local file import  # anuj
 from tensorboard.plugins.hparams import api as hp
 
 # Hide any GPUs form TensorFlow. Otherwise TF might reserve memory and make
@@ -116,11 +116,11 @@ def main(argv):
   data_dir = FLAGS.data_dir
 
   dataset_train_builder = ub.datasets.get(
-      'diabetic_retinopathy_detection', split='train', data_dir=data_dir)
+      'ub_diabetic_retinopathy_detection', split='train', data_dir=data_dir) # anuj
   dataset_train = dataset_train_builder.load(batch_size=train_batch_size)
 
   dataset_validation_builder = ub.datasets.get(
-      'diabetic_retinopathy_detection',
+      'ub_diabetic_retinopathy_detection', # anuj
       split='validation',
       data_dir=data_dir,
       is_training=not FLAGS.use_validation)
@@ -134,7 +134,7 @@ def main(argv):
     dataset_train = dataset_train.concatenate(dataset_validation)
 
   dataset_test_builder = ub.datasets.get(
-      'diabetic_retinopathy_detection', split='test', data_dir=data_dir)
+      'ub_diabetic_retinopathy_detection', split='test', data_dir=data_dir) # anuj
   dataset_test = dataset_test_builder.load(batch_size=eval_batch_size)
 
   summary_writer = tf.summary.create_file_writer(

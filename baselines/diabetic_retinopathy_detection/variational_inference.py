@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ from absl import flags
 from absl import logging
 import tensorflow as tf
 import uncertainty_baselines as ub
-import utils
+# import utils  # local file import
+import baselines.diabetic_retinopathy_detection.utils as utils  # anuj
 import wandb
 
 from tensorboard.plugins.hparams import api as hp
