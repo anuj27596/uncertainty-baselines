@@ -193,15 +193,6 @@ def initialize_local_spatial_model(config):  # EDIT(anuj)
   }
 
 
-def initialize_dan_model(config):  # EDIT(anuj)
-  logging.info('config.model = %s', config.get('model'))
-  model = ub.models.vision_transformer_dan(
-      num_classes=config.num_classes, **config.get('model', {}))
-  return {
-      'model': model
-  }
-
-
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -240,7 +231,6 @@ VIT_MODEL_INIT_MAP = {
     'batchensemble': initialize_batchensemble_model,
     'simclr': initialize_simclr_model,  # EDIT(anuj)
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
-    'dan': initialize_dan_model,  # EDIT(anuj)
 }
 
 
@@ -380,8 +370,7 @@ MODEL_TYPE_TO_INIT_PARAMS_FN = {
 }
 
 
-def init_evaluation_datasets(use_train,  # EDIT(anuj)
-                             use_validation,
+def init_evaluation_datasets(use_validation,
                              use_test,
                              dataset_names,
                              split_names,
@@ -391,9 +380,9 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
                              local_batch_size_eval):
   """Sets up evaluation datasets."""
   data_dir = config.get('data_dir')
-  def get_dataset(dataset_name, split_name):
+  def get_dataset(dataset_name, split_name, builder_config): # Karm
     base_dataset = ub.datasets.get(
-        dataset_name, split=split_name, data_dir=data_dir)
+        dataset_name, split=split_name, data_dir=data_dir, download_data=True, builder_config = builder_config) # Karm
     dataset_builder = base_dataset._dataset_builder  # pylint:disable=protected-access
     return get_eval_split(
         dataset_builder,
@@ -404,24 +393,26 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
         local_batch_size_eval)
 
   datasets = {}
-  if use_train:  # EDIT(anuj)
-    datasets['train'] = get_dataset(
-        dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['train_split'])
+  
+  # breakpoint()
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['in_domain_validation_split'])
+        split_name=split_names['in_domain_validation_split'], 
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm: This will not do anything
     datasets['ood_validation'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
-        split_name=split_names['ood_validation_split'])
+        split_name=split_names['ood_validation_split'],
+        builder_config = "aptos/btgraham-300-left") # Karm
   if use_test:
     datasets['in_domain_test'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['in_domain_test_split'])
+        split_name=split_names['in_domain_test_split'],
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm
     datasets['ood_test'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
-        split_name=split_names['ood_test_split'])
+        split_name=split_names['ood_test_split'],
+        builder_config = "aptos/btgraham-300-left")
 
   return datasets
 

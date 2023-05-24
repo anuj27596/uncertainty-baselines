@@ -1073,15 +1073,6 @@ def compute_dataset_eval_metrics_with_precomputed_arrs(
   return eval_metrics
 
 
-def splitreferral_uncertainty(x):  # EDIT(anuj)
-  unc = np.zeros(x.size)
-  neg = x < 0.5
-  pos = ~neg
-  unc[neg] = (x[neg].argsort().argsort() + 1) / (neg.sum() + 1)
-  unc[pos] = 1 - (x[pos].argsort().argsort() + 1) / (pos.sum() + 1)
-  return unc
-
-
 def compute_dataset_eval_metrics(
     dataset_key,
     results,
@@ -1179,17 +1170,6 @@ def compute_dataset_eval_metrics(
             y_true=y_true,
             uncertainty=y_pred_entropy,
             auc_str='prc'))
-
-    sr_unc = splitreferral_uncertainty(y_pred)  # EDIT(anuj)
-    eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean(
-        compute_retention_curve_on_accuracies(
-            accuracies=results['accuracy_arr'], uncertainty=sr_unc))  # EDIT(anuj)
-    eval_metrics[f'{dataset_key}/retention_auroc_auc_splitreferral'] = np.mean(
-        compute_auc_retention_curve(
-            y_pred=y_pred,
-            y_true=y_true,
-            uncertainty=sr_unc,
-            auc_str='roc'))  # EDIT(anuj)
 
   return eval_metrics
 

@@ -492,6 +492,7 @@ class SimclrAug:  # EDIT(anuj)
 
   def __call__(self, features: Features) -> Features:
     image = features[self.image_key]
+    label = features[self.label_key]
     features[self.res_key_1] = self.augment(image)
     features[self.res_key_2] = self.augment(image)
     return features

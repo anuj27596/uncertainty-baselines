@@ -57,7 +57,9 @@ from uncertainty_baselines.datasets.random import RandomRademacherImageDataset
 # pylint: enable=g-bad-import-order
 
 from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
+from uncertainty_baselines.datasets.chest_xray14 import ChestXray14Dataset  # karm
 from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
+from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset  # Karm
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -130,7 +132,9 @@ DATASETS = {
     # 'wikipedia_toxicity': WikipediaToxicityDataset,
     # 'genomics_ood': GenomicsOodDataset,
     'chest_xray8': ChestXray8Dataset,  # anuj
-    'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj
+    'chest_xray14': ChestXray14Dataset,  # anuj
+    'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj,
+    'chexpert_custom': ChexpertCustomDataset
 }
 
 

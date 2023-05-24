@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -103,7 +103,10 @@ class UBDiabeticRetinopathyDetectionDataset(base.BaseDataset):
       image = example['image']
       image = tf.image.convert_image_dtype(image, tf.float32)
       image = tf.image.resize(image, size=(512, 512), method='bilinear')
-
+      
+      # import pdb
+      # pdb.set_trace()
+      
       if self.decision_threshold == 'mild':
         highest_negative_class = 0
       elif self.decision_threshold == 'moderate':
@@ -117,7 +120,7 @@ class UBDiabeticRetinopathyDetectionDataset(base.BaseDataset):
       parsed_example = {
           'features': image,
           'labels': label,
-          'name': example['name'],
+          'name': example['name'], # this is label
       }
       return parsed_example
 

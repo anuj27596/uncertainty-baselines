@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ def _get_process_num_examples(builder, split, process_batch_size, process_index,
       process_index=process_index,
       process_count=process_count,
       drop_remainder=drop_remainder)
+  # breakpoint()
   num_examples = builder.info.splits[process_split].num_examples
 
   if drop_remainder:
@@ -204,7 +205,13 @@ def get_data(
     process_count = jax.process_count()
 
   dataset_builder = _get_dataset_builder(dataset, data_dir)
-
+  dataset_builder.download_and_prepare() # Karm
+  # try:
+  #   dataset_builder.download_and_prepare() # Karm
+  #   print("dataset_builder.download_and_prepare() executed!")
+  # except:
+  #   print("dataset_builder.download_and_prepare() skipped!")
+  
   if rng is not None:
     rng = jax.random.fold_in(rng, process_index)  # Derive RNG for this process.
 

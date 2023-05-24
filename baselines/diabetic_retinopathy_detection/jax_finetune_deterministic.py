@@ -194,7 +194,8 @@ def main(argv):
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      builder_config='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -216,7 +217,7 @@ def main(argv):
   # Please specify the desired shift (Country Shift or Severity Shift)
   # in the config.
   eval_iter_splits = vit_utils.init_evaluation_datasets(
-      use_train=config.eval_on_train,  # EDIT(anuj)
+      # use_train=config.eval_on_train,  # EDIT(anuj)
       use_validation=config.use_validation,
       use_test=config.use_test,
       dataset_names=dataset_names,

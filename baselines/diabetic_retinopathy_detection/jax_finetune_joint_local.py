@@ -117,14 +117,7 @@ def main(argv):
   # else:
   #   class_weights = None
 
-  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
-    class_weights = 0.5 * 35126 / jnp.array([28253, 6873])  # TODO(anuj): remove hardcode
-    if config.loss == 'softmax_xent':
-      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
-    else:
-      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
-  else:
-    base_loss_fn = getattr(train_utils, config.loss)
+  base_loss_fn = train_utils.LocalSpatialLoss(neg_mode='random') # Karm
 
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -185,7 +178,6 @@ def main(argv):
 
   write_note('Initializing preprocessing function...')
   # Same preprocessing function for training and evaluation
-  
   preproc_fn = preprocess_spec.parse(
       spec=config.pp_train, available_ops=preprocess_utils.all_ops())
 
@@ -195,7 +187,10 @@ def main(argv):
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      download_data=True, # Karm
+      builder_config=config.builder_config_ind) # Karm
+  
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -211,13 +206,37 @@ def main(argv):
   train_iter = input_utils.start_input_pipeline(
       train_ds, config.get('prefetch_to_device', 1))
 
+  rng, train_ood_ds_rng = jax.random.split(rng)
+  train_ood_ds_rng = jax.random.fold_in(train_ood_ds_rng, jax.process_index())
+  train_ood_base_dataset = ub.datasets.get(
+      dataset_names['ood_dataset'],
+      split=split_names['ood_validation_split'],
+      data_dir=config.get('data_dir'),
+    builder_config=config.builder_config_ood, # Karm
+      download_data = True) # Karm
+  
+  train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
+  train_ood_ds = input_utils.get_data(
+      dataset=train_ood_dataset_builder,
+      split=split_names['ood_validation_split'],
+      rng=train_ood_ds_rng,
+      process_batch_size=local_batch_size,
+      preprocess_fn=preproc_fn,
+      shuffle_buffer_size=config.shuffle_buffer_size,
+      prefetch_size=config.get('prefetch_to_host', 2),
+      data_dir=config.get('data_dir'))
+
+  # Start prefetching already.
+  train_ood_iter = input_utils.start_input_pipeline(
+      train_ood_ds, config.get('prefetch_to_device', 1))
+
+
   write_note('Initializing val dataset(s)...')
 
   # Load in-domain and OOD validation and/or test datasets.
   # Please specify the desired shift (Country Shift or Severity Shift)
   # in the config.
   eval_iter_splits = vit_utils.init_evaluation_datasets(
-      use_train=config.eval_on_train,  # EDIT(anuj)
       use_validation=config.use_validation,
       use_test=config.use_test,
       dataset_names=dataset_names,
@@ -246,7 +265,7 @@ def main(argv):
       total_steps, total_steps * batch_size / ntrain_img, steps_per_epoch)
 
   write_note('Initializing model...')
-  model_dict = vit_utils.initialize_model('simclr', config)  # EDIT(anuj)
+  model_dict = vit_utils.initialize_model('local_spatial', config)  # EDIT Karm
   model = model_dict['model']
 
   # We want all parameters to be created in host RAM, not on any device, they'll
@@ -277,16 +296,14 @@ def main(argv):
     num_params = sum(p.size for p in jax.tree_flatten(params_cpu)[0])
     parameter_overview.log_parameter_overview(params_cpu)
     writer.write_scalars(step=0, scalars={'num_params': num_params})
-
+  
+  
   @functools.partial(jax.pmap, axis_name='batch')
   def evaluation_fn(params, images, labels):
-    aug1, aug2 = images
-    logits, out1 = model.apply(
-        {'params': flax.core.freeze(params)}, aug1, train=False)
-    logits, out2 = model.apply(
-        {'params': flax.core.freeze(params)}, aug2, train=False)
-    projections = jnp.concatenate([out1['simclr_proj'], out2['simclr_proj']])
-    losses = base_loss_fn(projections=projections, reduction=False)  # EDIT(anuj)
+    logits, out = model.apply(
+        {'params': flax.core.freeze(params)}, images, train=False)
+    projections = out['local_spatial_proj']
+    losses = base_loss_fn(projections=projections, reduction=False) + train_utils.softmax_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj) + Karm
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -296,7 +313,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out2['pre_logits']], axis_name='batch')
+        logits, labels, out['pre_logits']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -309,7 +326,7 @@ def main(argv):
   opt_cpu = jax.jit(opt_def.create)(params_cpu)
 
   @functools.partial(jax.pmap, axis_name='batch', donate_argnums=(0,))
-  def update_fn(opt, lr, aug1, aug2, labels, rng):
+  def update_fn(opt, lr, images, labels, rng):
     """Update step."""
     measurements = {}
 
@@ -318,20 +335,46 @@ def main(argv):
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
     def loss_fn(params, images, labels):
-      aug1, aug2 = images
-      logits, out1 = model.apply(  # EDIT(anuj)
-          {'params': flax.core.freeze(params)}, aug1,
+      train_ind_imgs, train_ood_imgs = images
+      logits_ind, out_ind = model.apply(  # EDIT(anuj)
+          {'params': flax.core.freeze(params)}, train_ind_imgs,
           train=True, rngs={'dropout': rng_model_local})
-      logits, out2 = model.apply(  # EDIT(anuj)
-          {'params': flax.core.freeze(params)}, aug2,
+      logits_ood, out_ood = model.apply(  # EDIT(anuj)
+          {'params': flax.core.freeze(params)}, train_ood_imgs,
           train=True, rngs={'dropout': rng_model_local})
-      projections = jnp.concatenate([out1['simclr_proj'], out2['simclr_proj']])
-      return base_loss_fn(projections=projections)  # EDIT(anuj)
+      
+      projections = jnp.concatenate([out_ind['local_spatial_proj'], out_ood['local_spatial_proj']])
+      return base_loss_fn(projections=projections) +  train_utils.softmax_xent(logits=logits_ind, labels=labels) # EDIT(anuj) + Karm
+  
+    # def loss_fn(params, images, labels):
+    #   aug_1, aug_2, aug_ood_1, aug_ood_2 = images
+    #   logits_1, out_1 = model.apply(  # EDIT(anuj)
+    #       {'params': flax.core.freeze(params)}, aug_1,
+    #       train=True, rngs={'dropout': rng_model_local})
+    #   logits_2, out_2 = model.apply(  # EDIT(anuj)
+    #       {'params': flax.core.freeze(params)}, aug_2,
+    #       train=True, rngs={'dropout': rng_model_local})
+    #   _, out_ood_1 = model.apply(  # EDIT(anuj)
+    #       {'params': flax.core.freeze(params)}, aug_ood_1,
+    #       train=True, rngs={'dropout': rng_model_local})
+    #   _, out_ood_2 = model.apply(  # EDIT(anuj)
+    #       {'params': flax.core.freeze(params)}, aug_ood_2,
+    #       train=True, rngs={'dropout': rng_model_local})
+    #   projections = jnp.concatenate([  # EDIT(anuj)
+    #       out_1['simclr_proj'],
+    #       out_ood_1['simclr_proj'],
+    #       out_2['simclr_proj'],
+    #       out_ood_2['simclr_proj']])
+    #   loss = (
+    #       train_utils.simclr_loss(projections=projections)
+    #       + train_utils.softmax_xent(logits=logits_1, labels=labels)
+    #       + train_utils.softmax_xent(logits=logits_2, labels=labels))  # EDIT(anuj)
+    #   return loss  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
     l, g = train_utils.accumulate_gradient(
-        jax.value_and_grad(loss_fn), opt.target, (aug1, aug2), labels,
+        jax.value_and_grad(loss_fn), opt.target, images, labels,
         config.get('grad_accum_steps'))  # EDIT(anuj): do not accum_steps pls
     l, g = jax.lax.pmean((l, g), axis_name='batch')
 
@@ -426,11 +469,12 @@ def main(argv):
     write_note('Advancing iterators after resuming from a checkpoint...')
     lr_iter = itertools.islice(lr_iter, first_step, None)
     train_iter = itertools.islice(train_iter, first_step, None)
+    train_ood_iter = itertools.islice(train_ood_iter, first_step, None)
 
   # Using a python integer for step here, because opt.state.step is allocated
   # on TPU during replication.
-  for step, train_batch, lr_repl in zip(
-      range(first_step + 1, total_steps + 1), train_iter, lr_iter):
+  for step, train_batch, train_ood_batch, lr_repl in zip(
+      range(first_step + 1, total_steps + 1), train_iter, train_ood_iter, lr_iter):
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
@@ -439,8 +483,7 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            train_batch['image_aug_1'],
-            train_batch['image_aug_2'],
+            (train_batch['image'], train_ood_batch['image']), # Karm
             train_batch['labels'],
             rng=train_loop_rngs)
 
@@ -518,8 +561,7 @@ def main(argv):
 
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
-              evaluation_fn(
-                  opt_repl.target, (batch['image_aug_1'], batch['image_aug_2']), batch['labels']))
+                evaluation_fn(opt_repl.target, batch['image'], batch['labels']))
 
           # All results are a replicated array shaped as follows:
           # (local_devices, per_device_batch_size, elem_shape...)
