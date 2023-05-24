@@ -40,15 +40,18 @@ def get_config():
   config.output_dir = None
 
   # Fine-tuning dataset
-  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/pneumonia'
-  config.data_dir = 'gs://ue-usrl-anuj/data/pneumonia'
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
+  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'zp2cx'
+  config.distribution_shift = 'chxToch14' 
+  #chxToch14 - ID: ChexPert & OOD: Chest_xray14
+  #ch14Tochx - OOD: ChexPert & ID: Chest_xray14
+  
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -99,10 +102,10 @@ def get_config():
   config.pp_input_res = 256  # pylint: disable=invalid-name
   pp_common = f'|onehot({config.num_classes})|simclr_aug'
   config.pp_train = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
-  # 'pneumonia_preprocess(256)|onehot(2)'
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
+  # 'chest_xray_preprocess(256)|onehot(2)'
   config.pp_eval = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
   config.batch_size = 32  # using TPUv3-8

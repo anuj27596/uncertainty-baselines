@@ -30,8 +30,8 @@ import numpy as np
 import scipy
 
 import uncertainty_baselines as ub
-# import input_utils  # local file import from baselines.pneumonia
-import baselines.pneumonia.input_utils as input_utils  # anuj
+# import input_utils  # local file import from baselines.chest_xray
+import baselines.chest_xray.input_utils as input_utils  # anuj
 from . import eval_utils  # local file import
 from . import metric_utils  # local file import
 from . import results_storage_utils  # local file import
@@ -45,14 +45,14 @@ def get_dataset_and_split_names(dist_shift):
   dataset_names = {}
   split_names = {}
 
-  if dist_shift == 'zp2cx':
-    dataset_names['in_domain_dataset'] = 'zhang_pneumonia'
-    dataset_names['ood_dataset'] = 'chest_xray8'
-  elif dist_shift == 'cx2zp':
-    dataset_names['in_domain_dataset'] = 'chest_xray8'
-    dataset_names['ood_dataset'] = 'zhang_pneumonia'
+  if dist_shift == 'chxToch14':
+    dataset_names['in_domain_dataset'] = 'chexpert_custom'
+    dataset_names['ood_dataset'] = 'chest_xray14'
+  elif dist_shift == 'ch14Tochx':
+    dataset_names['in_domain_dataset'] = 'chest_xray14'
+    dataset_names['ood_dataset'] = 'chexpert_custom'
   else:
-    raise NotImplementedError(f'pneumonia distribution shift: {dist_shift}')
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
 
   split_names['train_split'] = 'train'
   split_names['in_domain_validation_split'] = 'validation'
@@ -377,12 +377,12 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   data_dir = config.get('data_dir')
   
   dist_shift = config.get('distribution_shift')
-  if dist_shift == 'zp2cx':
+  if dist_shift == 'chxToch14':
     builder_config = 'processed'
-  elif dist_shift == 'cx2zp':
+  elif dist_shift == 'ch14Tochx':
     builder_config = 'processed_swap'
   else:
-    raise NotImplementedError(f'pneumonia distribution shift: {dist_shift}')
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
 
   def get_dataset(dataset_name, split_name):
     base_dataset = ub.datasets.get(

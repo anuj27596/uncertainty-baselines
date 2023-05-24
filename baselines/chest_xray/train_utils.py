@@ -33,7 +33,7 @@ import jax.numpy as jnp
 import numpy as np
 
 # import checkpoint_utils  # local file import from baselines.jft  # anuj
-import baselines.pneumonia.checkpoint_utils as checkpoint_utils  # anuj
+import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # anuj
 
 # TODO(zmariet, dusenberrymw): create separate typing module.
 Params = checkpoint_utils.Params

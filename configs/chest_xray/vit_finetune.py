@@ -40,15 +40,15 @@ def get_config():
   config.output_dir = None
 
   # Fine-tuning dataset
-  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/pneumonia'
-  config.data_dir = 'gs://ue-usrl-anuj/data/pneumonia'
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
+  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'zp2cx'
+  config.distribution_shift = 'chxToch14'
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -67,8 +67,8 @@ def get_config():
 
   # Model Flags
 
-  # TODO(nband): fix issue with sigmoid loss.
-  config.num_classes = 2
+  # TODO(nband): fix issue with sigmoid loss
+  config.num_classes = 5
 
   # pre-trained model ckpt file
   # !!!  The below section should be modified per experiment
@@ -99,10 +99,10 @@ def get_config():
   config.pp_input_res = 256  # pylint: disable=invalid-name
   pp_common = f'|onehot({config.num_classes})'
   config.pp_train = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
-  # 'pneumonia_preprocess(256)|onehot(2)'
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
+  # 'chest_xray_preprocess(256)|onehot(2)'
   config.pp_eval = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
   config.batch_size = 128  # using TPUv3-8
@@ -112,7 +112,7 @@ def get_config():
   # Optimization
   config.optim_name = 'Momentum'
   config.optim = ml_collections.ConfigDict()
-  config.loss = 'softmax_xent'  # or 'sigmoid_xent'
+  config.loss = 'sigmoid_xent'  # or 'softmax_xent'
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.

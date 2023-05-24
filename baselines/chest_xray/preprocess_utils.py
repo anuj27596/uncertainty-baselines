@@ -92,7 +92,7 @@ class DiabeticRetinopathyPreprocess:
 
 
 @dataclasses.dataclass
-class PneumoniaPreprocess:
+class ChestXrayPreprocess:
   """Processes a retina image.
 
   Resizes and binarizes the labels according to a given decision threshold.

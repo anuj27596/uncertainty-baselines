@@ -43,18 +43,19 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-# import checkpoint_utils  # local file import from baselines.pneumonia  # EDIT(anuj)
-# import input_utils  # local file import from baselines.pneumonia  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.pneumonia  # EDIT(anuj)
-# import train_utils  # local file import from baselines.pneumonia  # EDIT(anuj)
+print(f"ub - {ub.__path__}")
+# import checkpoint_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import input_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import train_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.pneumonia.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.pneumonia.input_utils as input_utils  # EDIT(anuj)
-import baselines.pneumonia.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.pneumonia.train_utils as train_utils  # EDIT(anuj)
-from baselines.pneumonia.utils import results_storage_utils  # EDIT(anuj)
-from baselines.pneumonia.utils import vit_utils  # EDIT(anuj)
+import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # EDIT(Karm)
+import baselines.chest_xray.input_utils as input_utils  # EDIT(Karm)
+import baselines.chest_xray.preprocess_utils as preprocess_utils  # EDIT(Karm)
+import baselines.chest_xray.train_utils as train_utils  # EDIT(Karm)
+from baselines.chest_xray.utils import results_storage_utils  # EDIT(Karm)
+from baselines.chest_xray.utils import vit_utils  # EDIT(Karm)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -94,7 +95,7 @@ def main(argv):
 
   # Dataset Split Flags
   dist_shift = config.distribution_shift
-  print(f'Distribution Shift: pneumonia({dist_shift}).')
+  print(f'Distribution Shift: chest_xray({dist_shift}).')
   dataset_names, split_names = vit_utils.get_dataset_and_split_names(dist_shift)
 
   # LR / Optimization Flags
@@ -184,12 +185,12 @@ def main(argv):
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
-  if dist_shift == 'zp2cx':
+  if dist_shift == 'chxToch14':
     builder_config = 'processed'
-  elif dist_shift == 'cx2zp':
+  elif dist_shift == 'ch14Tochx':
     builder_config = 'processed_swap'
   else:
-    raise NotImplementedError(f'pneumonia distribution shift: {dist_shift}')
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
 
   ub.datasets.get(
       dataset_names['in_domain_dataset'],
