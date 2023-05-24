@@ -68,7 +68,9 @@ from uncertainty_baselines.datasets.test_utils import DatasetTest
 # pylint: enable=g-bad-import-order
 
 from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
+from uncertainty_baselines.datasets.chest_xray14 import ChestXray14Dataset  # karm
 from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
+from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset # Karm
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top

@@ -70,7 +70,7 @@ flags.DEFINE_boolean(
 flags.DEFINE_string('tpu', None,
                     'Unused. Name of the TPU. Only used if use_gpu is False.')
 FLAGS = flags.FLAGS
-
+DEBUG_STR = "======================================"
 
 def main(argv):
   del argv  # unused arg
@@ -186,11 +186,18 @@ def main(argv):
   write_note('Initializing train dataset...')
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
-  train_base_dataset = ub.datasets.get(
-      dataset_names['in_domain_dataset'],
+  
+  print(f"{DEBUG_STR} config.builder_config_ind - {config.builder_config_ind} {DEBUG_STR}")
+  train_base_dataset = ub.datasets.get( # returns: class UBDiabeticRetinopathyDetectionDataset(base.BaseDataset)
+      dataset_names['in_domain_dataset'], # 'ub_diabetic_retinopathy_detection'
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      download_data=True, # Karm
+      builder_config=config.builder_config_ind) # Karm
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
+  # train_dataset_builder.download_and_prepare() # Karm
+  # import ipdb
+  # ipdb.set_trace()
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
       split=split_names['train_split'],
@@ -202,16 +209,70 @@ def main(argv):
       data_dir=config.get('data_dir'))
 
   # Start prefetching already.
-  train_iter = input_utils.start_input_pipeline(
-      train_ds, config.get('prefetch_to_device', 1))
+  train_iter = input_utils.start_input_pipeline(train_ds, config.get('prefetch_to_device', 1))
+  
+  print(f"{DEBUG_STR} Start Train OOD Dataset setup {DEBUG_STR}")
+  
+  rng, train_ood_ds_rng = jax.random.split(rng)
+  train_ood_ds_rng = jax.random.fold_in(train_ood_ds_rng, jax.process_index())
+  train_ood_base_dataset = ub.datasets.get(
+      dataset_names['ood_dataset'],
+      split=split_names['ood_validation_split'],
+      data_dir=config.get('data_dir'),
+      builder_config=config.builder_config_ood, # Karm
+      download_data = True) # Karm
+  
+  train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
+  train_ood_ds = input_utils.get_data(
+      dataset=train_ood_dataset_builder,
+      split=split_names['ood_validation_split'],
+      rng=train_ood_ds_rng,
+      process_batch_size=local_batch_size,
+      preprocess_fn=preproc_fn,
+      shuffle_buffer_size=config.shuffle_buffer_size,
+      prefetch_size=config.get('prefetch_to_host', 2),
+      data_dir=config.get('data_dir'))
 
+  # Start prefetching already.
+  train_ood_iter = input_utils.start_input_pipeline(train_ood_ds, config.get('prefetch_to_device', 1))
+  
+  # write_note('Initializing OOD-test dataset...')
+  # rng, test_ds_rng_ood = jax.random.split(rng)
+  # test_ds_rng_ood = jax.random.fold_in(test_ds_rng_ood, jax.process_index())
+  
+  # # import pdb; pdb.set_trace();
+  # test_base_dataset_ood = ub.datasets.get( 
+  #     dataset_names['ood_dataset'],
+  #     split="test",
+  #     data_dir=config.get('data_dir'),
+  #     download_data=True, # Karm
+  #     builder_config='aptos/btgraham-300-left') # Karm
+  # test_dataset_builder_ood = test_base_dataset_ood._dataset_builder  # pylint: disable=protected-access
+
+  # # breakpoint()
+  # test_ds_ood = input_utils.get_data(
+  #     dataset=test_dataset_builder_ood,
+  #     split="test",
+  #     rng=test_ds_rng_ood,
+  #     process_batch_size=local_batch_size,
+  #     preprocess_fn=preproc_fn,
+  #     shuffle_buffer_size=config.shuffle_buffer_size,
+  #     prefetch_size=config.get('prefetch_to_host', 2),
+  #     data_dir=config.get('data_dir'))
+  print(f"{DEBUG_STR} END OOD Dataset setup {DEBUG_STR}")
+  
+  # Start prefetching already.
+  train_iter = input_utils.start_input_pipeline(train_ds, config.get('prefetch_to_device', 1))
   write_note('Initializing val dataset(s)...')
 
   # Load in-domain and OOD validation and/or test datasets.
   # Please specify the desired shift (Country Shift or Severity Shift)
   # in the config.
+
+  print(f"{DEBUG_STR} START Early validation set {DEBUG_STR}")
+  # import pdb; pdb.set_trace();
   eval_iter_splits = vit_utils.init_evaluation_datasets(
-      use_train=config.eval_on_train,  # EDIT(anuj)
+      # use_train=config.eval_on_train,  # EDIT(anuj)
       use_validation=config.use_validation,
       use_test=config.use_test,
       dataset_names=dataset_names,
@@ -220,6 +281,8 @@ def main(argv):
       preproc_fn=preproc_fn,
       batch_size_eval=batch_size_eval,
       local_batch_size_eval=local_batch_size_eval)
+  
+  print(f"{DEBUG_STR} END Early validation set {DEBUG_STR}")
 
   ntrain_img = input_utils.get_num_examples(
       train_dataset_builder,
@@ -309,10 +372,15 @@ def main(argv):
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
     def loss_fn(params, images, labels):
-      logits, out = model.apply(  # EDIT(anuj)
-          {'params': flax.core.freeze(params)}, images,
+      train_ind_imgs, train_ood_imgs = images
+      logits_ind, out_ind = model.apply(  # EDIT(anuj)
+          {'params': flax.core.freeze(params)}, train_ind_imgs,
           train=True, rngs={'dropout': rng_model_local})
-      projections = out['local_spatial_proj']
+      logits_ood, out_ood = model.apply(  # EDIT(anuj)
+          {'params': flax.core.freeze(params)}, train_ood_imgs,
+          train=True, rngs={'dropout': rng_model_local})
+      
+      projections = jnp.concatenate([out_ind['local_spatial_proj'], out_ood['local_spatial_proj']])
       return base_loss_fn(projections=projections)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
@@ -413,11 +481,12 @@ def main(argv):
     write_note('Advancing iterators after resuming from a checkpoint...')
     lr_iter = itertools.islice(lr_iter, first_step, None)
     train_iter = itertools.islice(train_iter, first_step, None)
+    train_ood_iter = itertools.islice(train_ood_iter, first_step, None) # Karm
 
   # Using a python integer for step here, because opt.state.step is allocated
   # on TPU during replication.
-  for step, train_batch, lr_repl in zip(
-      range(first_step + 1, total_steps + 1), train_iter, lr_iter):
+  for step, train_batch, train_ood_batch, lr_repl in zip(
+      range(first_step + 1, total_steps + 1), train_iter, train_ood_iter, lr_iter): # Karm
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
@@ -426,7 +495,7 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            train_batch['image'],
+            (train_batch['image'], train_ood_batch['image']), # Karm
             train_batch['labels'],
             rng=train_loop_rngs)
 

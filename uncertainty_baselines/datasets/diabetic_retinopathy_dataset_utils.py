@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2023 The Uncertainty Baselines Authors.
+# Copyright 2022 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -108,6 +108,10 @@ class UBDiabeticRetinopathyDetection(tfds.core.GeneratorBasedBuilder):
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
       UBDiabeticRetinopathyDetectionConfig(
+          name="btgraham-300-left",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
+      UBDiabeticRetinopathyDetectionConfig(
           name="blur-10-btgraham-300",
           description=_BLUR_BTGRAHAM_DESCRIPTION_PATTERN.format(300, 300 // 10),
           blur_constant=10,
@@ -195,28 +199,45 @@ class UBDiabeticRetinopathyDetection(tfds.core.GeneratorBasedBuilder):
     if csv_path:
       with tf.io.gfile.GFile(csv_path) as csv_f:
         reader = csv.DictReader(csv_f)
-        data = [(row["image"], int(row["level"]))
+        # data = [(row["image"], int(row["level"]))
+        #         for row in reader
+        #         if csv_usage is None or row["Usage"] == csv_usage]
+        data = [(row["image"], int(row["level"]), row["eye_label"]) # Karm
                 for row in reader
                 if csv_usage is None or row["Usage"] == csv_usage]
     else:
-      data = [(fname[:-5], -1)
+      # data = [(fname[:-5], -1)
+      #         for fname in tf.io.gfile.listdir(images_dir_path)
+      #         if fname.endswith(".jpeg")]
+      data = [(fname[:-5], -1, np.nan)
               for fname in tf.io.gfile.listdir(images_dir_path)
               if fname.endswith(".jpeg")]
 
     logging.info("Using BuilderConfig %s.", self.builder_config.name)
-
-    for name, label in data:
+    
+    for name, label, eye_label in data: # Karm
       image_filepath = "%s/%s.jpeg" % (images_dir_path, name)
       record = {
           "name": name,
-          "image": self._process_image(image_filepath),
-          "label": label,
+          # "image": self._process_image(image_filepath),
+          "image": self._process_image(image_filepath, eye_label), # Karm
+          "label": label
       }
       yield name, record
 
-  def _process_image(self, filepath):
+  def _process_image(self, filepath, eye_label): # Karm
+    
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
-      if self.builder_config.name.startswith("btgraham"):
+      if self.builder_config.name.endswith("left"): # Karm
+        return _btgraham_processing_left(  # pylint: disable=protected-access
+            image_fobj=image_fobj,
+            filepath=filepath,
+            target_pixels=self.builder_config.target_pixels,
+            blur_constant=30,
+            crop_to_radius=True,
+            eye_label = eye_label)
+        
+      elif self.builder_config.name.startswith("btgraham"):
         return _btgraham_processing(  # pylint: disable=protected-access
             image_fobj=image_fobj,
             filepath=filepath,
@@ -298,6 +319,55 @@ def _btgraham_processing(image_fobj,
   _, buff = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 72])
   return io.BytesIO(buff.tobytes())
 
+# Karm
+def _btgraham_processing_left(image_fobj,
+                         filepath,
+                         target_pixels,
+                         blur_constant,
+                         crop_to_radius=False,
+                         eye_label = np.nan): # karm
+  """Process an image as the winner of the 2015 Kaggle competition.
+
+  Args:
+    image_fobj: File object containing the original image.
+    filepath: Filepath of the image, for logging purposes only.
+    target_pixels: The number of target pixels for the radius of the image.
+    blur_constant: Constant used to vary the Kernel standard deviation in
+      smoothing the image with Gaussian blur.
+    crop_to_radius: If True, crop the borders of the image to remove gray areas.
+
+  Returns:
+    A file object.
+  """
+  cv2 = tfds.core.lazy_imports.cv2
+  # Decode image using OpenCV2.
+  image = cv2.imdecode(
+      np.frombuffer(image_fobj.read(), dtype=np.uint8), flags=3)
+  
+  
+  import matplotlib.pyplot as plt # Karm
+  # Process the image.
+  # flip the left eye image
+  image_name = filepath.split("/")[-1].split(".")[0] # Karm
+  if eye_label == "left": # Karm
+      # import pdb; pdb.set_trace()
+      # breakpoint()
+      output_dir = 'btgraham_processing_left_images_aptos'
+      plt.imsave(os.path.join(output_dir, f'{image_name}_original.png'), image)
+      image = tf.image.flip_left_right(image).numpy() # Karm
+      plt.imsave(os.path.join(output_dir, f'{image_name}_flipped.png'), image)
+       
+  image = _scale_radius_size(image, filepath, target_radius_size=target_pixels)
+  image = _subtract_local_average(
+      image, target_radius_size=target_pixels, blur_constant=blur_constant)
+  image = _mask_and_crop_to_radius(
+      image,
+      target_radius_size=target_pixels,
+      radius_mask_ratio=0.9,
+      crop_to_radius=crop_to_radius)
+  # Encode the image with quality=72 and store it in a BytesIO object.
+  _, buff = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 72])
+  return io.BytesIO(buff.tobytes())
 
 def _scale_radius_size(image, filepath, target_radius_size):
   """Scale the input image so that the radius of the eyeball is the given."""
