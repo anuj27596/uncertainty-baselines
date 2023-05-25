@@ -94,7 +94,7 @@ def main(argv):
 
   # Dataset Split Flags
   dist_shift = config.distribution_shift
-  print(f'Distribution Shift: chest_xray({dist_shift}).')
+  print(f'Distribution Shift: {dist_shift}.')
   dataset_names, split_names = vit_utils.get_dataset_and_split_names(dist_shift)
 
   # LR / Optimization Flags
@@ -116,6 +116,7 @@ def main(argv):
   #   class_weights = utils.get_diabetic_retinopathy_class_balance_weights()
   # else:
   #   class_weights = None
+
 
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -210,6 +211,29 @@ def main(argv):
   train_iter = input_utils.start_input_pipeline(
       train_ds, config.get('prefetch_to_device', 1))
 
+  rng, train_ood_ds_rng = jax.random.split(rng)
+  train_ood_ds_rng = jax.random.fold_in(train_ood_ds_rng, jax.process_index())
+  train_ood_base_dataset = ub.datasets.get(
+      dataset_names['ood_dataset'],
+      split=split_names['ood_validation_split'],
+      builder_config=f"{dataset_names['ood_dataset']}/{builder_config}",
+      data_dir=config.get('data_dir'))
+  train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
+  train_ood_ds = input_utils.get_data(
+      dataset=train_ood_dataset_builder,
+      split=split_names['ood_validation_split'],
+      rng=train_ood_ds_rng,
+      process_batch_size=local_batch_size,
+      preprocess_fn=preproc_fn,
+      shuffle_buffer_size=config.shuffle_buffer_size,
+      prefetch_size=config.get('prefetch_to_host', 2),
+      data_dir=config.get('data_dir'))
+
+  # Start prefetching already.
+  train_ood_iter = input_utils.start_input_pipeline(
+      train_ood_ds, config.get('prefetch_to_device', 1))
+
+
   write_note('Initializing val dataset(s)...')
 
   # Load in-domain and OOD validation and/or test datasets.
@@ -245,7 +269,7 @@ def main(argv):
       total_steps, total_steps * batch_size / ntrain_img, steps_per_epoch)
 
   write_note('Initializing model...')
-  model_dict = vit_utils.initialize_model('deterministic', config)
+  model_dict = vit_utils.initialize_model('dan', config)
   model = model_dict['model']
 
   # We want all parameters to be created in host RAM, not on any device, they'll
@@ -291,7 +315,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out['pre_logits']], axis_name='batch')
+        logits, labels, out['pre_logits'], out['domain_pred']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -313,10 +337,32 @@ def main(argv):
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
     def loss_fn(params, images, labels):
-      logits, _ = model.apply(
-          {'params': flax.core.freeze(params)}, images,
+      images_id, images_ood = images
+      logits, out_id = model.apply(
+          {'params': flax.core.freeze(params)}, images_id,
           train=True, rngs={'dropout': rng_model_local})
-      return train_utils.sigmoid_xent(logits=logits, labels=labels)  # EDIT(anuj)
+      _, out_ood = model.apply(
+          {'params': flax.core.freeze(params)}, images_ood,
+          train=True, rngs={'dropout': rng_model_local})
+
+      domain_pred = jnp.concatenate([
+          out_id['domain_pred'],
+          out_ood['domain_pred']])
+      domain_labels = jnp.concatenate([
+          jnp.zeros((*out_id['domain_pred'].shape[:-1], 1)),
+          jnp.ones((*out_ood['domain_pred'].shape[:-1], 1))])
+
+      domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
+
+      # NOTE(anuj): below gives jax tracer error
+      # domain_acc = jnp.mean((domain_pred >= 0).astype(int) == domain_labels)
+      # measurements['domain_loss'] = domain_loss
+      # measurements['domain_acc'] = domain_acc
+
+      loss = (
+          train_utils.sigmoid_xent(logits=logits, labels=labels)
+          + 0.1 * domain_loss)  # EDIT(anuj)
+      return loss
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -416,11 +462,12 @@ def main(argv):
     write_note('Advancing iterators after resuming from a checkpoint...')
     lr_iter = itertools.islice(lr_iter, first_step, None)
     train_iter = itertools.islice(train_iter, first_step, None)
+    train_ood_iter = itertools.islice(train_ood_iter, first_step, None)
 
   # Using a python integer for step here, because opt.state.step is allocated
   # on TPU during replication.
-  for step, train_batch, lr_repl in zip(
-      range(first_step + 1, total_steps + 1), train_iter, lr_iter):
+  for step, train_batch, train_ood_batch, lr_repl in zip(
+      range(first_step + 1, total_steps + 1), train_iter, train_ood_iter, lr_iter):
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
@@ -429,7 +476,10 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            train_batch['image'],
+            (
+              train_batch['image'],
+              train_ood_batch['image'],
+            ),
             train_batch['labels'],
             rng=train_loop_rngs)
 
@@ -499,11 +549,13 @@ def main(argv):
             'y_true': [],
             'y_pred': [],
             'logits': [],
+            'domain_pred': [],
             'y_pred_entropy': [],
         }
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = []
 
+        write_note(f'Evaluating on split: {eval_name}')
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
               evaluation_fn(
@@ -517,14 +569,15 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
+          logits, labels, pre_logits, domain_pred = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
-          probs = jax.nn.sigmoid(logits)  # EDIT(anuj)
+          probs = jax.nn.sigmoid(logits)
 
           labels = np.array(labels[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
+          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
           labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))  # EDIT(anuj)
 
           batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
@@ -532,6 +585,7 @@ def main(argv):
           results_arrs['y_true'].append(labels[:batch_trunc])
           results_arrs['y_pred'].append(probs[:batch_trunc])
           results_arrs['logits'].append(logits[:batch_trunc])
+          results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
           if config.only_eval:  # EDIT(anuj)
             pre_logits = np.array(pre_logits[0])
             pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
@@ -543,6 +597,7 @@ def main(argv):
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
+        results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy_from_logits(results_arrs['logits'])  # EDIT(anuj)
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = np.concatenate(results_arrs['pre_logits'], axis=0)
@@ -550,6 +605,9 @@ def main(argv):
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
         results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
+
+        domain_pred_mean = np.mean(results_arrs['domain_pred'] > 0)
+        results_arrs['domain_pred_recall'] = domain_pred_mean if 'ood' in eval_name else (1 - domain_pred_mean)
 
         all_eval_results[eval_name] = results_arrs
 
@@ -559,6 +617,9 @@ def main(argv):
           num_bins=15,
           return_per_pred_results=True
       )
+
+      for eval_name in eval_iter_splits.keys():
+        metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
 
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty
