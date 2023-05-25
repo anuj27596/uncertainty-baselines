@@ -526,11 +526,16 @@ def main(argv):
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
           labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))  # EDIT(anuj)
-          results_arrs['y_true'].append(labels)
-          results_arrs['y_pred'].append(probs)
-          results_arrs['logits'].append(logits)
+
+          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
+
+          results_arrs['y_true'].append(labels[:batch_trunc])
+          results_arrs['y_pred'].append(probs[:batch_trunc])
+          results_arrs['logits'].append(logits[:batch_trunc])
           if config.only_eval:  # EDIT(anuj)
-            results_arrs['pre_logits'].append(pre_logits)
+            pre_logits = np.array(pre_logits[0])
+            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
 
