@@ -232,7 +232,7 @@ class ChexpertCustomDataset(base.BaseDataset):
 
   def __init__(self,
                split: str,
-               builder_config: str = "chexpert/processed",
+               builder_config: str = "chexpert_custom/processed",
                shuffle_buffer_size: Optional[int] = None,
                num_parallel_parser_calls: int = 64,
                data_dir: Optional[str] = None,
@@ -279,7 +279,7 @@ class ChexpertCustomDataset(base.BaseDataset):
         download_data=download_data,
         drop_remainder=drop_remainder,
         cache=cache)
-    print(f"Building Chexpert OOD dataset")
+    print(f"Building ChexpertCustom OOD dataset")
     if not drop_remainder:
       print("Not dropping the remainder (i.e., not truncating last batch).")
 
