@@ -27,7 +27,7 @@ from typing import Dict, Union
 
 import tensorflow as tf
 import tensorflow.keras.backend as K
-import torch
+# import torch
 
 
 def get_pneumonia_class_balance_weights(
@@ -164,61 +164,61 @@ def get_weighted_binary_cross_entropy_keras(weights: Dict[int, float]):
   return weighted_cross_entropy_fn
 
 
-def get_weighted_binary_cross_entropy_torch(weights: Dict[int, float]):
-  """Return a function to calculate weighted binary xent with multi-hot labels.
+# def get_weighted_binary_cross_entropy_torch(weights: Dict[int, float]):
+#   """Return a function to calculate weighted binary xent with multi-hot labels.
 
-  Based on implementation from @menrfa
-  (https://stackoverflow.com/questions/46009619/
-    keras-weighted-binary-crossentropy)
+#   Based on implementation from @menrfa
+#   (https://stackoverflow.com/questions/46009619/
+#     keras-weighted-binary-crossentropy)
 
-  # Example
-  >>> y_true = torch.FloatTensor([1, 0, 0, 0, 0, 0])
-  >>> y_pred = torch.FloatTensor([0.6, 0.1, 0.1, 0.9, 0.1, 0.])
-  >>> weights = {
-  ...     0: 1.,
-  ...     1: 2.
-  ... }
+#   # Example
+#   >>> y_true = torch.FloatTensor([1, 0, 0, 0, 0, 0])
+#   >>> y_pred = torch.FloatTensor([0.6, 0.1, 0.1, 0.9, 0.1, 0.])
+#   >>> weights = {
+#   ...     0: 1.,
+#   ...     1: 2.
+#   ... }
 
-  # With weights
-  >>> loss_fn = get_weighted_binary_cross_entropy_torch(weights=weights)
-  >>> loss_fn(y_true, y_pred)
-  tensor(0.6067)
+#   # With weights
+#   >>> loss_fn = get_weighted_binary_cross_entropy_torch(weights=weights)
+#   >>> loss_fn(y_true, y_pred)
+#   tensor(0.6067)
 
-  # Without weights
-  >>> loss_fn = torch.nn.BCELoss()
-  >>> loss_fn(input=y_pred, target=y_true)
-  tensor(0.5216)
+#   # Without weights
+#   >>> loss_fn = torch.nn.BCELoss()
+#   >>> loss_fn(input=y_pred, target=y_true)
+#   tensor(0.5216)
 
-  Args:
-    weights: dict, set weights for respective labels, e.g., {
-          0: 1.
-          1: 8. } In this case, we aim to compensate for the true (1) label
-            occurring less in the training dataset than the false (0) label.
-            e.g. [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0]
+#   Args:
+#     weights: dict, set weights for respective labels, e.g., {
+#           0: 1.
+#           1: 8. } In this case, we aim to compensate for the true (1) label
+#             occurring less in the training dataset than the false (0) label.
+#             e.g. [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0]
 
-  Returns:
-    A function to calculate (weighted) binary cross entropy.
-  """
-  if 0 not in weights or 1 not in weights:
-    raise NotImplementedError
+#   Returns:
+#     A function to calculate (weighted) binary cross entropy.
+#   """
+#   if 0 not in weights or 1 not in weights:
+#     raise NotImplementedError
 
-  def weighted_cross_entropy_fn(y_true: torch.Tensor,
-                                y_pred: torch.Tensor,
-                                from_logits: bool = False):
-    assert y_true.dtype == torch.float32
-    assert y_pred.dtype == torch.float32
+#   def weighted_cross_entropy_fn(y_true: torch.Tensor,
+#                                 y_pred: torch.Tensor,
+#                                 from_logits: bool = False):
+#     assert y_true.dtype == torch.float32
+#     assert y_pred.dtype == torch.float32
 
-    # weight_1 = torch.as_tensor(weights[1], dtype=y_pred.dtype)
-    # weight_0 = torch.as_tensor(weights[0], dtype=y_pred.dtype)
-    weights_v = torch.where(y_true == 1, weights[1], weights[0])
-    if from_logits:
-      ce = torch.nn.BCEWithLogitsLoss(weight=weights_v, reduction='none')
-    else:
-      ce = torch.nn.BCELoss(weight=weights_v, reduction='none')
+#     # weight_1 = torch.as_tensor(weights[1], dtype=y_pred.dtype)
+#     # weight_0 = torch.as_tensor(weights[0], dtype=y_pred.dtype)
+#     weights_v = torch.where(y_true == 1, weights[1], weights[0])
+#     if from_logits:
+#       ce = torch.nn.BCEWithLogitsLoss(weight=weights_v, reduction='none')
+#     else:
+#       ce = torch.nn.BCELoss(weight=weights_v, reduction='none')
 
-    return torch.mean(ce(input=y_pred, target=y_true))
+#     return torch.mean(ce(input=y_pred, target=y_true))
 
-  return weighted_cross_entropy_fn
+#   return weighted_cross_entropy_fn
 
 
 def get_pneumonia_loss_fn(class_reweight_mode: Union[str, None],
