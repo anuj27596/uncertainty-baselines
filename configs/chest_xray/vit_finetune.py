@@ -97,7 +97,7 @@ def get_config():
 
   # Input resolution of each retina image. (Default: 256)
   config.pp_input_res = 256  # pylint: disable=invalid-name
-  pp_common = f'|onehot({config.num_classes})'
+  pp_common = f''
   config.pp_train = (
       f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
   # 'chest_xray_preprocess(256)|onehot(2)'
@@ -105,7 +105,7 @@ def get_config():
       f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 128  # using TPUv3-8
+  config.batch_size = 64  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
@@ -131,18 +131,18 @@ def get_config():
   config.only_eval = False  # Disables training, only evaluates the model
   config.eval_on_train = False  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
-  config.use_test = True  # Whether to use a test split
+  config.use_test = False  # Whether to use a test split
 
   # Step Counts
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (5400, 270)
+  config.total_and_warmup_steps = (5490, 275)
 
   config.log_training_steps = 50
-  config.log_eval_steps = 540
+  config.log_eval_steps = 549
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 540
+  config.checkpoint_steps = 549
   config.checkpoint_timeout = 1
 
   config.args = {}

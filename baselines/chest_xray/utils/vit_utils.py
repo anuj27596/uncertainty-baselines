@@ -462,3 +462,7 @@ def entropy(pk, qk=None, base=None, axis=0):
   if base is not None:
     s /= np.log(base)
   return s
+
+
+def entropy_from_logits(logits):  # DEF(anuj)
+  return np.log1p(np.exp(-logits)) + logits / (1 + np.exp(logits))

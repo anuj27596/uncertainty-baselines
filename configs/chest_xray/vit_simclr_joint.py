@@ -97,7 +97,7 @@ def get_config():
 
   # Input resolution of each retina image. (Default: 256)
   config.pp_input_res = 256  # pylint: disable=invalid-name
-  pp_common = f'|onehot({config.num_classes})|simclr_aug'
+  pp_common = f'|simclr_aug'
   config.pp_train = (
       f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
   # 'pneumonia_preprocess(256)|onehot(2)'
