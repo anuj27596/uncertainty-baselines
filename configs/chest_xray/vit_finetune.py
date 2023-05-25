@@ -137,7 +137,7 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (5490, 275)
+  config.total_and_warmup_steps = (10_000, 275)
 
   config.log_training_steps = 50
   config.log_eval_steps = 549

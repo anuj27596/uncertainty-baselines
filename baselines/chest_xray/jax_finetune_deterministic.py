@@ -549,7 +549,8 @@ def main(argv):
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = eval_steps * batch_size_eval
+        # import pdb; pdb.set_trace()
+        results_arrs['dataset_size'] = results_arrs['y_true'].shape[0] # eval_steps * batch_size_eval = 256 while results_arrs['y_true'].shape[0] = 234
 
         all_eval_results[eval_name] = results_arrs
 
