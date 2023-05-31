@@ -1067,7 +1067,7 @@ def compute_dataset_eval_metrics(
         average_precision_score(y_true[:, i], y_pred[:, i])
         for i in range(num_classes)], axis=0)
   eval_metrics[f'{dataset_key}/accuracy'] = np.mean([
-        accuracy_score(y_true=y_true, y_pred=(y_pred > 0.5))
+        accuracy_score(y_true=y_true[:, i], y_pred=(y_pred[:, i] > 0.5))
         for i in range(num_classes)], axis=0)
 
   # Uncertainty metrics

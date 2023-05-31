@@ -196,6 +196,15 @@ def initialize_dan_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_dan_ens_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan_ens(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -235,6 +244,7 @@ VIT_MODEL_INIT_MAP = {
     'simclr': initialize_simclr_model,  # EDIT(anuj)
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
     'dan': initialize_dan_model,  # EDIT(anuj)
+    'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
 }
 
 
