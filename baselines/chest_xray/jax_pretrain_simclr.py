@@ -186,29 +186,24 @@ def main(argv):
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
   if dist_shift == 'chxToch14':
-    builder_config = 'processed'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  elif dist_shift == 'chxfToch14':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
   elif dist_shift == 'ch14Tochx':
-    builder_config = 'processed_swap'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed_swap'
+        for d in ('in_domain_dataset', 'ood_dataset')}
   else:
     raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
-
-  ub.datasets.get(
-      dataset_names['in_domain_dataset'],
-      split='test',
-      download_data=True,
-      builder_config=f"{dataset_names['in_domain_dataset']}/{builder_config}",
-      data_dir=config.get('data_dir')).load(batch_size=local_batch_size)
-  ub.datasets.get(
-      dataset_names['ood_dataset'],
-      split='test',
-      download_data=True,
-      builder_config=f"{dataset_names['ood_dataset']}/{builder_config}",
-      data_dir=config.get('data_dir')).load(batch_size=local_batch_size)
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      builder_config=f"{dataset_names['in_domain_dataset']}/{builder_config}",
+      builder_config=builder_config['in_domain_dataset'],
       data_dir=config.get('data_dir'))
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
@@ -230,7 +225,7 @@ def main(argv):
   train_ood_base_dataset = ub.datasets.get(
       dataset_names['ood_dataset'],
       split=split_names['ood_validation_split'],
-      builder_config=f"{dataset_names['ood_dataset']}/{builder_config}",
+      builder_config=builder_config['ood_dataset'],
       data_dir=config.get('data_dir'))
   train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ood_ds = input_utils.get_data(
@@ -581,21 +576,21 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, _ = batch_metric_args
-          logits = np.array(logits[0])
-          probs = jax.nn.softmax(logits)
+          # logits, labels, _ = batch_metric_args
+          # logits = np.array(logits[0])
+          # probs = jax.nn.softmax(logits)
 
-          # From one-hot to integer labels.
-          int_labels = np.argmax(np.array(labels[0]), axis=-1)
+          # # From one-hot to integer labels.
+          # int_labels = np.argmax(np.array(labels[0]), axis=-1)
 
-          probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          int_labels = int_labels.flatten()
-          y_pred = probs[:, 1]
-          results_arrs['y_true'].append(int_labels)
-          results_arrs['y_pred'].append(y_pred)
+          # probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
+          # int_labels = int_labels.flatten()
+          # y_pred = probs[:, 1]
+          # results_arrs['y_true'].append(int_labels)
+          # results_arrs['y_pred'].append(y_pred)
 
-          # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs)
+          # # Entropy is computed at the per-epoch level (see below).
+          # results_arrs['y_pred_entropy'].append(probs)
 
           eval_step_loss += batch_losses.mean(axis=-1) * batch_n
           eval_step_n += batch_n
@@ -603,35 +598,29 @@ def main(argv):
         eval_step_loss = eval_step_loss.sum() / eval_step_n.sum()  # EDIT(anuj)
         eval_losses.append((eval_name, eval_step_loss))
 
-        results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
-        results_arrs['y_pred'] = np.concatenate(
-            results_arrs['y_pred'], axis=0).astype('float64')
-        results_arrs['y_pred_entropy'] = vit_utils.entropy(
-            np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
+        # results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
+        # results_arrs['y_pred'] = np.concatenate(
+        #     results_arrs['y_pred'], axis=0).astype('float64')
+        # results_arrs['y_pred_entropy'] = vit_utils.entropy(
+        #     np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
 
-        time_elapsed = time.time() - start_time
-        results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = eval_steps * batch_size_eval
+        # time_elapsed = time.time() - start_time
+        # results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
+        # results_arrs['dataset_size'] = eval_steps * batch_size_eval
 
-        all_eval_results[eval_name] = results_arrs
+        # all_eval_results[eval_name] = results_arrs
 
-      per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
-          dataset_split_to_containers=all_eval_results,
-          is_deterministic=True,
-          num_bins=15,
-          return_per_pred_results=True
-      )
-      for name, loss in eval_losses:  # EDIT(anuj)
-        metrics_results[name][f'{name}/loss'] = loss
-
-      # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
-      # dataset. Flatten this dict so we can pass to the writer and remove empty
-      # entries.
+      # per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
+      #     dataset_split_to_containers=all_eval_results,
+      #     is_deterministic=True,
+      #     num_bins=15,
+      #     return_per_pred_results=True
+      # )
+      
       flattened_metric_results = {}
-      for dic in metrics_results.values():
-        for key, value in dic.items():
-          if value is not None:
-            flattened_metric_results[key] = value
+      for name, loss in eval_losses:  # EDIT(anuj)
+        flattened_metric_results[f'{name}/loss'] = loss
+
       writer.write_scalars(step, flattened_metric_results)
 
       # Optionally log to wandb
@@ -639,8 +628,8 @@ def main(argv):
         wandb.log(metrics_results, step=step)
 
       # Save per-prediction metrics
-      results_storage_utils.save_per_prediction_results(
-          output_dir, step, per_pred_results, verbose=False)
+      # results_storage_utils.save_per_prediction_results(
+      #     output_dir, step, per_pred_results, verbose=False)
       chrono.resume()
 
     # End of step.

@@ -111,6 +111,10 @@ class ChexpertCustom(tfds.core.GeneratorBasedBuilder):
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
       ChexpertCustomConfig(
+          name="frontal",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
+      ChexpertCustomConfig(
           name="processed_swap",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
@@ -195,9 +199,9 @@ class ChexpertCustom(tfds.core.GeneratorBasedBuilder):
       
       labels = df.iloc[:,2:].apply(lambda x: list(x), axis=1) # Karm Extract lables of size _NUM_CLASSES
       data = [(idx, lbls) for idx, s, lbls in zip(df["id"], df["split"], labels) if s in split] # Karm
-    #   data = [(idx, int(pneumonia))
-    #           for idx, pneumonia, s in df[['id', 'pneumonia', 'split']].iloc
-    #           if s in split]
+
+      if self.builder_config.name.startswith('frontal'):
+        data = [(idx, lbls) for idx, lbls in data if idx.endswith('frontal.jpg')]
 
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
@@ -216,7 +220,8 @@ class ChexpertCustom(tfds.core.GeneratorBasedBuilder):
 
   def _process_image(self, filepath):
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
-      if self.builder_config.name.startswith("processed"):
+      if self.builder_config.name.startswith("processed") \
+          or self.builder_config.name.startswith("frontal"):
         return _pneumonia_processing(
             image_fobj=image_fobj,
             filepath=filepath,

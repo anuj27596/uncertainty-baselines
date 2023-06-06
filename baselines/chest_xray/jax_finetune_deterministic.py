@@ -184,16 +184,24 @@ def main(argv):
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
   if dist_shift == 'chxToch14':
-    builder_config = 'processed'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  elif dist_shift == 'chxfToch14':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
   elif dist_shift == 'ch14Tochx':
-    builder_config = 'processed_swap'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed_swap'
+        for d in ('in_domain_dataset', 'ood_dataset')}
   else:
     raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      builder_config=f"{dataset_names['in_domain_dataset']}/{builder_config}",
+      builder_config=builder_config['in_domain_dataset'],
       data_dir=config.get('data_dir'))
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(

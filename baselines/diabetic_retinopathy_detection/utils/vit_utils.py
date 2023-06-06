@@ -417,7 +417,8 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   if use_train:  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['train_split'])
+        split_name=split_names['train_split'], 
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
