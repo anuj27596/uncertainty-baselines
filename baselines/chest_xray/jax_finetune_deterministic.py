@@ -43,18 +43,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-# import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import input_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import train_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import checkpoint_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import input_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import train_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
+import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.chest_xray.input_utils as input_utils  # EDIT(anuj)
+import baselines.chest_xray.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.chest_xray.train_utils as train_utils  # EDIT(anuj)
+from baselines.chest_xray.utils import results_storage_utils  # EDIT(anuj)
+from baselines.chest_xray.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -94,7 +94,7 @@ def main(argv):
 
   # Dataset Split Flags
   dist_shift = config.distribution_shift
-  print(f'Distribution Shift: {dist_shift}.')
+  print(f'Distribution Shift: chest_xray({dist_shift}).')
   dataset_names, split_names = vit_utils.get_dataset_and_split_names(dist_shift)
 
   # LR / Optimization Flags
@@ -116,15 +116,6 @@ def main(argv):
   #   class_weights = utils.get_diabetic_retinopathy_class_balance_weights()
   # else:
   #   class_weights = None
-
-  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
-    class_weights = 0.5 * 35126 / jnp.array([28253, 6873])  # TODO(anuj): remove hardcode
-    if config.loss == 'softmax_xent':
-      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
-    else:
-      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
-  else:
-    base_loss_fn = getattr(train_utils, config.loss)
 
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -191,11 +182,27 @@ def main(argv):
   write_note('Initializing train dataset...')
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
+
+  if dist_shift == 'chxToch14':
+    builder_config = {
+        d: f'{dataset_names[d]}/processed'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  elif dist_shift == 'chxfToch14':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  elif dist_shift == 'ch14Tochx':
+    builder_config = {
+        d: f'{dataset_names[d]}/processed_swap'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  else:
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'),
-      builder_config='ub_diabetic_retinopathy_detection/btgraham-300') # Karm
+      builder_config=builder_config['in_domain_dataset'],
+      data_dir=config.get('data_dir'))
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -282,7 +289,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = base_loss_fn(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
+    losses = train_utils.sigmoid_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -317,7 +324,7 @@ def main(argv):
       logits, _ = model.apply(
           {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
+      return train_utils.sigmoid_xent(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -499,6 +506,7 @@ def main(argv):
         results_arrs = {
             'y_true': [],
             'y_pred': [],
+            'logits': [],
             'y_pred_entropy': [],
         }
         if config.only_eval:  # EDIT(anuj)
@@ -519,33 +527,37 @@ def main(argv):
           # Here we parse batch_metric_args to compute uncertainty metrics.
           logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
-          probs = jax.nn.softmax(logits)
+          probs = jax.nn.sigmoid(logits)  # EDIT(anuj)
 
-          # From one-hot to integer labels.
-          int_labels = np.argmax(np.array(labels[0]), axis=-1)
+          labels = np.array(labels[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          int_labels = int_labels.flatten()
-          y_pred = probs[:, 1]
-          results_arrs['y_true'].append(int_labels)
-          results_arrs['y_pred'].append(y_pred)
+          logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
+          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))  # EDIT(anuj)
+
+          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
+
+          results_arrs['y_true'].append(labels[:batch_trunc])
+          results_arrs['y_pred'].append(probs[:batch_trunc])
+          results_arrs['logits'].append(logits[:batch_trunc])
           if config.only_eval:  # EDIT(anuj)
-            results_arrs['pre_logits'].append(pre_logits)
+            pre_logits = np.array(pre_logits[0])
+            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs)
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
-        results_arrs['y_pred_entropy'] = vit_utils.entropy(
-            np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
+        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
+        results_arrs['y_pred_entropy'] = vit_utils.entropy_from_logits(results_arrs['logits'])  # EDIT(anuj)
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = np.concatenate(results_arrs['pre_logits'], axis=0)
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = eval_steps * batch_size_eval
+        results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
 
         all_eval_results[eval_name] = results_arrs
 

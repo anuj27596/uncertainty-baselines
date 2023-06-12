@@ -30,8 +30,8 @@ import numpy as np
 import scipy
 
 import uncertainty_baselines as ub
-# import input_utils  # local file import from baselines.diabetic_retinopathy_detection
-import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # anuj
+# import input_utils  # local file import from baselines.chest_xray
+import baselines.chest_xray.input_utils as input_utils  # anuj
 from . import eval_utils  # local file import
 from . import metric_utils  # local file import
 from . import results_storage_utils  # local file import
@@ -45,26 +45,20 @@ def get_dataset_and_split_names(dist_shift):
   dataset_names = {}
   split_names = {}
 
-  if dist_shift == 'aptos':
-    dataset_names['in_domain_dataset'] = 'ub_diabetic_retinopathy_detection'
-    dataset_names['ood_dataset'] = 'aptos'
-    split_names['train_split'] = 'train'
-    split_names['in_domain_validation_split'] = 'validation'
-    split_names['ood_validation_split'] = 'validation'
-    split_names['in_domain_test_split'] = 'test'
-    split_names['ood_test_split'] = 'test'
-  elif dist_shift == 'severity':
-    dataset_names[
-        'in_domain_dataset'] = 'diabetic_retinopathy_severity_shift_moderate'
-    dataset_names[
-        'ood_dataset'] = 'diabetic_retinopathy_severity_shift_moderate'
-    split_names['train_split'] = 'train'
-    split_names['in_domain_validation_split'] = 'in_domain_validation'
-    split_names['ood_validation_split'] = 'ood_validation'
-    split_names['in_domain_test_split'] = 'in_domain_test'
-    split_names['ood_test_split'] = 'ood_test'
+  if dist_shift in ('chxToch14', 'chxfToch14'):
+    dataset_names['in_domain_dataset'] = 'chexpert_custom'
+    dataset_names['ood_dataset'] = 'chest_xray14'
+  elif dist_shift == 'ch14Tochx':
+    dataset_names['in_domain_dataset'] = 'chest_xray14'
+    dataset_names['ood_dataset'] = 'chexpert_custom'
   else:
-    raise NotImplementedError
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+
+  split_names['train_split'] = 'train'
+  split_names['in_domain_validation_split'] = 'validation'
+  split_names['ood_validation_split'] = 'validation'
+  split_names['in_domain_test_split'] = 'test'
+  split_names['ood_test_split'] = 'test'
 
   return dataset_names, split_names
 
@@ -401,9 +395,29 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
                              local_batch_size_eval):
   """Sets up evaluation datasets."""
   data_dir = config.get('data_dir')
-  def get_dataset(dataset_name, split_name, builder_config): # Karm
+  
+  dist_shift = config.get('distribution_shift')
+  if dist_shift == 'chxToch14':
+    builder_config = {
+        d: f'{dataset_names[d]}/processed'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  elif dist_shift == 'chxfToch14':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  elif dist_shift == 'ch14Tochx':
+    builder_config = {
+        d: f'{dataset_names[d]}/processed_swap'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  else:
+    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+
+  def get_dataset(dataset_name, split_name, builder_config):
     base_dataset = ub.datasets.get(
-        dataset_name, split=split_name, data_dir=data_dir, download_data=True, builder_config = builder_config) # Karm
+        dataset_name,
+        split=split_name,
+        builder_config=builder_config,
+        data_dir=data_dir)
     dataset_builder = base_dataset._dataset_builder  # pylint:disable=protected-access
     return get_eval_split(
         dataset_builder,
@@ -417,30 +431,26 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   if use_train:  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['train_split'], 
-        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
+        builder_config=builder_config['in_domain_dataset'],
+        split_name=split_names['train_split'])
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['in_domain_validation_split'], 
-        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
-        # builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm: This will not do anything
-    datasets['ood_validation'] = get_dataset(
+        builder_config=builder_config['in_domain_dataset'],
+        split_name=split_names['in_domain_validation_split'])
+    datasets['ood_validation'] = get_dataset(  # EDIT(anuj): very big, and dont need to evaluate
         dataset_name=dataset_names['ood_dataset'],
-        split_name=split_names['ood_validation_split'],
-        builder_config = "aptos/btgraham-300")
-        # builder_config = "aptos/btgraham-300-left") # Karm
+        builder_config=builder_config['ood_dataset'],
+        split_name=split_names['ood_validation_split'])
   if use_test:
     datasets['in_domain_test'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['in_domain_test_split'],
-        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
-        # builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm
+        builder_config=builder_config['in_domain_dataset'],
+        split_name=split_names['in_domain_test_split'])
     datasets['ood_test'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
-        split_name=split_names['ood_test_split'],
-        builder_config = "aptos/btgraham-300")
-        # builder_config = "aptos/btgraham-300-left")
+        builder_config=builder_config['ood_dataset'],
+        split_name=split_names['ood_test_split'])
 
   return datasets
 
@@ -485,3 +495,7 @@ def entropy(pk, qk=None, base=None, axis=0):
   if base is not None:
     s /= np.log(base)
   return s
+
+
+def entropy_from_logits(logits):  # DEF(anuj)
+  return np.log1p(np.exp(-logits)) + logits / (1 + np.exp(logits))
