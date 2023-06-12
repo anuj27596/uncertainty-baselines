@@ -202,6 +202,15 @@ def initialize_dan_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_dan_ens_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan_ens(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -241,6 +250,7 @@ VIT_MODEL_INIT_MAP = {
     'simclr': initialize_simclr_model,  # EDIT(anuj)
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
     'dan': initialize_dan_model,  # EDIT(anuj)
+    'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
 }
 
 
@@ -407,25 +417,30 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   if use_train:  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
-        split_name=split_names['train_split'])
+        split_name=split_names['train_split'], 
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
         split_name=split_names['in_domain_validation_split'], 
-        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm: This will not do anything
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
+        # builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm: This will not do anything
     datasets['ood_validation'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
         split_name=split_names['ood_validation_split'],
-        builder_config = "aptos/btgraham-300-left") # Karm
+        builder_config = "aptos/btgraham-300")
+        # builder_config = "aptos/btgraham-300-left") # Karm
   if use_test:
     datasets['in_domain_test'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
         split_name=split_names['in_domain_test_split'],
-        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm
+        builder_config ='ub_diabetic_retinopathy_detection/btgraham-300')
+        # builder_config ='ub_diabetic_retinopathy_detection/btgraham-300-left') # Karm
     datasets['ood_test'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
         split_name=split_names['ood_test_split'],
-        builder_config = "aptos/btgraham-300-left")
+        builder_config = "aptos/btgraham-300")
+        # builder_config = "aptos/btgraham-300-left")
 
   return datasets
 

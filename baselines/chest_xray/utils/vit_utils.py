@@ -45,7 +45,7 @@ def get_dataset_and_split_names(dist_shift):
   dataset_names = {}
   split_names = {}
 
-  if dist_shift == 'chxToch14':
+  if dist_shift in ('chxToch14', 'chxfToch14'):
     dataset_names['in_domain_dataset'] = 'chexpert_custom'
     dataset_names['ood_dataset'] = 'chest_xray14'
   elif dist_shift == 'ch14Tochx':
@@ -187,6 +187,24 @@ def initialize_local_spatial_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_dan_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
+def initialize_dan_ens_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan_ens(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -225,6 +243,8 @@ VIT_MODEL_INIT_MAP = {
     'batchensemble': initialize_batchensemble_model,
     'simclr': initialize_simclr_model,  # EDIT(anuj)
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
+    'dan': initialize_dan_model,  # EDIT(anuj)
+    'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
 }
 
 
@@ -378,17 +398,25 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   
   dist_shift = config.get('distribution_shift')
   if dist_shift == 'chxToch14':
-    builder_config = 'processed'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed'
+        for d in ('in_domain_dataset', 'ood_dataset')}
+  elif dist_shift == 'chxfToch14':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
   elif dist_shift == 'ch14Tochx':
-    builder_config = 'processed_swap'
+    builder_config = {
+        d: f'{dataset_names[d]}/processed_swap'
+        for d in ('in_domain_dataset', 'ood_dataset')}
   else:
     raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
 
-  def get_dataset(dataset_name, split_name):
+  def get_dataset(dataset_name, split_name, builder_config):
     base_dataset = ub.datasets.get(
         dataset_name,
         split=split_name,
-        builder_config=f'{dataset_name}/{builder_config}',
+        builder_config=builder_config,
         data_dir=data_dir)
     dataset_builder = base_dataset._dataset_builder  # pylint:disable=protected-access
     return get_eval_split(
@@ -403,20 +431,25 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   if use_train:  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
+        builder_config=builder_config['in_domain_dataset'],
         split_name=split_names['train_split'])
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
+        builder_config=builder_config['in_domain_dataset'],
         split_name=split_names['in_domain_validation_split'])
     datasets['ood_validation'] = get_dataset(  # EDIT(anuj): very big, and dont need to evaluate
         dataset_name=dataset_names['ood_dataset'],
+        builder_config=builder_config['ood_dataset'],
         split_name=split_names['ood_validation_split'])
   if use_test:
     datasets['in_domain_test'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
+        builder_config=builder_config['in_domain_dataset'],
         split_name=split_names['in_domain_test_split'])
     datasets['ood_test'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
+        builder_config=builder_config['ood_dataset'],
         split_name=split_names['ood_test_split'])
 
   return datasets
