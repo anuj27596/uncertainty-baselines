@@ -49,12 +49,12 @@ import uncertainty_baselines as ub
 # import train_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.chest_xray.input_utils as input_utils  # EDIT(anuj)
-import baselines.chest_xray.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.chest_xray.train_utils as train_utils  # EDIT(anuj)
-from baselines.chest_xray.utils import results_storage_utils  # EDIT(anuj)
-from baselines.chest_xray.utils import vit_utils  # EDIT(anuj)
+import baselines.cancer.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.cancer.input_utils as input_utils  # EDIT(anuj)
+import baselines.cancer.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.cancer.train_utils as train_utils  # EDIT(anuj)
+from baselines.cancer.utils import results_storage_utils  # EDIT(anuj)
+from baselines.cancer.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -183,26 +183,17 @@ def main(argv):
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
-  if dist_shift == 'chxToch14':
-    builder_config = {
-        d: f'{dataset_names[d]}/processed'
-        for d in ('in_domain_dataset', 'ood_dataset')}
-  elif dist_shift == 'chxfToch14':
-    builder_config = {
-        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
-  elif dist_shift == 'ch14Tochx':
-    builder_config = {
-        d: f'{dataset_names[d]}/processed_swap'
-        for d in ('in_domain_dataset', 'ood_dataset')}
-  else:
-    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+  builder_config = {
+      d: f'{dataset_names[d]}/processed'
+      for d in ('in_domain_dataset')}
+      # for d in ('in_domain_dataset', 'ood_dataset')}
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
       builder_config=builder_config['in_domain_dataset'],
       data_dir=config.get('data_dir'))
+  
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,

@@ -44,15 +44,8 @@ def get_dataset_and_split_names(dist_shift):
   """Gets dataset and split names."""
   dataset_names = {}
   split_names = {}
-
-  if dist_shift in ('chxToch14', 'chxfToch14'):
-    dataset_names['in_domain_dataset'] = 'chexpert_custom'
-    dataset_names['ood_dataset'] = 'chest_xray14'
-  elif dist_shift == 'ch14Tochx':
-    dataset_names['in_domain_dataset'] = 'chest_xray14'
-    dataset_names['ood_dataset'] = 'chexpert_custom'
-  else:
-    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+  dataset_names['in_domain_dataset'] = 'cancer_cam16_embd'
+  dataset_names['ood_dataset'] = ''
 
   split_names['train_split'] = 'train'
   split_names['in_domain_validation_split'] = 'validation'

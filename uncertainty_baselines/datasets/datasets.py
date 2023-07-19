@@ -60,6 +60,7 @@ from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
 from uncertainty_baselines.datasets.chest_xray14 import ChestXray14Dataset  # karm
 from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
 from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset  # Karm
+from uncertainty_baselines.datasets.cancer_cam16_embd import CancerCam16EmbdDataset
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -134,7 +135,8 @@ DATASETS = {
     'chest_xray8': ChestXray8Dataset,  # anuj
     'chest_xray14': ChestXray14Dataset,  # anuj
     'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj,
-    'chexpert_custom': ChexpertCustomDataset
+    'chexpert_custom': ChexpertCustomDataset,
+    'cancer_cam16_embd': CancerCam16EmbdDataset
 }
 
 
