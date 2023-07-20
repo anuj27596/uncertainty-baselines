@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 import sys
 sys.path.append("/data3/home/karmpatel/ub_karm/uncertainty-baselines")
@@ -16,7 +16,7 @@ data_dir = "/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/"
 train_base_dataset = ub.datasets.get(
   dataset_name,
   "train",
-  builder_config=f'{dataset_name}/processed',
+  builder_config=f'{dataset_name}/processed_swap',
   data_dir=data_dir)
 
 train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access

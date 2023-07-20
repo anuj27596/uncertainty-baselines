@@ -31,7 +31,7 @@ import scipy
 
 import uncertainty_baselines as ub
 # import input_utils  # local file import from baselines.chest_xray
-import baselines.chest_xray.input_utils as input_utils  # anuj
+import baselines.cancer.input_utils as input_utils  # anuj
 from . import eval_utils  # local file import
 from . import metric_utils  # local file import
 from . import results_storage_utils  # local file import
@@ -45,7 +45,7 @@ def get_dataset_and_split_names(dist_shift):
   dataset_names = {}
   split_names = {}
   dataset_names['in_domain_dataset'] = 'cancer_cam16_embd'
-  dataset_names['ood_dataset'] = ''
+  dataset_names['ood_dataset'] = 'cancer_cam16_embd'
 
   split_names['train_split'] = 'train'
   split_names['in_domain_validation_split'] = 'validation'
@@ -131,7 +131,7 @@ def get_eval_split(dataset,
       dataset,
       split=split,
       process_batch_size=local_batch_size_eval,
-      drop_remainder=False,
+      drop_remainder=True,
       data_dir=data_dir)
   eval_steps = int(np.ceil(n_eval_img / batch_size_eval))
   logging.info('Running evaluation for %d steps for %s, %s', eval_steps,
@@ -146,7 +146,7 @@ def get_eval_split(dataset,
       repeat_after_batching=True,
       shuffle=False,
       prefetch_size=config.get('prefetch_to_host', 2),
-      drop_remainder=False,
+      drop_remainder=True,
       data_dir=data_dir)
   eval_iter = input_utils.start_input_pipeline(
       eval_ds, config.get('prefetch_to_device', 1))
@@ -196,7 +196,10 @@ def initialize_dan_ens_model(config):  # EDIT(anuj)
   return {
       'model': model
   }
-
+  
+def initialize_gated_attention_embd_model(config):
+  logging.info('config.model = %s', config.get('model'))
+  return {"model": ub.models.gated_attention_embed()}
 
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
@@ -237,7 +240,8 @@ VIT_MODEL_INIT_MAP = {
     'simclr': initialize_simclr_model,  # EDIT(anuj)
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
     'dan': initialize_dan_model,  # EDIT(anuj)
-    'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
+    'dan_ens': initialize_dan_ens_model,  # EDIT(anuj),
+    'attention_embd': initialize_gated_attention_embd_model
 }
 
 
@@ -403,7 +407,7 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
         d: f'{dataset_names[d]}/processed_swap'
         for d in ('in_domain_dataset', 'ood_dataset')}
   else:
-    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+    raise NotImplementedError(f'Cancer distribution shift: {dist_shift}')
 
   def get_dataset(dataset_name, split_name, builder_config):
     base_dataset = ub.datasets.get(

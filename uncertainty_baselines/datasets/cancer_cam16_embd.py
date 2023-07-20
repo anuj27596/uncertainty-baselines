@@ -29,6 +29,13 @@ from uncertainty_baselines.datasets import base
 from uncertainty_baselines.datasets.processing_pneumonia import _pneumonia_processing, _resize_image_if_necessary
 
 d_path = "/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/"
+DEBUG = True
+if DEBUG:
+  CSV = "Camelyon16_debug.csv"
+else:
+  CSV = "Camelyon16.csv"
+  
+  
 
 _DESCRIPTION = """\
 APTOS is a dataset containing the 3,662 high-resolution fundus images
@@ -135,7 +142,7 @@ class CancerCam16Embd(tfds.core.GeneratorBasedBuilder):
         features=tfds.features.FeaturesDict({
             "wsi_name": tfds.features.Text(),  # patient ID. eg: "000c1434d8d7".
             "embeddings": tfds.features.Sequence(tfds.features.Tensor(shape = (512,),dtype=np.float64)),
-            "label": tfds.features.Scalar(dtype=tf.dtypes.int32) # Karm
+            "label": tfds.features.Tensor(shape=(1,), dtype=tf.dtypes.int64) # Karm
         }),
         homepage="https://www.kaggle.com/c/aptos2019-blindness-detection/data",
         citation=_CITATION)
@@ -165,7 +172,7 @@ class CancerCam16Embd(tfds.core.GeneratorBasedBuilder):
             gen_kwargs={
                 "images_dir_path": os.path.join(d_path),
                 "split": split,
-                "csv_path": os.path.join(os.path.join(d_path, "Camelyon16.csv")),
+                "csv_path": os.path.join(os.path.join(d_path, CSV)),
             })
         for split in splits
     ]
@@ -205,7 +212,7 @@ class CancerCam16Embd(tfds.core.GeneratorBasedBuilder):
         record = {
             "wsi_name": row["wsi"],
             "embeddings": df_emb.to_numpy(dtype=np.float64),
-            "label": row["label"]
+            "label": np.array([row["label"]])
         }
         yield i, record
 

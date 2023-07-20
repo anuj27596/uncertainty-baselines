@@ -74,6 +74,7 @@ from uncertainty_baselines.models.resnet50_ssvae_m2 import resnet50_ssvae_m2 # a
 from uncertainty_baselines.models.resnet50_vae import resnet50_vae # anuj
 from uncertainty_baselines.models.resnet50_cvae import resnet50_cvae # anuj
 from uncertainty_baselines.models.vit_keras import vit_keras # anuj
+from uncertainty_baselines.models.attention_embed import GatedAttentionEmbd
 
 
 # pylint: disable=g-import-not-at-top
@@ -95,6 +96,7 @@ try:
   from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
+  from uncertainty_baselines.models.attention_embed import gated_attention_embed
 except ImportError:
   logging.warning('Skipped ViT models due to ImportError.', exc_info=True)
 except tf.errors.NotFoundError:

@@ -125,6 +125,7 @@ def _add_mask(batch, num_batch_dims):
 def _pad_reshape_batch(batch, flat_batch_size, num_devices):
   """Pads and reshapes the tensors in a flattened batch."""
   def f(x):
+    # import pdb; pdb.set_trace()
     actual_batch_size = tf.shape(x)[0]
     needed = flat_batch_size - actual_batch_size
     zeros = tf.zeros(tf.concat([[needed], x.shape[1:]], axis=0), dtype=x.dtype)
@@ -252,6 +253,7 @@ def get_data(
     # [num_devices, batch_size_per_device].
     batch_size_per_device = math.ceil(process_batch_size / num_devices)
     flat_batch_size = batch_size_per_device * num_devices
+    import pdb; pdb.set_trace();
     dataset = dataset.batch(flat_batch_size, drop_remainder=drop_remainder)
 
     def f(xs):

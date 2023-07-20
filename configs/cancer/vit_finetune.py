@@ -41,7 +41,7 @@ def get_config():
 
   # Fine-tuning dataset
   # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
-  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
+  config.data_dir = '/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
@@ -75,7 +75,7 @@ def get_config():
   # config.model_init = '/troy/anuj/gub-og/checkpoints/vit_imgnet21k/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
   # config.model_init = 'gs://ue-usrl-anuj/vit-simclr-outputs/1680700740884/checkpoint_900.npz'
   # config.model_init = 'gs://vit_models/augreg/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
-  config.model_init = 'gs://vit_models/augreg/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0.npz'
+  # config.model_init = 'gs://vit_models/augreg/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0.npz'
 
   # Model definition to be copied from the pre-training config
   config.model = ml_collections.ConfigDict()
@@ -105,7 +105,7 @@ def get_config():
       f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 256  # using TPUv3-8
+  config.batch_size = 1  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
@@ -130,7 +130,7 @@ def get_config():
   # Evaluation Misc
   config.only_eval = False  # Disables training, only evaluates the model
   config.eval_on_train = True  # Whether to eval on train split
-  config.use_validation = True  # Whether to use a validation split
+  config.use_validation = False  # Whether to use a validation split
   config.use_test = True  # Whether to use a test split
 
   # Step Counts
