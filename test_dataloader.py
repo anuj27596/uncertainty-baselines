@@ -11,12 +11,23 @@ import numpy as np
 train_ds_rng = jax.random.PRNGKey(0)
 
 dataset_name = "cancer_cam16_embd"
-data_dir = "/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/"
+#data_dir = "/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/"
+data_dir = "/home/karm/troy_karm/cancer/dsmil-wsi/datasets/Camelyon16"
 
 train_base_dataset = ub.datasets.get(
   dataset_name,
   "train",
-  builder_config=f'{dataset_name}/processed_swap',
+  builder_config=f'{dataset_name}/processed',
+  data_dir=data_dir)
+
+train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
+train_dataset_builder
+train_dataset_builder.download_and_prepare()
+
+train_base_dataset = ub.datasets.get(
+  dataset_name,
+  "test",
+  builder_config=f'{dataset_name}/processed',
   data_dir=data_dir)
 
 train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
