@@ -34,17 +34,6 @@ class IdentityLayer(nn.Module):
     return x
 
 
-class GradientReversalLayer(nn.Module):
-  """Identity layer, convenient for giving a name to an array."""
-
-  grad_coeff: float = 0.1
-
-  @nn.compact
-  def __call__(self, x):
-    sgx = jax.lax.stop_gradient(x)
-    return sgx + self.grad_coeff * (sgx - x)
-
-
 class AddPositionEmbs(nn.Module):
   """Adds (optionally learned) positional embeddings to the inputs.
 
@@ -219,45 +208,45 @@ class Encoder(nn.Module):
     return encoded
 
 
-class DomainDiscriminator(nn.Module):
-  """Transformer MLP / feed-forward block."""
+class PredictionHead(nn.Module):
 
-  hid_dim: int
-  num_ens: int = 5
+  dim: int
   dtype: Dtype = jnp.float32
+  dropout_rate: float = 0.1
+  output_shape: Tuple = None
   kernel_init: Callable[[PRNGKey, Shape, Dtype],
                         Array] = nn.initializers.xavier_uniform()
   bias_init: Callable[[PRNGKey, Shape, Dtype],
                       Array] = nn.initializers.normal(stddev=1e-6)
 
   @nn.compact
-  def __call__(self, inputs):
-    outputs = []
-    for _ in range(self.num_ens):
-      x = GradientReversalLayer()(inputs)
-      x = nn.Dense(
-          features=self.hid_dim,
-          dtype=self.dtype,
-          kernel_init=self.kernel_init,
-          bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
-              x)
-      x = nn.gelu(x)
-      x = nn.Dense(
-          features=self.hid_dim,
-          dtype=self.dtype,
-          kernel_init=self.kernel_init,
-          bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
-              x)
-      x = nn.gelu(x)
-      outputs.append(nn.Dense(
-          features=1,
-          dtype=self.dtype,
-          kernel_init=nn.initializers.zeros)(  # pytype: disable=wrong-arg-types
-              x))
-    return jnp.concatenate(outputs, axis=1)
+  def __call__(self, inputs, *, deterministic):
+    """Applies Transformer MlpBlock module."""
+    n, w, w, c = self.output_shape
+    _, s2, _ = inputs.shape
+    s = int(s2 ** 0.5) # assuming square grid
+    p = w // s
+    x = nn.Dense(
+        features=self.dim,
+        dtype=self.dtype,
+        kernel_init=self.kernel_init,
+        bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
+            inputs)
+    x = nn.gelu(x)
+    x = nn.Dropout(rate=self.dropout_rate)(x, deterministic=deterministic)
+    x = nn.Dense(
+        features=p * p * c,
+        dtype=self.dtype,
+        kernel_init=self.kernel_init,
+        bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
+            x)
+    x = jnp.reshape(x, (n, s, s, p, p, c))
+    x = jnp.transpose(x, (0, 1, 3, 2, 4, 5))
+    x = jnp.reshape(x, (n, w, w, c))
+    return x
 
 
-class VisionTransformerDanEns(nn.Module):
+class VisionTransformerMim(nn.Module):
   """Vision Transformer model."""
 
   num_classes: int
@@ -271,9 +260,9 @@ class VisionTransformerDanEns(nn.Module):
   @nn.compact
   def __call__(self, inputs, *, train):
     out = {}
-
-    x = inputs 
-    n, h, w, c = x.shape
+    
+    mim_pred_shape = inputs.shape
+    x = inputs
 
     # We can merge s2d+emb into a single conv; it's the same.
     x = nn.Conv(
@@ -322,30 +311,35 @@ class VisionTransformerDanEns(nn.Module):
     if self.fix_base_model:
       x = jax.lax.stop_gradient(x)
 
-    out['domain_pred'] = DomainDiscriminator(
-        hid_dim=self.hidden_size)(
-            x)
-
-    x = nn.Dense(
+    logits = nn.Dense(
         features=self.num_classes,
         name='head',
         kernel_init=nn.initializers.zeros)(
             x)
-    out['logits'] = x
-    return x, out
+    out['logits'] = logits
+
+    mim_pred = PredictionHead(
+        dim=c,
+        output_shape=mim_pred_shape,
+        name='mim_head')(
+            out['transformed'][:, 1:],  # discard cls
+            deterministic=not train)
+    out['mim_pred'] = mim_pred
+
+    return logits, out
 
 
-def vision_transformer_dan_ens(num_classes: int,
-                       patches: Any,
-                       transformer: Any,
-                       hidden_size: int,
-                       representation_size: Optional[int] = None,
-                       classifier: str = 'token',
-                       fix_base_model: bool = False):
+def vision_transformer_mim(num_classes: int,
+                                     patches: Any,
+                                     transformer: Any,
+                                     hidden_size: int,
+                                     representation_size: Optional[int] = None,
+                                     classifier: str = 'token',
+                                     fix_base_model: bool = False):
   """Builds a Vision Transformer (ViT) model."""
   # TODO(dusenberrymw): Add API docs once config dict in VisionTransformer is
   # cleaned up.
-  return VisionTransformerDanEns(
+  return VisionTransformerMim(
       num_classes=num_classes,
       patches=patches,
       transformer=transformer,

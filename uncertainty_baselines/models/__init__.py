@@ -95,6 +95,8 @@ try:
   from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
+  from uncertainty_baselines.models.vit_mim import vision_transformer_mim  # EDIT(anuj)
+  from uncertainty_baselines.models.vit_osp import vision_transformer_osp  # EDIT(anuj)
 except ImportError:
   logging.warning('Skipped ViT models due to ImportError.', exc_info=True)
 except tf.errors.NotFoundError:

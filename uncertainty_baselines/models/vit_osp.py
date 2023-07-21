@@ -1,5 +1,5 @@
 # coding=utf-8
-# Copyright 2022 The Uncertainty Baselines Authors.
+# Copyright 2023 The Uncertainty Baselines Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,67 +27,58 @@ Shape = Tuple[int]
 Dtype = Any
 
 
-class GradientReversalLayer(nn.Module):
-  """Identity layer, convenient for giving a name to an array."""
-
+class GradientMultiplier(nn.Module):
   grad_coeff: float
-  
+
   @nn.compact
   def __call__(self, x):
     sgx = jax.lax.stop_gradient(x)
-    return sgx + self.grad_coeff * (sgx - x)
+    return sgx + self.grad_coeff * (x - sgx)
 
 
-class DomainPredictor(nn.Module):
-  """Transformer MLP / feed-forward block."""
-
-  hid_dim: int
-  grl_coeff: float
-  num_layers: int = 2
-  dtype: Dtype = jnp.float32
-  kernel_init: Callable[[PRNGKey, Shape, Dtype],
-                        Array] = nn.initializers.xavier_uniform()
-  bias_init: Callable[[PRNGKey, Shape, Dtype],
-                      Array] = nn.initializers.normal(stddev=1e-6)
+class Lagrangian(nn.Module):
+  num_classes: int
+  mu: float = 1
+  lambda_grad: float = 1
+  phi_grad: float = 1
 
   @nn.compact
-  def __call__(self, inputs):
-    x = GradientReversalLayer(self.grl_coeff)(inputs)
+  def __call__(self, x, y):
+    loglambdas = self.param('lambda', nn.initializers.zeros, self.num_classes)
+    lambdas = jax.nn.softplus(loglambdas)
+    lambdas = GradientMultiplier(-self.lambda_grad)(lambdas)
+    phis = self.param('phi', nn.initializers.zeros, self.num_classes)
+    phis = GradientMultiplier(self.phi_grad)(phis)
 
-    for _ in range(self.num_layers - 1):
-      x = nn.Dense(
-          features=self.hid_dim,
-          dtype=self.dtype,
-          kernel_init=self.kernel_init,
-          bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
-              x)
-      x = nn.gelu(x)
+    x = jnp.reshape(x, (-1, self.num_classes))
+    y = jnp.reshape(y, (-1, self.num_classes))
+
+    nl_p = -jax.nn.log_sigmoid(x)
+    nl_not_p = -jax.nn.log_sigmoid(-x)
+    loss = jnp.sum(nl_p * y, axis=0) / (jnp.sum(y, axis=0) + 1e-16)
+    constraint = jnp.sum(nl_not_p * (1 - y), axis=0) / (jnp.sum((1 - y), axis=0) + 1e-16)
     
-    output = nn.Dense(
-        features=1,
-        dtype=self.dtype,
-        kernel_init=nn.initializers.zeros)(  # pytype: disable=wrong-arg-types
-            x)
-    return output
+    lagrangian = loss + lambdas * (constraint - phis) + self.mu * phis
+    return jnp.mean(lagrangian)
 
 
-class VisionTransformerDan(nn.Module):
+class VisionTransformerOsp(nn.Module):
   """Vision Transformer model."""
 
   num_classes: int
   patches: Any
   transformer: Any
-  domain_predictor: Any
+  lagrangian: Any
   hidden_size: int
   representation_size: Optional[int] = None
   classifier: str = 'token'
   fix_base_model: bool = False
 
   @nn.compact
-  def __call__(self, inputs, *, train):
+  def __call__(self, inputs, labels, *, train):
     out = {}
 
-    x = inputs 
+    x = inputs
     n, h, w, c = x.shape
 
     # We can merge s2d+emb into a single conv; it's the same.
@@ -137,23 +128,22 @@ class VisionTransformerDan(nn.Module):
     if self.fix_base_model:
       x = jax.lax.stop_gradient(x)
 
-    out['domain_pred'] = DomainPredictor(
-        **self.domain_predictor)(
-            x)
-
     x = nn.Dense(
         features=self.num_classes,
         name='head',
         kernel_init=nn.initializers.zeros)(
             x)
     out['logits'] = x
+
+    out['lagrangian'] = Lagrangian(num_classes=self.num_classes, **self.lagrangian)(x, labels)
+
     return x, out
 
 
-def vision_transformer_dan(num_classes: int,
+def vision_transformer_osp(num_classes: int,
                        patches: Any,
                        transformer: Any,
-                       domain_predictor: Any,
+                       lagrangian: Any,
                        hidden_size: int,
                        representation_size: Optional[int] = None,
                        classifier: str = 'token',
@@ -161,11 +151,11 @@ def vision_transformer_dan(num_classes: int,
   """Builds a Vision Transformer (ViT) model."""
   # TODO(dusenberrymw): Add API docs once config dict in VisionTransformer is
   # cleaned up.
-  return VisionTransformerDan(
+  return VisionTransformerOsp(
       num_classes=num_classes,
       patches=patches,
       transformer=transformer,
-      domain_predictor=domain_predictor,
+      lagrangian=lagrangian,
       hidden_size=hidden_size,
       representation_size=representation_size,
       classifier=classifier,

@@ -496,3 +496,39 @@ class SimclrAug:  # EDIT(anuj)
     features[self.res_key_2] = self.augment(image)
     return features
 
+
+@dataclasses.dataclass
+class PatchMimMask:
+  """
+
+  Attributes:
+    key: Key of the data to be processed.
+    key_result: Key under which to store the result (same as `key` if None).
+    rng_key: Key of the random number used for
+      `tf.image.stateless_sample_distorted_bounding_box`.
+  """
+
+  mask_rate: float = 0.4
+  patch_size: int = 32
+  key: str = "image"
+  key_result: Optional[str] = 'mim_mask'
+
+  def __call__(self, features: Features) -> Features:
+    image = features[self.key]
+
+    *_, h, w, c = image.shape
+    p = self.patch_size
+
+    h = h // p
+    w = w // p
+
+    mask = tf.keras.backend.random_bernoulli(
+        shape=(h, 1, w, 1),
+        p=1-self.mask_rate)
+
+    mask = tf.repeat(mask, repeats=p, axis=1)
+    mask = tf.repeat(mask, repeats=p * c, axis=3)
+    mask = tf.reshape(mask, (h * p, w * p, c))
+
+    features[self.key_result] = mask
+    return features

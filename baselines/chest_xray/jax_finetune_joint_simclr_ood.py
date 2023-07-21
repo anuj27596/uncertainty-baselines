@@ -192,6 +192,10 @@ def main(argv):
     builder_config = {
         'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
         'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  elif dist_shift == 'chxfToch14r':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
   elif dist_shift == 'ch14Tochx':
     builder_config = {
         d: f'{dataset_names[d]}/processed_swap'

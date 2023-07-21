@@ -77,6 +77,24 @@ def simclr_loss(*, projections, temp=0.1, reduction=True):  # EDIT(anuj): def si
   return jnp.mean(loss) if reduction else loss
 
 
+def mim_loss(*, inputs, pred, mask, reduction=True):  # EDIT(anuj): def mim loss
+  mask = 1 - mask
+  pred_nll = -(inputs * jax.nn.log_sigmoid(pred) + (1 - inputs) * jax.nn.log_sigmoid(-pred))
+  input_ent = -(inputs * jnp.log(jnp.clip(inputs, 1e-8)) + (1 - inputs) * jnp.log(jnp.clip(1 - inputs, 1e-8)))
+  pred_kl = pred_nll - input_ent
+  loss = jnp.mean(pred_kl * mask, axis=(1, 2, 3)) / jnp.mean(mask, axis=(1, 2, 3))
+  return jnp.mean(loss) if reduction else loss
+
+
+def decorrelation_loss(*, logits):  # EDIT(anuj): def decorrelation loss
+  n, c = logits.shape
+  noise = np.random.randn(c, n) * 1e-4
+  mask = jnp.triu(jnp.ones((c, c)), k=1)
+  corrcoef = jnp.corrcoef(logits.T + noise) * mask
+  loss = jnp.mean(corrcoef ** 2) / jnp.mean(mask)
+  return loss
+
+
 class LocalSpatialLoss:  # EDIT(anuj): def get_local_spatial loss
   def __init__(self, neg_mode='linf_2'):
     self.neg_mode = neg_mode

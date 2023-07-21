@@ -57,8 +57,6 @@ from baselines.diabetic_retinopathy_detection.utils import results_storage_utils
 from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
 import wandb
 
-from tqdm import tqdm
-
 # pylint: enable=g-import-not-at-top,line-too-long
 
 # TODO(nband): lock config after separating total and warmup steps arguments.
@@ -346,13 +344,10 @@ def main(argv):
           jnp.ones((*out_ood['domain_pred'].shape[:-1], 1))])
 
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
-      domain_acc = jnp.mean((domain_pred >= 0).astype(int) == domain_labels)
-      measurements['domain_loss'] = domain_loss
-      measurements['domain_acc'] = domain_acc
 
       loss = (
           train_utils.softmax_xent(logits=logits, labels=labels)
-          + 0.1 * domain_loss)  # EDIT(anuj)
+          + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
       return loss
 
     # Implementation considerations compared and summarized at
@@ -539,6 +534,7 @@ def main(argv):
         results_arrs = {
             'y_true': [],
             'y_pred': [],
+            'logits': [],
             'domain_pred': [],
             'y_pred_entropy': [],
         }
@@ -546,7 +542,7 @@ def main(argv):
           results_arrs['pre_logits'] = []
 
         write_note(f'Evaluating on split: {eval_name}')
-        for _, batch in tqdm(zip(range(eval_steps), eval_iter), total=eval_steps):
+        for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
               evaluation_fn(
                   opt_repl.target, batch['image'], batch['labels']))
@@ -564,21 +560,34 @@ def main(argv):
           probs = jax.nn.softmax(logits)
 
           # From one-hot to integer labels.
-          int_labels = np.argmax(np.array(labels[0]), axis=-1)
+          labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
+          domain_pred = np.array(domain_pred[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          int_labels = int_labels.flatten()
+          
+          logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
+          domain_pred = domain_pred.flatten()
+          labels = labels.flatten()  # EDIT(anuj)
+
           y_pred = probs[:, 1]
-          results_arrs['y_true'].append(int_labels)
-          results_arrs['y_pred'].append(y_pred)
-          results_arrs['domain_pred'].append(domain_pred)
+
+          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
+
+          results_arrs['y_true'].append(labels[:batch_trunc])
+          results_arrs['y_pred'].append(y_pred[:batch_trunc])
+          results_arrs['logits'].append(logits[:batch_trunc])
+          results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
+
           if config.only_eval:  # EDIT(anuj)
-            results_arrs['pre_logits'].append(pre_logits)
+            pre_logits = np.array(pre_logits[0])
+            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs)
+          results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
+        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
@@ -589,7 +598,10 @@ def main(argv):
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = eval_steps * batch_size_eval
+        results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
+
+        domain_pred_mean = np.mean(results_arrs['domain_pred'] > 0)
+        results_arrs['domain_pred_recall'] = domain_pred_mean if 'ood' in eval_name else (1 - domain_pred_mean)
 
         all_eval_results[eval_name] = results_arrs
 
@@ -599,6 +611,9 @@ def main(argv):
           num_bins=15,
           return_per_pred_results=True
       )
+
+      for eval_name in eval_iter_splits.keys():
+        metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
 
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty

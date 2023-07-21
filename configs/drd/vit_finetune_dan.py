@@ -40,15 +40,15 @@ def get_config():
   config.output_dir = None
 
   # Fine-tuning dataset
-  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
-  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/diabetic_retinopathy_diagnosis'
+  config.data_dir = 'gs://ue-usrl-anuj/data/diabetic_retinopathy_diagnosis'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'chxfToch14r'
+  config.distribution_shift = 'aptos'
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -67,8 +67,8 @@ def get_config():
 
   # Model Flags
 
-  # TODO(nband): fix issue with sigmoid loss
-  config.num_classes = 5
+  # TODO(nband): fix issue with sigmoid loss.
+  config.num_classes = 2
 
   # pre-trained model ckpt file
   # !!!  The below section should be modified per experiment
@@ -90,33 +90,39 @@ def get_config():
   config.model.transformer.num_layers = 12
   config.model.classifier = 'token'  # Or 'gap'
 
+  config.model.domain_predictor = ml_collections.ConfigDict()
+  config.model.domain_predictor.grl_coeff = 0.1
+  config.model.domain_predictor.num_layers = 2
+  config.model.domain_predictor.hid_dim = 768
+  config.dp_loss_coeff = 1.0
+
   # This is "no head" fine-tuning, which we use by default
   config.model.representation_size = None
 
   # Preprocessing
 
-  # Input resolution of each retina image. (Default: 256)
-  config.pp_input_res = 256  # pylint: disable=invalid-name
-  pp_common = f''
+  # Input resolution of each retina image. (Default: 512)
+  config.pp_input_res = 512  # pylint: disable=invalid-name
+  pp_common = f'|onehot({config.num_classes})'
   config.pp_train = (
-      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
-  # 'chest_xray_preprocess(256)|onehot(2)'
+      f'diabetic_retinopathy_preprocess({config.pp_input_res})' + pp_common)
+  # 'diabetic_retinopathy_preprocess(512)|onehot(2)'
   config.pp_eval = (
-      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
+      f'diabetic_retinopathy_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 256  # using TPUv3-8
+  config.batch_size = 32  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
   # Optimization
   config.optim_name = 'Momentum'
   config.optim = ml_collections.ConfigDict()
-  config.loss = 'sigmoid_xent'  # or 'softmax_xent'
+  config.loss = 'softmax_xent'  # or 'sigmoid_xent'
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.
-  config.lr.base = 0.003
+  config.lr.base = 1e-4
   config.lr.decay_type = 'linear'
 
   # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
@@ -125,7 +131,7 @@ def get_config():
   # 'constant' will use the train proportions to reweight the binary cross
   #   entropy loss.
   # 'minibatch' will use the proportions of each minibatch to reweight the loss.
-  config.class_reweight_mode = 'none'
+  config.class_reweight_mode = None
 
   # Evaluation Misc
   config.only_eval = False  # Disables training, only evaluates the model
@@ -137,14 +143,13 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (746 * 40, 400)
+  config.total_and_warmup_steps = (1097 * 40, 600)
 
-  config.log_training_steps = 100
-  config.log_eval_steps = 746
+  config.log_training_steps = 400
+  config.log_eval_steps = 1097 * 2
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 746
+  config.checkpoint_steps = 1097 * 2
   config.checkpoint_timeout = 1
 
   config.args = {}
   return config
-

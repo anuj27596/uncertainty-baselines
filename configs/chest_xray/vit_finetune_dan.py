@@ -90,6 +90,12 @@ def get_config():
   config.model.transformer.num_layers = 12
   config.model.classifier = 'token'  # Or 'gap'
 
+  config.model.domain_predictor = ml_collections.ConfigDict()
+  config.model.domain_predictor.grl_coeff = 0.1
+  config.model.domain_predictor.num_layers = 2
+  config.model.domain_predictor.hid_dim = 768
+  config.dp_loss_coeff = 1.0
+
   # This is "no head" fine-tuning, which we use by default
   config.model.representation_size = None
 
@@ -105,7 +111,7 @@ def get_config():
       f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 256  # using TPUv3-8
+  config.batch_size = 128  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
@@ -116,7 +122,7 @@ def get_config():
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.
-  config.lr.base = 0.003
+  config.lr.base = 1e-4
   config.lr.decay_type = 'linear'
 
   # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
@@ -137,12 +143,12 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (746 * 40, 400)
+  config.total_and_warmup_steps = (1492 * 40, 800)
 
-  config.log_training_steps = 100
-  config.log_eval_steps = 746
+  config.log_training_steps = 400
+  config.log_eval_steps = 1492 * 2
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 746
+  config.checkpoint_steps = 1492 * 2
   config.checkpoint_timeout = 1
 
   config.args = {}

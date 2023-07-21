@@ -282,7 +282,7 @@ def main(argv):
       total_steps, total_steps * batch_size / ntrain_img, steps_per_epoch)
 
   write_note('Initializing model...')
-  model_dict = vit_utils.initialize_model('simclr', config)  # EDIT(anuj)
+  model_dict = vit_utils.initialize_model('mim', config)  # EDIT(anuj)
   model = model_dict['model']
 
   # We want all parameters to be created in host RAM, not on any device, they'll
@@ -315,14 +315,10 @@ def main(argv):
     writer.write_scalars(step=0, scalars={'num_params': num_params})
 
   @functools.partial(jax.pmap, axis_name='batch')
-  def evaluation_fn(params, images, labels):
-    aug1, aug2 = images
-    logits, out1 = model.apply(
-        {'params': flax.core.freeze(params)}, aug1, train=False)
-    logits, out2 = model.apply(
-        {'params': flax.core.freeze(params)}, aug2, train=False)
-    projections = jnp.concatenate([out1['simclr_proj'], out2['simclr_proj']])
-    losses = train_utils.simclr_loss(projections=projections, reduction=False)  # EDIT(anuj)
+  def evaluation_fn(params, images, labels, mim_mask):
+    logits, out = model.apply(
+        {'params': flax.core.freeze(params)}, images * mim_mask, train=False)
+    losses = train_utils.mim_loss(inputs=images, pred=out['mim_pred'], mask=mim_mask, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -332,7 +328,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out2['pre_logits']], axis_name='batch')
+        logits, labels, out['pre_logits']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -345,7 +341,7 @@ def main(argv):
   opt_cpu = jax.jit(opt_def.create)(params_cpu)
 
   @functools.partial(jax.pmap, axis_name='batch', donate_argnums=(0,))
-  def update_fn(opt, lr, images, labels, rng):
+  def update_fn(opt, lr, images, labels, mim_mask, rng):
     """Update step."""
     measurements = {}
 
@@ -353,30 +349,18 @@ def main(argv):
     rng, rng_model = jax.random.split(rng, 2)
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
-    def loss_fn(params, images, labels):
-      aug_1, aug_2, aug_ood_1, aug_ood_2 = images
-      # logits_1, out_1 = model.apply(  # EDIT(anuj)
-      #     {'params': flax.core.freeze(params)}, aug_1,
-      #     train=True, rngs={'dropout': rng_model_local})
-      # logits_2, out_2 = model.apply(  # EDIT(anuj)
-      #     {'params': flax.core.freeze(params)}, aug_2,
-      #     train=True, rngs={'dropout': rng_model_local})
-      _, out_ood_1 = model.apply(  # EDIT(anuj)
-          {'params': flax.core.freeze(params)}, aug_ood_1,
+    def loss_fn(params, images, labels, mim_mask):
+      logits, out = model.apply(  # EDIT(anuj)
+          {'params': flax.core.freeze(params)}, images * mim_mask,
           train=True, rngs={'dropout': rng_model_local})
-      _, out_ood_2 = model.apply(  # EDIT(anuj)
-          {'params': flax.core.freeze(params)}, aug_ood_2,
-          train=True, rngs={'dropout': rng_model_local})
-      projections = jnp.concatenate([  # EDIT(anuj)
-          out_ood_1['simclr_proj'],
-          out_ood_2['simclr_proj']])
-      return train_utils.simclr_loss(projections=projections)  # EDIT(anuj)
+      return train_utils.mim_loss(inputs=images, pred=out['mim_pred'], mask=mim_mask)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
-    l, g = train_utils.accumulate_gradient(
-        jax.value_and_grad(loss_fn), opt.target, images, labels,
-        config.get('grad_accum_steps'))  # EDIT(anuj): do not accum_steps pls
+    # l, g = train_utils.accumulate_gradient(
+    #     jax.value_and_grad(loss_fn), opt.target, images, labels,
+    #     config.get('grad_accum_steps'))  # EDIT(anuj): do not accum_steps pls
+    l, g = jax.value_and_grad(loss_fn)(opt.target, images, labels, mim_mask)
     l, g = jax.lax.pmean((l, g), axis_name='batch')
 
     # Log the gradient norm only if we need to compute it anyways (clipping)
@@ -484,13 +468,9 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            (
-              train_batch['image_aug_1'],
-              train_batch['image_aug_2'],
-              train_ood_batch['image_aug_1'],
-              train_ood_batch['image_aug_2'],
-            ),
+            jnp.concatenate([train_batch['image'], train_ood_batch['image']], axis=1),
             train_batch['labels'],
+            jnp.concatenate([train_batch['mim_mask'], train_ood_batch['mim_mask']], axis=1),
             rng=train_loop_rngs)
 
     # if jax.process_index() == 0:  # EDIT(anuj)
@@ -568,7 +548,7 @@ def main(argv):
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
               evaluation_fn(
-                  opt_repl.target, (batch['image_aug_1'], batch['image_aug_2']), batch['labels']))
+                  opt_repl.target, batch['image'], batch['labels'], batch['mim_mask']))
 
           # All results are a replicated array shaped as follows:
           # (local_devices, per_device_batch_size, elem_shape...)

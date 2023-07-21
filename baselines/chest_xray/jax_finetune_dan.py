@@ -192,6 +192,10 @@ def main(argv):
     builder_config = {
         'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
         'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  elif dist_shift == 'chxfToch14r':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
   elif dist_shift == 'ch14Tochx':
     builder_config = {
         d: f'{dataset_names[d]}/processed_swap'
@@ -362,14 +366,9 @@ def main(argv):
 
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
 
-      # NOTE(anuj): below gives jax tracer error
-      # domain_acc = jnp.mean((domain_pred >= 0).astype(int) == domain_labels)
-      # measurements['domain_loss'] = domain_loss
-      # measurements['domain_acc'] = domain_acc
-
       loss = (
           train_utils.sigmoid_xent(logits=logits, labels=labels)
-          + 0.1 * domain_loss)  # EDIT(anuj)
+          + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
       return loss
 
     # Implementation considerations compared and summarized at
@@ -585,7 +584,7 @@ def main(argv):
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
+          domain_pred = domain_pred.flatten()
           labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))  # EDIT(anuj)
 
           batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)

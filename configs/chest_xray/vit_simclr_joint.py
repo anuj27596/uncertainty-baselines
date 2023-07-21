@@ -40,15 +40,15 @@ def get_config():
   config.output_dir = None
 
   # Fine-tuning dataset
-  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/pneumonia'
-  config.data_dir = 'gs://ue-usrl-anuj/data/pneumonia'
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
+  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'zp2cx'
+  config.distribution_shift = 'chxfToch14r'
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -68,7 +68,7 @@ def get_config():
   # Model Flags
 
   # TODO(nband): fix issue with sigmoid loss.
-  config.num_classes = 2
+  config.num_classes = 5
 
   # pre-trained model ckpt file
   # !!!  The below section should be modified per experiment
@@ -99,13 +99,13 @@ def get_config():
   config.pp_input_res = 256  # pylint: disable=invalid-name
   pp_common = f'|simclr_aug'
   config.pp_train = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
-  # 'pneumonia_preprocess(256)|onehot(2)'
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
+  # 'chest_xray_preprocess(256)|onehot(2)'
   config.pp_eval = (
-      f'pneumonia_preprocess({config.pp_input_res})' + pp_common)
+      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 16  # using TPUv3-8
+  config.batch_size = 64  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
@@ -125,11 +125,11 @@ def get_config():
   # 'constant' will use the train proportions to reweight the binary cross
   #   entropy loss.
   # 'minibatch' will use the proportions of each minibatch to reweight the loss.
-  config.class_reweight_mode = None
+  config.class_reweight_mode = 'none'
 
   # Evaluation Misc
   config.only_eval = False  # Disables training, only evaluates the model
-  config.eval_on_train = False  # Whether to eval on train split
+  config.eval_on_train = True  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
   config.use_test = True  # Whether to use a test split
 
@@ -137,12 +137,12 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (54000, 2700)
+  config.total_and_warmup_steps = (2985 * 20, 1800)
 
-  config.log_training_steps = 500
-  config.log_eval_steps = 5400
+  config.log_training_steps = 300
+  config.log_eval_steps = 2985
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 5400
+  config.checkpoint_steps = 2985
   config.checkpoint_timeout = 1
 
   config.args = {}

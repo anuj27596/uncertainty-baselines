@@ -356,7 +356,7 @@ def main(argv):
 
       loss = (
           train_utils.sigmoid_xent(logits=logits, labels=labels)
-          + 0.3 * domain_loss)  # EDIT(anuj)
+          + domain_loss)  # EDIT(anuj)
       return loss
 
     # Implementation considerations compared and summarized at

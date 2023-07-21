@@ -128,21 +128,21 @@ def get_config():
   config.class_reweight_mode = 'none'
 
   # Evaluation Misc
-  config.only_eval = False  # Disables training, only evaluates the model
-  config.eval_on_train = False  # Whether to eval on train split
+  config.only_eval = True  # Disables training, only evaluates the model
+  config.eval_on_train = True  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
-  config.use_test = False  # Whether to use a test split
+  config.use_test = True  # Whether to use a test split
 
   # Step Counts
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (746 * 40, 400)
+  config.total_and_warmup_steps = (1, 3)
 
-  config.log_training_steps = 100
-  config.log_eval_steps = 746
+  config.log_training_steps = 3
+  config.log_eval_steps = 3
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 746
+  config.checkpoint_steps = 3
   config.checkpoint_timeout = 1
 
   config.args = {}

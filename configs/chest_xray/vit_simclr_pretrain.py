@@ -48,7 +48,7 @@ def get_config():
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'chxToch14' 
+  config.distribution_shift = 'chxfToch14r' 
   #chxToch14 - ID: ChexPert & OOD: Chest_xray14
   #ch14Tochx - OOD: ChexPert & ID: Chest_xray14
   
@@ -71,7 +71,7 @@ def get_config():
   # Model Flags
 
   # TODO(nband): fix issue with sigmoid loss.
-  config.num_classes = 2
+  config.num_classes = 5
 
   # pre-trained model ckpt file
   # !!!  The below section should be modified per experiment
@@ -108,7 +108,7 @@ def get_config():
       f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 32  # using TPUv3-8
+  config.batch_size = 64  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
@@ -132,7 +132,7 @@ def get_config():
 
   # Evaluation Misc
   config.only_eval = False  # Disables training, only evaluates the model
-  config.eval_on_train = False  # Whether to eval on train split
+  config.eval_on_train = True  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
   config.use_test = True  # Whether to use a test split
 
@@ -140,12 +140,12 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (80000, 4000)
+  config.total_and_warmup_steps = (2985 * 20, 1800)
 
-  config.log_training_steps = 200
-  config.log_eval_steps = 2000
+  config.log_training_steps = 300
+  config.log_eval_steps = 2985
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 2000
+  config.checkpoint_steps = 2985
   config.checkpoint_timeout = 1
 
   config.args = {}

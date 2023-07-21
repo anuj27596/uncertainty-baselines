@@ -45,7 +45,7 @@ def get_dataset_and_split_names(dist_shift):
   dataset_names = {}
   split_names = {}
 
-  if dist_shift in ('chxToch14', 'chxfToch14'):
+  if dist_shift in ('chxToch14', 'chxfToch14', 'chxfToch14r'):
     dataset_names['in_domain_dataset'] = 'chexpert_custom'
     dataset_names['ood_dataset'] = 'chest_xray14'
   elif dist_shift == 'ch14Tochx':
@@ -205,6 +205,15 @@ def initialize_dan_ens_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_mim_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_mim(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -245,6 +254,7 @@ VIT_MODEL_INIT_MAP = {
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
     'dan': initialize_dan_model,  # EDIT(anuj)
     'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
+    'mim': initialize_mim_model,  # EDIT(anuj)
 }
 
 
@@ -405,6 +415,10 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
     builder_config = {
         'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
         'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  elif dist_shift == 'chxfToch14r':
+    builder_config = {
+        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+        'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
   elif dist_shift == 'ch14Tochx':
     builder_config = {
         d: f'{dataset_names[d]}/processed_swap'

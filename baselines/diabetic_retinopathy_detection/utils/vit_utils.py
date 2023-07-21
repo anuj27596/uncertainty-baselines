@@ -196,7 +196,8 @@ def initialize_local_spatial_model(config):  # EDIT(anuj)
 def initialize_dan_model(config):  # EDIT(anuj)
   logging.info('config.model = %s', config.get('model'))
   model = ub.models.vision_transformer_dan(
-      num_classes=config.num_classes, **config.get('model', {}))
+      num_classes=config.num_classes,
+      **config.get('model', {}))
   return {
       'model': model
   }
@@ -205,6 +206,24 @@ def initialize_dan_model(config):  # EDIT(anuj)
 def initialize_dan_ens_model(config):  # EDIT(anuj)
   logging.info('config.model = %s', config.get('model'))
   model = ub.models.vision_transformer_dan_ens(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
+def initialize_mim_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_mim(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
+def initialize_osp_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_osp(
       num_classes=config.num_classes, **config.get('model', {}))
   return {
       'model': model
@@ -251,6 +270,8 @@ VIT_MODEL_INIT_MAP = {
     'local_spatial': initialize_local_spatial_model,  # EDIT(anuj)
     'dan': initialize_dan_model,  # EDIT(anuj)
     'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
+    'mim': initialize_mim_model,  # EDIT(anuj)
+    'osp': initialize_osp_model,  # EDIT(anuj)
 }
 
 

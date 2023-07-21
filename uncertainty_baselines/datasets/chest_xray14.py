@@ -111,6 +111,10 @@ class ChestXray14(tfds.core.GeneratorBasedBuilder):
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
       ChestXray14Config(
+          name="resampled",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
+      ChestXray14Config(
           name="processed_swap",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
@@ -163,7 +167,8 @@ class ChestXray14(tfds.core.GeneratorBasedBuilder):
             gen_kwargs={
                 "images_dir_path": os.path.join(path, "chest_xray14", "images"),
                 "split": split,
-                "csv_path": os.path.join(path, "chest_xray14", "metadata.csv"),
+                "csv_path": os.path.join(path, "chest_xray14",
+                    ("metadata_resampled.csv" if self.builder_config.name.startswith('resampled') else "metadata.csv")),
             })
         for split in splits
     ]
@@ -216,7 +221,7 @@ class ChestXray14(tfds.core.GeneratorBasedBuilder):
 
   def _process_image(self, filepath):
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
-      if self.builder_config.name.startswith("processed"):
+      if self.builder_config.name.startswith("processed") or self.builder_config.name.startswith("resampled"):
         return _pneumonia_processing(
             image_fobj=image_fobj,
             filepath=filepath,

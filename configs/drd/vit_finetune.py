@@ -131,13 +131,13 @@ def get_config():
   config.only_eval = False  # Disables training, only evaluates the model
   config.eval_on_train = False  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
-  config.use_test = True  # Whether to use a test split
+  config.use_test = False  # Whether to use a test split
 
   # Step Counts
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (10980, 280)
+  config.total_and_warmup_steps = (549 * 20, 300)
 
   config.log_training_steps = 50
   config.log_eval_steps = 549
@@ -147,5 +147,3 @@ def get_config():
 
   config.args = {}
   return config
-
-# n=35000; b=16; n/b=2000; 

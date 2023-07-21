@@ -40,15 +40,15 @@ def get_config():
   config.output_dir = None
 
   # Fine-tuning dataset
-  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/chest_xray'
-  config.data_dir = 'gs://ue-usrl-anuj/data/chest_xray'
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/diabetic_retinopathy_diagnosis'
+  config.data_dir = 'gs://ue-usrl-anuj/data/diabetic_retinopathy_diagnosis'
 
   # REQUIRED: distribution shift.
   # 'aptos': loads APTOS (India) OOD validation and test datasets.
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'chxfToch14r'
+  config.distribution_shift = 'aptos'
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -67,14 +67,16 @@ def get_config():
 
   # Model Flags
 
-  # TODO(nband): fix issue with sigmoid loss
-  config.num_classes = 5
+  # TODO(nband): fix issue with sigmoid loss.
+  config.num_classes = 2
 
   # pre-trained model ckpt file
   # !!!  The below section should be modified per experiment
+  
   # config.model_init = '/troy/anuj/gub-og/checkpoints/vit_imgnet21k/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
-  # config.model_init = 'gs://ue-usrl-anuj/vit-simclr-outputs/1680700740884/checkpoint_900.npz'
+  
   # config.model_init = 'gs://vit_models/augreg/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
+  
   config.model_init = 'gs://vit_models/augreg/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0.npz'
 
   # Model definition to be copied from the pre-training config
@@ -95,28 +97,27 @@ def get_config():
 
   # Preprocessing
 
-  # Input resolution of each retina image. (Default: 256)
-  config.pp_input_res = 256  # pylint: disable=invalid-name
-  pp_common = f''
+  # Input resolution of each retina image. (Default: 512)
+  config.pp_input_res = 512  # pylint: disable=invalid-name
+  pp_common = f'|onehot({config.num_classes})|patch_mim_mask(0.4)'
   config.pp_train = (
-      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
-  # 'chest_xray_preprocess(256)|onehot(2)'
+      f'diabetic_retinopathy_preprocess({config.pp_input_res})' + pp_common)
   config.pp_eval = (
-      f'chest_xray_preprocess({config.pp_input_res})' + pp_common)
+      f'diabetic_retinopathy_preprocess({config.pp_input_res})' + pp_common)
 
   # Training Misc
-  config.batch_size = 256  # using TPUv3-8
+  config.batch_size = 32  # using TPUv3-8
   config.seed = 0  # Random seed.
   config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
 
   # Optimization
   config.optim_name = 'Momentum'
   config.optim = ml_collections.ConfigDict()
-  config.loss = 'sigmoid_xent'  # or 'softmax_xent'
+  config.loss = 'mim_loss'
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.
-  config.lr.base = 0.003
+  config.lr.base = 0.001
   config.lr.decay_type = 'linear'
 
   # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
@@ -125,11 +126,11 @@ def get_config():
   # 'constant' will use the train proportions to reweight the binary cross
   #   entropy loss.
   # 'minibatch' will use the proportions of each minibatch to reweight the loss.
-  config.class_reweight_mode = 'none'
+  config.class_reweight_mode = None
 
   # Evaluation Misc
+  config.eval_on_train = False  # eval on train split
   config.only_eval = False  # Disables training, only evaluates the model
-  config.eval_on_train = False  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
   config.use_test = False  # Whether to use a test split
 
@@ -137,14 +138,13 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (746 * 40, 400)
+  config.total_and_warmup_steps = (22 * 100, 22)
 
-  config.log_training_steps = 100
-  config.log_eval_steps = 746
+  config.log_training_steps = 2
+  config.log_eval_steps = 22
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 746
+  config.checkpoint_steps = 22
   config.checkpoint_timeout = 1
 
   config.args = {}
   return config
-
