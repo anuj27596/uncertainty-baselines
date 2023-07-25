@@ -60,6 +60,8 @@ from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
 from uncertainty_baselines.datasets.chest_xray14 import ChestXray14Dataset  # karm
 from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
 from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset  # Karm
+from uncertainty_baselines.datasets.pacs_id import PacsIdDataset
+from uncertainty_baselines.datasets.pacs_ood import PacsOodDataset
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -134,7 +136,9 @@ DATASETS = {
     'chest_xray8': ChestXray8Dataset,  # anuj
     'chest_xray14': ChestXray14Dataset,  # anuj
     'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj,
-    'chexpert_custom': ChexpertCustomDataset
+    'chexpert_custom': ChexpertCustomDataset,
+    'pacs_id': PacsIdDataset,
+    'pacs_ood': PacsOodDataset
 }
 
 
@@ -175,4 +179,5 @@ def get(dataset_name: str, split: Union[Tuple[str, float], str, tfds.Split],
     raise ValueError('Unrecognized dataset name: {!r}'.format(dataset_name))
 
   dataset_class = DATASETS[dataset_name]
+
   return dataset_class(split=split, **hyperparameters)

@@ -71,6 +71,10 @@ from uncertainty_baselines.datasets.chest_xray8 import ChestXray8Dataset  # anuj
 from uncertainty_baselines.datasets.chest_xray14 import ChestXray14Dataset  # karm
 from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset  # anuj
 from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset # Karm
+from uncertainty_baselines.datasets.pacs_id import PacsIdDataset # Karm
+from uncertainty_baselines.datasets.pacs_ood import PacsOodDataset # Karm
+
+
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
