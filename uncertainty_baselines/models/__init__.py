@@ -32,65 +32,65 @@ from uncertainty_baselines.models.gat import gat
 from uncertainty_baselines.models.genomics_cnn import genomics_cnn
 from uncertainty_baselines.models.movielens import movielens
 from uncertainty_baselines.models.mpnn import mpnn
-from uncertainty_baselines.models.resnet20 import resnet20
-from uncertainty_baselines.models.resnet50_batchensemble import resnet101_batchensemble
-from uncertainty_baselines.models.resnet50_batchensemble import resnet50_batchensemble
-from uncertainty_baselines.models.resnet50_batchensemble import resnet_batchensemble
-from uncertainty_baselines.models.resnet50_deterministic import resnet50_deterministic
-from uncertainty_baselines.models.resnet50_dropout import resnet50_dropout
-from uncertainty_baselines.models.resnet50_fsvi import resnet50_fsvi
-from uncertainty_baselines.models.resnet50_het_mimo import resnet50_het_mimo
-from uncertainty_baselines.models.resnet50_het_rank1 import resnet50_het_rank1
-from uncertainty_baselines.models.resnet50_heteroscedastic import resnet50_heteroscedastic
-from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp
-from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp_add_last_layer
-from uncertainty_baselines.models.resnet50_radial import resnet50_radial
-from uncertainty_baselines.models.resnet50_rank1 import resnet50_rank1
-from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp
-from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp_add_last_layer
-from uncertainty_baselines.models.resnet50_sngp_be import resnet50_sngp_be
-from uncertainty_baselines.models.resnet50_variational import resnet50_variational
-from uncertainty_baselines.models.textcnn import textcnn
-from uncertainty_baselines.models.unet import unet
-from uncertainty_baselines.models.wide_resnet import get_wide_resnet_hp_keys
-from uncertainty_baselines.models.wide_resnet import wide_resnet
-from uncertainty_baselines.models.wide_resnet_batchensemble import wide_resnet_batchensemble
-from uncertainty_baselines.models.wide_resnet_condconv import wide_resnet_condconv
-from uncertainty_baselines.models.wide_resnet_dropout import wide_resnet_dropout
-from uncertainty_baselines.models.wide_resnet_heteroscedastic import wide_resnet_heteroscedastic
-from uncertainty_baselines.models.wide_resnet_hetsngp import wide_resnet_hetsngp
-from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import e_factory as hyperbatchensemble_e_factory
-from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import LambdaConfig as HyperBatchEnsembleLambdaConfig
-from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import wide_resnet_hyperbatchensemble
-from uncertainty_baselines.models.wide_resnet_posterior_network import wide_resnet_posterior_network
-from uncertainty_baselines.models.wide_resnet_rank1 import wide_resnet_rank1
-from uncertainty_baselines.models.wide_resnet_sngp import wide_resnet_sngp
-from uncertainty_baselines.models.wide_resnet_sngp_be import wide_resnet_sngp_be
-from uncertainty_baselines.models.wide_resnet_variational import wide_resnet_variational
+# from uncertainty_baselines.models.resnet20 import resnet20
+# from uncertainty_baselines.models.resnet50_batchensemble import resnet101_batchensemble
+# from uncertainty_baselines.models.resnet50_batchensemble import resnet50_batchensemble
+# from uncertainty_baselines.models.resnet50_batchensemble import resnet_batchensemble
+# from uncertainty_baselines.models.resnet50_deterministic import resnet50_deterministic
+# from uncertainty_baselines.models.resnet50_dropout import resnet50_dropout
+# from uncertainty_baselines.models.resnet50_fsvi import resnet50_fsvi
+# from uncertainty_baselines.models.resnet50_het_mimo import resnet50_het_mimo
+# from uncertainty_baselines.models.resnet50_het_rank1 import resnet50_het_rank1
+# from uncertainty_baselines.models.resnet50_heteroscedastic import resnet50_heteroscedastic
+# from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp
+# from uncertainty_baselines.models.resnet50_hetsngp import resnet50_hetsngp_add_last_layer
+# from uncertainty_baselines.models.resnet50_radial import resnet50_radial
+# from uncertainty_baselines.models.resnet50_rank1 import resnet50_rank1
+# from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp
+# from uncertainty_baselines.models.resnet50_sngp import resnet50_sngp_add_last_layer
+# from uncertainty_baselines.models.resnet50_sngp_be import resnet50_sngp_be
+# from uncertainty_baselines.models.resnet50_variational import resnet50_variational
+# from uncertainty_baselines.models.textcnn import textcnn
+# from uncertainty_baselines.models.unet import unet
+# from uncertainty_baselines.models.wide_resnet import get_wide_resnet_hp_keys
+# from uncertainty_baselines.models.wide_resnet import wide_resnet
+# from uncertainty_baselines.models.wide_resnet_batchensemble import wide_resnet_batchensemble
+# from uncertainty_baselines.models.wide_resnet_condconv import wide_resnet_condconv
+# from uncertainty_baselines.models.wide_resnet_dropout import wide_resnet_dropout
+# from uncertainty_baselines.models.wide_resnet_heteroscedastic import wide_resnet_heteroscedastic
+# from uncertainty_baselines.models.wide_resnet_hetsngp import wide_resnet_hetsngp
+# from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import e_factory as hyperbatchensemble_e_factory
+# from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import LambdaConfig as HyperBatchEnsembleLambdaConfig
+# from uncertainty_baselines.models.wide_resnet_hyperbatchensemble import wide_resnet_hyperbatchensemble
+# from uncertainty_baselines.models.wide_resnet_posterior_network import wide_resnet_posterior_network
+# from uncertainty_baselines.models.wide_resnet_rank1 import wide_resnet_rank1
+# from uncertainty_baselines.models.wide_resnet_sngp import wide_resnet_sngp
+# from uncertainty_baselines.models.wide_resnet_sngp_be import wide_resnet_sngp_be
+# from uncertainty_baselines.models.wide_resnet_variational import wide_resnet_variational
 
-from uncertainty_baselines.models.cnn_ssvae_m1 import ssvae_m1 # anuj
-from uncertainty_baselines.models.cnn_ssvae_m2 import ssvae_m2 # anuj
-from uncertainty_baselines.models.resnet50_ssvae_m2 import resnet50_ssvae_m2 # anuj
-from uncertainty_baselines.models.resnet50_vae import resnet50_vae # anuj
-from uncertainty_baselines.models.resnet50_cvae import resnet50_cvae # anuj
-from uncertainty_baselines.models.vit_keras import vit_keras # anuj
+# from uncertainty_baselines.models.cnn_ssvae_m1 import ssvae_m1 # anuj
+# from uncertainty_baselines.models.cnn_ssvae_m2 import ssvae_m2 # anuj
+# from uncertainty_baselines.models.resnet50_ssvae_m2 import resnet50_ssvae_m2 # anuj
+# from uncertainty_baselines.models.resnet50_vae import resnet50_vae # anuj
+# from uncertainty_baselines.models.resnet50_cvae import resnet50_cvae # anuj
+# from uncertainty_baselines.models.vit_keras import vit_keras # anuj
 
 
 # pylint: disable=g-import-not-at-top
 try:
   # Try to import ViT models.
-  from uncertainty_baselines.models import vit_batchensemble
-  from uncertainty_baselines.models import vit_batchensemble_gp
-  from uncertainty_baselines.models.bit_resnet import bit_resnet
-  from uncertainty_baselines.models.bit_resnet_heteroscedastic import bit_resnet_heteroscedastic
+  # from uncertainty_baselines.models import vit_batchensemble
+  # from uncertainty_baselines.models import vit_batchensemble_gp
+  # from uncertainty_baselines.models.bit_resnet import bit_resnet
+  # from uncertainty_baselines.models.bit_resnet_heteroscedastic import bit_resnet_heteroscedastic
   from uncertainty_baselines.models.vit import vision_transformer
-  from uncertainty_baselines.models.vit_batchensemble import vision_transformer_be
-  from uncertainty_baselines.models.vit_batchensemble_gp import vision_transformer_be_gp
-  from uncertainty_baselines.models.vit_gp import vision_transformer_gp
-  from uncertainty_baselines.models.vit_hetgpbe import vision_transformer_het_gp_be
-  from uncertainty_baselines.models.vit_hetgp import vision_transformer_hetgp
-  from uncertainty_baselines.models.vit_mimo import vision_transformer_mimo
-  from uncertainty_baselines.models.vit_heteroscedastic import vision_transformer_het
+  # from uncertainty_baselines.models.vit_batchensemble import vision_transformer_be
+  # from uncertainty_baselines.models.vit_batchensemble_gp import vision_transformer_be_gp
+  # from uncertainty_baselines.models.vit_gp import vision_transformer_gp
+  # from uncertainty_baselines.models.vit_hetgpbe import vision_transformer_het_gp_be
+  # from uncertainty_baselines.models.vit_hetgp import vision_transformer_hetgp
+  # from uncertainty_baselines.models.vit_mimo import vision_transformer_mimo
+  # from uncertainty_baselines.models.vit_heteroscedastic import vision_transformer_het
   from uncertainty_baselines.models.vit_simclr import vision_transformer_simclr  # EDIT(anuj)
   from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)

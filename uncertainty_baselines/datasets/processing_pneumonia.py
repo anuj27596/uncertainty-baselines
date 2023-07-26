@@ -99,6 +99,7 @@ def _pneumonia_processing(image_fobj,
 
   height, width, _ = image.shape
   actual_pixels = height * width
+  # import pdb; pdb.set_trace()
   if actual_pixels > target_pixels:
     factor = target_pixels / np.sqrt(actual_pixels)
     image = cv2.resize(image, dsize=None, fx=factor, fy=factor)
