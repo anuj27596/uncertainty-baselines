@@ -44,6 +44,7 @@ import tensorflow as tf
 
 from . import metric_utils  # local file import
 from . import results_storage_utils  # local file import
+import pdb
 
 
 @tf.function
@@ -664,7 +665,8 @@ def compute_loss_and_accuracy_arrs(results):
   """
   results = compute_log_loss_arr(results)
   y_pred, y_true = results['y_pred'], results['y_true']
-  results['accuracy_arr'] = y_true == (y_pred > 0.5)
+  assert y_pred.shape == y_true.shape, f"y_pred and y_true have different shape - {y_pred.shape} != {y_true.shape}"
+  results['accuracy_arr'] = np.argmax(y_true, axis=1) == np.argmax(y_pred, axis=1)
   return results
 
 
@@ -694,7 +696,10 @@ def compute_log_loss_arr(results, labels=np.asarray([0, 1]), eps=1e-15):
   # Check if dimensions are consistent.
   y_true = check_array(y_true)
 
-  loss = -(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))  # EDIT(anuj)
+  # loss = -(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))  # EDIT(anuj)
+
+  loss = -(y_true*np.log(y_pred)) # karm, cross-entropy loss
+  loss = np.sum(loss, axis=1) # karm
   results['nll_arr'] = loss
   return results
 
@@ -1020,6 +1025,7 @@ def splitreferral_uncertainty(x):  # EDIT(anuj)
   pos = ~neg
   unc[neg] = (x[neg].argsort().argsort() + 1) / (neg.sum() + 1)
   unc[pos] = 1 - (x[pos].argsort().argsort() + 1) / (pos.sum() + 1)
+  
   return unc
 
 
@@ -1054,50 +1060,70 @@ def compute_dataset_eval_metrics(
 
   # Standard predictive metrics
   # EDIT(anuj): averaging over classes for all metrics
-  eval_metrics[f'{dataset_key}/negative_log_likelihood'] = np.mean([
-      log_loss(y_true[:, i], y_pred[:, i], labels=np.asarray([0, 1]))
-      for i in range(num_classes)], axis=0)
-  try:
-    eval_metrics[f'{dataset_key}/auroc'] = np.mean([
-        roc_auc_score(y_true[:, i], y_pred[:, i], labels=np.asarray([0, 1]))
-        for i in range(num_classes)], axis=0)
-  except ValueError:
-    eval_metrics[f'{dataset_key}/auroc'] = None
-  eval_metrics[f'{dataset_key}/auprc'] = np.mean([
-        average_precision_score(y_true[:, i], y_pred[:, i])
-        for i in range(num_classes)], axis=0)
-  eval_metrics[f'{dataset_key}/accuracy'] = np.mean([
-        accuracy_score(y_true=y_true[:, i], y_pred=(y_pred[:, i] > 0.5))
-        for i in range(num_classes)], axis=0)
+
+  # eval_metrics[f'{dataset_key}/negative_log_likelihood'] = np.mean([
+  #     log_loss(y_true[:, i], y_pred[:, i], labels=np.asarray([0, 1]))
+  #     for i in range(num_classes)], axis=0)
+  
+  eval_metrics[f'{dataset_key}/negative_log_likelihood'] = log_loss(y_true, y_pred) # = np.average(np.sum(-y_true*np.log(y_pred),axis=1)), karm
+  # try:
+  #   # changeṇ
+  #   eval_metrics[f'{dataset_key}/auroc'] = np.mean([
+  #       roc_auc_score(y_true[:, i], y_pred[:, i], labels=np.asarray([0, 1]))
+  #       for i in range(num_classes)], axis=0)
+  # except ValueError:
+  #   eval_metrics[f'{dataset_key}/auroc'] = None
+  
+  eval_metrics[f'{dataset_key}/auroc'] = None
+  eval_metrics[f'{dataset_key}/auprc'] = average_precision_score(y_true, y_pred, average="weighted") # karm
+  eval_metrics[f'{dataset_key}/accuracy'] = accuracy_score(np.argmax(y_true, axis=1), np.argmax(y_pred, axis=1)) # karm
 
   # Uncertainty metrics
+
+  ece = rm.metrics.ExpectedCalibrationError(num_bins=ece_num_bins)
+  ece.add_batch(y_pred, label=y_true)
+  eval_metrics[f'{dataset_key}/ece'] = ece.result()['ece']
+
   ece_list = []
   for i in range(num_classes):
     ece = rm.metrics.ExpectedCalibrationError(num_bins=ece_num_bins)
     ece.add_batch(y_pred[:, i], label=y_true[:, i])
     ece_list.append(ece.result()['ece'])
-  eval_metrics[f'{dataset_key}/ece'] = np.mean(ece_list, axis=0)
+  eval_metrics[f'{dataset_key}/ece_individual'] = np.mean(ece_list, axis=0) # to do: ece or ece_individual 
 
   if compute_open_set_recognition:
     is_ood = results['is_ood']
-    eval_metrics[f'{dataset_key}/ood_detection_auroc'] = np.mean([
-        roc_auc_score(y_true=is_ood, y_score=y_pred_entropy[:, i])
-        for i in range(num_classes)], axis=0)
-    eval_metrics[f'{dataset_key}/ood_detection_auprc'] = np.mean([
-        average_precision_score(y_true=is_ood, y_score=y_pred_entropy[:, i])
-        for i in range(num_classes)], axis=0)
+    # eval_metrics[f'{dataset_key}/ood_detection_auroc'] = np.mean([
+    #     roc_auc_score(y_true=is_ood, y_score=y_pred_entropy[:, i])
+    #     for i in range(num_classes)], axis=0)
+    eval_metrics[f'{dataset_key}/ood_detection_auroc'] = None
+    # eval_metrics[f'{dataset_key}/ood_detection_auprc'] = np.mean([
+    #     average_precision_score(y_true=is_ood, y_score=y_pred_entropy[:, i])
+    #     for i in range(num_classes)], axis=0)
+    eval_metrics[f'{dataset_key}/ood_detection_auprc'] = average_precision_score(y_true=is_ood, y_score=y_pred_entropy, average="weighted") # karm
 
     # For the joint datasets, we also compute a rebalanced retention metric,
     # in which we duplicate the OOD dataset to match the size of the in-domain
     # dataset, and then compute the retention metrics.
+
+    # doubt: balanced retention
     rebal_ret_scores = []
-    for i in range(num_classes):
-      results_i = {k: results[k][:, i] for k in ['y_pred_entropy', 'accuracy_arr', 'nll_arr', 'y_pred', 'y_true']}
-      results_i['is_ood'] = results['is_ood']
-      rebal_ret_scores.append(compute_rebalanced_retention_scores(results_i))
+    # for i in range(num_classes):
+    #   results_i = {k: results[k][:, i] for k in ['y_pred_entropy', 'accuracy_arr', 'nll_arr', 'y_pred', 'y_true']}
+    #   results_i['is_ood'] = results['is_ood']
+    #   rebal_ret_scores.append(compute_rebalanced_retention_scores(results_i))
+    # for metric in ('accuracy', 'nll', 'auroc', 'auprc'):
+    #   eval_metrics[f'{dataset_key}/balanced_retention_{metric}_auc'] = np.mean(
+    #       [rebal_ret_scores[i][metric] for i in range(num_classes)])
+
+
+    results_i = {k: results[k] for k in ['y_pred_entropy', 'accuracy_arr', 'nll_arr', 'y_pred', 'y_true']}
+    results_i['is_ood'] = results['is_ood']
+    rebal_ret_scores = compute_rebalanced_retention_scores(results_i)
+
     for metric in ('accuracy', 'nll', 'auroc', 'auprc'):
-      eval_metrics[f'{dataset_key}/balanced_retention_{metric}_auc'] = np.mean(
-          [rebal_ret_scores[i][metric] for i in range(num_classes)])
+      eval_metrics[f'{dataset_key}/balanced_retention_{metric}_auc'] = rebal_ret_scores[metric]
+      
   else:
     # This is added for convenience when logging (so the entry exists
     # in tabular format)
@@ -1111,41 +1137,48 @@ def compute_dataset_eval_metrics(
   if compute_retention_auc:
     assert 'accuracy_arr' in results
     assert 'nll_arr' in results
-    eval_metrics[f'{dataset_key}/retention_accuracy_auc'] = np.mean([
-        np.mean(compute_retention_curve_on_accuracies(
-            accuracies=results['accuracy_arr'][:, i], uncertainty=y_pred_entropy[:, i]))
-        for i in range(num_classes)], axis=0)
-    eval_metrics[f'{dataset_key}/retention_nll_auc'] = np.mean([
-        np.mean(compute_retention_curve_on_losses(
-            losses=results['nll_arr'][:, i], uncertainty=y_pred_entropy[:, i]))
-        for i in range(num_classes)], axis=0)
-    eval_metrics[f'{dataset_key}/retention_auroc_auc'] = np.mean([
-        np.mean(compute_auc_retention_curve(
-            y_pred=y_pred[:, i],
-            y_true=y_true[:, i],
-            uncertainty=y_pred_entropy[:, i],
-            auc_str='roc'))
-        for i in range(num_classes)], axis=0)
-    eval_metrics[f'{dataset_key}/retention_auprc_auc'] = np.mean([
-        np.mean(compute_auc_retention_curve(
-            y_pred=y_pred[:, i],
-            y_true=y_true[:, i],
-            uncertainty=y_pred_entropy[:, i],
-            auc_str='prc'))
-        for i in range(num_classes)], axis=0)
+    # eval_metrics[f'{dataset_key}/retention_accuracy_auc'] = np.mean([
+    #     np.mean(compute_retention_curve_on_accuracies(
+    #         accuracies=results['accuracy_arr'][:, i], uncertainty=y_pred_entropy[:, i]))
+    #     for i in range(num_classes)], axis=0)
+    eval_metrics[f'{dataset_key}/retention_accuracy_auc'] = np.mean(
+      compute_retention_curve_on_accuracies(accuracies=results['accuracy_arr'], uncertainty=y_pred_entropy))
 
+    # eval_metrics[f'{dataset_key}/retention_nll_auc'] = np.mean([
+    #     np.mean(compute_retention_curve_on_losses(
+    #         losses=results['nll_arr'][:, i], uncertainty=y_pred_entropy[:, i]))
+    #     for i in range(num_classes)], axis=0)
+    
+    eval_metrics[f'{dataset_key}/retention_nll_auc'] = np.mean(compute_retention_curve_on_losses(losses=results['nll_arr'], uncertainty=y_pred_entropy))
+    
+    # eval_metrics[f'{dataset_key}/retention_auroc_auc'] = np.mean([
+    #     np.mean(compute_auc_retention_curve(
+    #         y_pred=y_pred[:, i],
+    #         y_true=y_true[:, i],
+    #         uncertainty=y_pred_entropy[:, i],
+    #         auc_str='roc'))
+    #     for i in range(num_classes)], axis=0)
+    eval_metrics[f'{dataset_key}/retention_auroc_auc'] = None
+    # eval_metrics[f'{dataset_key}/retention_auprc_auc'] = np.mean([
+    #     np.mean(compute_auc_retention_curve(
+    #         y_pred=y_pred[:, i],
+    #         y_true=y_true[:, i],
+    #         uncertainty=y_pred_entropy[:, i],
+    #         auc_str='prc'))
+    #     for i in range(num_classes)], axis=0) # todo
+    eval_metrics[f'{dataset_key}/retention_auprc_auc'] = None
     sr_unc = [splitreferral_uncertainty(y_pred[:, i]) for i in range(num_classes)]  # EDIT(anuj)
-    eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean([
-        np.mean(compute_retention_curve_on_accuracies(
-            accuracies=results['accuracy_arr'][:, i], uncertainty=sr_unc[i]))
-        for i in range(num_classes)], axis=0)
-    eval_metrics[f'{dataset_key}/retention_auroc_auc_splitreferral'] = np.mean([
-        np.mean(compute_auc_retention_curve(
-            y_pred=y_pred[:, i],
-            y_true=y_true[:, i],
-            uncertainty=sr_unc[i],
-            auc_str='roc'))
-        for i in range(num_classes)], axis=0)
+    # eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean([
+    #     np.mean(compute_retention_curve_on_accuracies(
+    #         accuracies=results['accuracy_arr'], uncertainty=sr_unc[i]))
+    #     for i in range(num_classes)], axis=0) # todo
+    # eval_metrics[f'{dataset_key}/retention_auroc_auc_splitreferral'] = np.mean([
+    #     np.mean(compute_auc_retention_curve(
+    #         y_pred=y_pred[:, i],
+    #         y_true=y_true[:, i],
+    #         uncertainty=sr_unc[i],
+    #         auc_str='roc'))
+    #     for i in range(num_classes)], axis=0) # todo
 
   return eval_metrics
 

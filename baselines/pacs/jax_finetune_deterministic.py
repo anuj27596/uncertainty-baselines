@@ -278,7 +278,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = train_utils.sigmoid_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
+    losses = train_utils.softmax_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -313,7 +313,7 @@ def main(argv):
       logits, _ = model.apply(
           {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      return train_utils.sigmoid_xent(logits=logits, labels=labels)  # EDIT(anuj)
+      return train_utils.softmax_xent(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -516,7 +516,7 @@ def main(argv):
           # Here we parse batch_metric_args to compute uncertainty metrics.
           logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
-          probs = jax.nn.sigmoid(logits)  # EDIT(anuj)
+          probs = jax.nn.softmax(logits)  # EDIT(anuj)
 
           labels = np.array(labels[0])  # EDIT(anuj)
 
@@ -540,7 +540,7 @@ def main(argv):
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
-        results_arrs['y_pred_entropy'] = vit_utils.entropy_from_logits(results_arrs['logits'])  # EDIT(anuj)
+        results_arrs['y_pred_entropy'] = vit_utils.entropy_from_ypred(results_arrs['y_pred'])  # EDIT(karm)
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = np.concatenate(results_arrs['pre_logits'], axis=0)
 
@@ -550,6 +550,7 @@ def main(argv):
 
         all_eval_results[eval_name] = results_arrs
 
+      # import pdb; pdb.set_trace()
       per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
           dataset_split_to_containers=all_eval_results,
           is_deterministic=True,
