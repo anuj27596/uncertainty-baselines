@@ -12,7 +12,7 @@ import sklearn.metrics as skm
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
-import tensorflow as tf
+# import tensorflow as tf
 
 MAXREF = 95
 REFRANGE = np.linspace(0, MAXREF / 100, MAXREF + 1)
@@ -34,22 +34,15 @@ def ecdf(x):
 
 def split_referral_order(y_pred, y_true):
 
-    # y_pred = y_pred.reshape(-1, NUM_CLASSES)
-    # y_true = y_true.reshape(-1, NUM_CLASSES)
-
     y_hat = np.argmax(y_pred, axis=1)
     print(f"----- Debug ------ {y_pred.shape} {y_true.shape} {y_hat.shape}")
 
     order = {}
     for c in range(NUM_CLASSES):
-        y_pred_c = y_pred[y_hat == c][:,c]
-        
-        y_args_c = np.argsort(y_pred_c)
-        y_pred_c = y_pred_c[y_args_c]
-        y_true_c = np.argmax(y_true[y_hat == c][y_args_c],axis=1)
         order[c] = {}
-        order[c]["y_pred"] = y_pred_c
-        order[c]["y_true"] = y_true_c
+        ids = np.argsort(y_pred[y_hat == c], axis=0)[:, c] # sort by axis=c and take rankindex
+        order[c]["y_pred"] = y_pred[y_hat == c][ids] # n_c x c
+        order[c]["y_true"] = y_true[y_hat == c][ids] # n_c x c
     return order
 
 def select_referral(order, r):
@@ -66,9 +59,9 @@ def select_referral(order, r):
         y_pred_select.append(order[c]["y_pred"][n_remove:])
         y_hat_select.append(np.repeat(c, n - n_remove))
 
-    y_true_select = np.concatenate(y_true_select)
-    y_pred_select = np.concatenate(y_pred_select)
-    y_hat_select = np.concatenate(y_hat_select)
+    y_true_select = np.concatenate(y_true_select) # nxc
+    y_pred_select = np.concatenate(y_pred_select) # nxc
+    y_hat_select = np.concatenate(y_hat_select) # nx1
 
     return y_true_select, y_hat_select, y_pred_select
         
@@ -118,13 +111,15 @@ def process_func(m, d, seed, SR):
             y_true_selected, y_hat_selected, y_pred_selected = select_referral(order_split, r)
         else:
             ids = order[int(r*len(order)):]
-            y_true_selected, y_hat_selected, y_pred_selected = np.argmax(y, axis=1)[ids].reshape(-1,), np.argmax(p, axis=1)[ids].reshape(-1,), np.max(p,axis=1)[ids].reshape(-1,)
+            y_true_selected, y_hat_selected, y_pred_selected = y[ids], np.argmax(p, axis=1)[ids].reshape(-1,), p[ids] 
+            
+        metrics['Accuracy'][r_idx] = skm.accuracy_score(np.argmax(y_true_selected, axis=1), y_hat_selected)
+        metrics['AvgPrec'][r_idx] = skm.average_precision_score(y_true_selected, y_pred_selected, average="weighted")
             
 
         print(f"----------- debug ------- y_true_selected: {y_true_selected.shape} y_hat_selected: {y_hat_selected.shape}")
-        metrics['Accuracy'][r_idx] = skm.accuracy_score(y_true_selected, y_hat_selected)
-        metrics['AvgPrec'][r_idx] = skm.average_precision_score(tf.one_hot(y_true_selected, NUM_CLASSES).numpy(), tf.one_hot(y_pred_selected, NUM_CLASSES).numpy(), average="weighted")
-        # import pdb; pdb.set_trace()
+
+ 
         # if y[ids, class_id].mean() not in (0, 1):
         #     metrics['AUROC'][class_id, r_idx] = skm.roc_auc_score(
         #         y[ids, class_id], p[ids, class_id])
@@ -219,9 +214,9 @@ if __name__ == '__main__':
         # 'rb_dropout',
     ]
     datasets = [
-        # 'in_domain_test',
+        'in_domain_test',
         'in_domain_validation',
-        # 'ood_test',
+        'ood_test',
         'ood_validation',
     ]
     
@@ -287,12 +282,12 @@ if __name__ == '__main__':
                 + [model_name[m] + ' [SR]' for m in models]
             )
 
-            for SR, m in itertools.product((False, True), models):
-                if m != 'vit' and SR:
-                    continue
-                mean = metrics[p][m, d, SR].reshape(-1,)
-                std = np.std(metrics[p][m, d, SR].reshape(-1,))
-                plt.fill_between(REFRANGE, mean - std, mean + std, color = plot_color[m], alpha = 0.05)
+            # for SR, m in itertools.product((False, True), models):
+            #     if m != 'vit' and SR:
+            #         continue
+            #     mean = metrics[p][m, d, SR].reshape(-1,)
+            #     std = np.std(metrics[p][m, d, SR].reshape(-1,)) # ACROSS THE SEED
+            #     plt.fill_between(REFRANGE, mean - std, mean + std, color = plot_color[m], alpha = 0.05)
 
             plt.xlabel('Referral Rate')
             plt.ylabel(p)
