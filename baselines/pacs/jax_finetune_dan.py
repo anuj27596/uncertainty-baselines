@@ -43,18 +43,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-# import checkpoint_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import input_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import train_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import checkpoint_utils  # local file import from baselines.pacs  # EDIT(anuj)
+# import input_utils  # local file import from baselines.pacs  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.pacs  # EDIT(anuj)
+# import train_utils  # local file import from baselines.pacs  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.chest_xray.input_utils as input_utils  # EDIT(anuj)
-import baselines.chest_xray.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.chest_xray.train_utils as train_utils  # EDIT(anuj)
-from baselines.chest_xray.utils import results_storage_utils  # EDIT(anuj)
-from baselines.chest_xray.utils import vit_utils  # EDIT(anuj)
+import baselines.pacs.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.pacs.input_utils as input_utils  # EDIT(anuj)
+import baselines.pacs.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.pacs.train_utils as train_utils  # EDIT(anuj)
+from baselines.pacs.utils import results_storage_utils  # EDIT(anuj)
+from baselines.pacs.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -184,24 +184,7 @@ def main(argv):
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
-  if dist_shift == 'chxToch14':
-    builder_config = {
-        d: f'{dataset_names[d]}/processed'
-        for d in ('in_domain_dataset', 'ood_dataset')}
-  elif dist_shift == 'chxfToch14':
-    builder_config = {
-        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
-  elif dist_shift == 'chxfToch14r':
-    builder_config = {
-        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-        'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
-  elif dist_shift == 'ch14Tochx':
-    builder_config = {
-        d: f'{dataset_names[d]}/processed_swap'
-        for d in ('in_domain_dataset', 'ood_dataset')}
-  else:
-    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+  builder_config = {d: f'{dataset_names[d]}/{config.builder_config}' for d in ('in_domain_dataset', 'ood_dataset')}
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],

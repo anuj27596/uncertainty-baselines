@@ -24,3 +24,5 @@ dist/
 
 # by karm
 eval_results
+dump
+plots

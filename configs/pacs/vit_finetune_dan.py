@@ -152,5 +152,6 @@ def get_config():
   config.checkpoint_timeout = 1
 
   config.args = {}
+  config.builder_config = "processed_sketch"
   return config
 
