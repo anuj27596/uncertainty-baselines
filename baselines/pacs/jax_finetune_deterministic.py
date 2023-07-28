@@ -550,7 +550,7 @@ def main(argv):
 
         all_eval_results[eval_name] = results_arrs
 
-      # import pdb; pdb.set_trace()
+      import pdb; pdb.set_trace()
       per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
           dataset_split_to_containers=all_eval_results,
           is_deterministic=True,
