@@ -1168,10 +1168,10 @@ def compute_dataset_eval_metrics(
     #     for i in range(num_classes)], axis=0) # todo
     eval_metrics[f'{dataset_key}/retention_auprc_auc'] = None
     sr_unc = [splitreferral_uncertainty(y_pred[:, i]) for i in range(num_classes)]  # EDIT(anuj)
-    # eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean([
-    #     np.mean(compute_retention_curve_on_accuracies(
-    #         accuracies=results['accuracy_arr'], uncertainty=sr_unc[i]))
-    #     for i in range(num_classes)], axis=0) # todo
+    eval_metrics[f'{dataset_key}/retention_accuracy_auc_splitreferral'] = np.mean([
+        np.mean(compute_retention_curve_on_accuracies(
+            accuracies=results['accuracy_arr'], uncertainty=sr_unc[i]))
+        for i in range(num_classes)], axis=0) # todo
     # eval_metrics[f'{dataset_key}/retention_auroc_auc_splitreferral'] = np.mean([
     #     np.mean(compute_auc_retention_curve(
     #         y_pred=y_pred[:, i],
