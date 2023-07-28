@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 import sys
 sys.path.append("uncertainty-baselines")
@@ -14,12 +14,12 @@ train_ds_rng = jax.random.PRNGKey(0)
 
 dataset_name = "pacs_ood"
 #data_dir = "/data3/home/karmpatel/dsmil-wsi/datasets/Camelyon16/"
-data_dir = "~/troy_anuj/gub-mod/uncertainty-baselines/data/downloads/manual/pacs"
+data_dir = "~/ub_karm/data_ub/data/pacs"
 
 train_base_dataset = ub.datasets.get(
   dataset_name,
   "validation",
-  builder_config=f'{dataset_name}/processed_sketch', 
+  builder_config=f'{dataset_name}/processed_art_painting', 
   data_dir=data_dir)
 
 train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
