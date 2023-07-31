@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import sys
 sys.path.append("uncertainty-baselines")
@@ -19,7 +19,7 @@ data_dir = "~/ub_karm/data_ub/data/pacs"
 train_base_dataset = ub.datasets.get(
   dataset_name,
   "validation",
-  builder_config=f'{dataset_name}/processed_art_painting', 
+  builder_config=f'{dataset_name}/processed_photo_swap', 
   data_dir=data_dir)
 
 train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access

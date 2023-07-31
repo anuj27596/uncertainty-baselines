@@ -124,6 +124,12 @@ class PacsId(tfds.core.GeneratorBasedBuilder):
         name="processed_photo",
         description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
         target_pixels=300),
+
+         PacsIdConfig(
+        name="processed_photo_swap",
+        description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+        target_pixels=300),
+        
             PacsIdConfig(
         name="processed_sketch",
         description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -170,9 +176,13 @@ class PacsId(tfds.core.GeneratorBasedBuilder):
     splits = ('train', 'validation', 'test')
     id_domains = []
     for domain in _DATA_DOMAINS:
-      if domain not in self.builder_config.name:
-        id_domains.append(domain)
-        
+      if "swap" not in self.builder_config.name:
+        if domain not in self.builder_config.name:
+          id_domains.append(domain)
+      else:
+        # swap
+        if domain in self.builder_config.name:
+          id_domains.append(domain)
 
       # print(f"********* Preparting In-Domain: {domain} ************")
     path = dl_manager.manual_dir

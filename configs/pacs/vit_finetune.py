@@ -48,7 +48,7 @@ def get_config():
   #   Kaggle/EyePACS in-domain datasets are unchanged.
   # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
   #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
-  config.distribution_shift = 'chxfToch14r'
+  config.distribution_shift = 'swap'
 
   # If checkpoint path is provided, resume training and/or conduct evaluation
   #   with this checkpoint. See `checkpoint_utils.py`.
@@ -131,18 +131,18 @@ def get_config():
   config.only_eval = False  # Disables training, only evaluates the model
   config.eval_on_train = True  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
-  config.use_test = False  # Whether to use a test split
+  config.use_test = True  # Whether to use a test split
 
   # Step Counts
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (250 * 50, 400)
+  config.total_and_warmup_steps = (30 * 50, 400)
 
-  config.log_training_steps = 100
-  config.log_eval_steps = 746
+  config.log_training_steps = 50
+  config.log_eval_steps = 200
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 746
+  config.checkpoint_steps = 500
   config.checkpoint_timeout = 1
   config.builder_config = "processed_sketch"
 

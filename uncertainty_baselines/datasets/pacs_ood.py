@@ -124,6 +124,10 @@ class PacsOod(tfds.core.GeneratorBasedBuilder):
         name="processed_photo",
         description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
         target_pixels=300),
+         PacsOodConfig(
+        name="processed_photo_swap",
+        description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+        target_pixels=300),
             PacsOodConfig(
         name="processed_sketch",
         description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -166,28 +170,36 @@ class PacsOod(tfds.core.GeneratorBasedBuilder):
     # TODO(nband): implement download using kaggle API.
     # TODO(nband): implement extraction of multiple files archives.
 
+    splits = ('validation', 'test')
+    ood_domains = []
     for domain in _DATA_DOMAINS:
-      if domain in self.builder_config.name:
-        # ood
-        splits = ('validation', 'test')
-        print(f"********* Preparting Out-Domain: {domain} ************")
-        path = dl_manager.manual_dir
-        return [
-            tfds.core.SplitGenerator(
-                name=split,
-                gen_kwargs={
-                    "images_dir_path":path,
-                    "split": split,
-                    "domain": domain,
-                })
-            for split in splits
-    ]
+      if "swap" not in self.builder_config.name:
+        if domain in self.builder_config.name:
+          ood_domains.append(domain) # only 1 domain
+      else:
+        # swap
+        if domain not in self.builder_config.name:
+          ood_domains.append(domain) # multiple domains
+
+    path = dl_manager.manual_dir
+    split_generators = []
+    split_generators.extend([
+      tfds.core.SplitGenerator(
+          name=split,
+          gen_kwargs={
+              "images_dir_path":path,
+              "split": split,
+              "domains": ood_domains,
+          })
+      for split in splits
+    ])
+    return split_generators
 
 
   def _generate_examples(self,
                          images_dir_path,
                          split,
-                         domain,
+                         domains,
                          csv_usage=None):
     """Yields Example instances from given CSV.
 
@@ -200,9 +212,14 @@ class PacsOod(tfds.core.GeneratorBasedBuilder):
         the "Usage" column from the csv
     """
    
-    split_file = os.path.join(images_dir_path, "split", f"ood_{domain}_{split}.txt")
-            
-    df = pd.read_csv(split_file)
+    dfs = []
+    for domain in domains:
+      split_file = os.path.join(images_dir_path, "split", f"ood_{domain}_{split}.txt")
+      print(f"\n *********** Out Domain: Reading: {split_file} ***********") 
+      df = pd.read_csv(split_file)
+      dfs.append(df)
+    
+    df = pd.concat(dfs)
     # pdb.set_trace()
     for i, (path, label) in df.iterrows():
         record = {
