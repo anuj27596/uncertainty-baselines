@@ -214,6 +214,15 @@ def initialize_mim_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_osp_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_osp(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_sngp_model(config):
   """Initializes SNGP model."""
   # Specify Gaussian process layer configs.
@@ -255,6 +264,7 @@ VIT_MODEL_INIT_MAP = {
     'dan': initialize_dan_model,  # EDIT(anuj)
     'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
     'mim': initialize_mim_model,  # EDIT(anuj)
+    'osp': initialize_osp_model,  # EDIT(anuj)
 }
 
 

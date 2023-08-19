@@ -485,12 +485,12 @@ class Keep:
 @dataclasses.dataclass
 class SimclrAug:  # EDIT(anuj)
 
-  image_key: str = "image"
-  label_key: str = "labels"
   area_min: int = 80
-  area_max: int = 100
   rotation_max: int = 10
   jitter_strength: float = 0.02
+  area_max: int = 100
+  image_key: str = "image"
+  label_key: str = "labels"
   res_key_1: str = "image_aug_1"
   res_key_2: str = "image_aug_2"
 
