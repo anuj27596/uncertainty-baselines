@@ -270,7 +270,7 @@ def _reinit(restored_params, init_params, to_reinit):
 
 def restore_from_pretrained_params(init_params, loaded_params,
                                    model_representation_size, model_classifier,
-                                   reinit_params):
+                                   reinit_params, no_grid):
   """Initializes (some) model parameters based on pretrained parameters.
 
   Args:
@@ -322,16 +322,25 @@ def restore_from_pretrained_params(init_params, loaded_params,
       else:
         posemb_tok, posemb_grid = posemb[:, :0], posemb[0]
 
-      gs_old = int(np.sqrt(len(posemb_grid)))
-      gs_new = int(np.sqrt(ntok_new))
-      logging.info("load_pretrained: grid-size from %s to %s", gs_old, gs_new)
-      posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
-
-      zoom = (gs_new / gs_old, gs_new / gs_old, 1)
-      posemb_grid = scipy.ndimage.zoom(posemb_grid, zoom, order=1)
-      posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
-      posemb = jnp.array(np.concatenate([posemb_tok, posemb_grid], axis=1))
-      restored_params["Transformer"]["posembed_input"]["pos_embedding"] = posemb
+      if no_grid:
+        ntok_old = len(posemb_grid)
+        logging.info("load_pretrained: num-tokens from %s to %s", ntok_old, ntok_new)
+        posemb_grid = posemb_grid.reshape(ntok_old, -1)
+        zoom = (ntok_new / ntok_old, 1)
+        posemb_grid = scipy.ndimage.zoom(posemb_grid, zoom, order=1)
+        posemb_grid = posemb_grid.reshape(1, ntok_new, -1)
+        posemb = jnp.array(np.concatenate([posemb_tok, posemb_grid], axis=1))
+        restored_params["Transformer"]["posembed_input"]["pos_embedding"] = posemb
+      else:
+        gs_old = int(np.sqrt(len(posemb_grid)))
+        gs_new = int(np.sqrt(ntok_new))
+        logging.info("load_pretrained: grid-size from %s to %s", gs_old, gs_new)
+        posemb_grid = posemb_grid.reshape(gs_old, gs_old, -1)
+        zoom = (gs_new / gs_old, gs_new / gs_old, 1)
+        posemb_grid = scipy.ndimage.zoom(posemb_grid, zoom, order=1)
+        posemb_grid = posemb_grid.reshape(1, gs_new * gs_new, -1)
+        posemb = jnp.array(np.concatenate([posemb_tok, posemb_grid], axis=1))
+        restored_params["Transformer"]["posembed_input"]["pos_embedding"] = posemb
 
   return restored_params
 
@@ -342,7 +351,8 @@ def maybe_load_checkpoint(train_loop_rngs: jnp.ndarray,
                           init_params: Params,
                           init_fixed_model_states: Optional[Params],
                           default_reinit_params: Iterable[str],
-                          config: ml_collections.ConfigDict) -> CheckpointData:
+                          config: ml_collections.ConfigDict,
+                          no_grid: bool = True) -> CheckpointData:
   """Loads a model from an existing checkpoint if so indicated by the config.
 
   Whether to resume training, initialize from a previous checkpoint, or do
@@ -429,7 +439,8 @@ def maybe_load_checkpoint(train_loop_rngs: jnp.ndarray,
         loaded_params=loaded_params,
         model_representation_size=config.model.representation_size,
         model_classifier=config.model.classifier,
-        reinit_params=reinit_params)
+        reinit_params=reinit_params,
+        no_grid=no_grid)
 
     optimizer = init_optimizer.replace(target=loaded_params)
     if jax.process_index() == 0:

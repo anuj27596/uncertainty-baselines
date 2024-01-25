@@ -96,6 +96,7 @@ try:
   from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
   from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
   from uncertainty_baselines.models.vit_mim import vision_transformer_mim  # EDIT(anuj)
+  from uncertainty_baselines.models.vit_mae import vision_transformer_mae  # EDIT(anuj)
   from uncertainty_baselines.models.vit_osp import vision_transformer_osp  # EDIT(anuj)
 except ImportError:
   logging.warning('Skipped ViT models due to ImportError.', exc_info=True)

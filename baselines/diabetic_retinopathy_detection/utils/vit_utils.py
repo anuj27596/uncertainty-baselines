@@ -221,6 +221,15 @@ def initialize_mim_model(config):  # EDIT(anuj)
   }
 
 
+def initialize_mae_model(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_mae(
+      num_classes=config.num_classes, **config.get('model', {}))
+  return {
+      'model': model
+  }
+
+
 def initialize_osp_model(config):  # EDIT(anuj)
   logging.info('config.model = %s', config.get('model'))
   model = ub.models.vision_transformer_osp(
@@ -271,6 +280,7 @@ VIT_MODEL_INIT_MAP = {
     'dan': initialize_dan_model,  # EDIT(anuj)
     'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
     'mim': initialize_mim_model,  # EDIT(anuj)
+    'mae': initialize_mae_model,  # EDIT(anuj)
     'osp': initialize_osp_model,  # EDIT(anuj)
 }
 

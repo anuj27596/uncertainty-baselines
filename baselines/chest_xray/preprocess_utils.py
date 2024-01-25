@@ -575,3 +575,34 @@ class PatchMimMask:
 
     features[self.key_result] = mask
     return features
+
+
+@dataclasses.dataclass
+class MaeMask:
+  """
+
+  Attributes:
+    key: Key of the data to be processed.
+    key_result: Key under which to store the result (same as `key` if None).
+    rng_key: Key of the random number used for
+      `tf.image.stateless_sample_distorted_bounding_box`.
+  """
+
+  mask_rate: float = 0.5
+  patch_size: int = 32
+  key: str = "image"
+  key_result: Optional[str] = 'mae_mask'
+
+  def __call__(self, features: Features) -> Features:
+    image = features[self.key]
+
+    *_, h, w, c = image.shape
+    p = self.patch_size
+    s = (h // p) * (w // p)
+
+    mask = np.random.choice(s, int(self.mask_rate * s), replace = False)
+    mask = tf.convert_to_tensor(mask)
+
+    features[self.key_result] = mask
+    return features
+

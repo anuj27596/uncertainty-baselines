@@ -194,8 +194,6 @@ class Encoder(nn.Module):
             inputs)
     x = nn.Dropout(rate=self.dropout_rate)(x, deterministic=not train)
 
-    # embeddings = []
-
     # Input Encoder
     for lyr in range(self.num_layers):
       x = Encoder1DBlock(
@@ -205,30 +203,82 @@ class Encoder(nn.Module):
           name=f'encoderblock_{lyr}',
           num_heads=self.num_heads)(
               x, deterministic=not train)
-      # if lyr in [0, 1, 3, 5, 8]: # temp anuj
-      #   embeddings.append(x[:, 0])
     encoded = nn.LayerNorm(name='encoder_norm')(x)
 
-    return encoded # , embeddings
+    return encoded
 
 
-class VisionTransformer(nn.Module):
+class Decoder(nn.Module):
+
+  dim: int
+  mlp_dim: int
+  num_heads: int
+  input_shape: Tuple = None
+  output_shape: Tuple = None
+  dtype: Dtype = jnp.float32
+  dropout_rate: float = 0.1
+  attention_dropout_rate: float = 0.1
+  kernel_init: Callable[[PRNGKey, Shape, Dtype],
+                        Array] = nn.initializers.xavier_uniform()
+  bias_init: Callable[[PRNGKey, Shape, Dtype],
+                      Array] = nn.initializers.normal(stddev=1e-6)
+
+  @nn.compact
+  def __call__(self, inputs, mask, *, deterministic):
+    """Applies Transformer MlpBlock module."""
+    n, s2, ci = self.input_shape
+    s = int(s2 ** 0.5) # assuming square grid
+    n, w, w, co = self.output_shape
+    p = w // s
+
+    masked_vectors = self.param('masked_vectors', nn.initializers.zeros, ci)
+
+    x = jnp.tile(masked_vectors, (n, s2, 1))
+    x = x.at[jnp.arange(n)[:, None], mask].set(inputs)
+
+    x = Encoder1DBlock(
+        mlp_dim=self.mlp_dim,
+        dropout_rate=self.dropout_rate,
+        attention_dropout_rate=self.attention_dropout_rate,
+        name=f'decoderblock',
+        num_heads=self.num_heads)(
+            x, deterministic=deterministic)
+
+    x = nn.gelu(x)
+    x = nn.Dropout(rate=self.dropout_rate)(x, deterministic=deterministic)
+    
+    x = nn.Dense(
+        features=p * p * co,
+        dtype=self.dtype,
+        kernel_init=self.kernel_init,
+        bias_init=self.bias_init)(  # pytype: disable=wrong-arg-types
+            x)
+
+    x = jnp.reshape(x, (n, s, s, p, p, co))
+    x = jnp.transpose(x, (0, 1, 3, 2, 4, 5))
+    x = jnp.reshape(x, (n, w, w, co))
+
+    return x
+
+
+class VisionTransformerMAE(nn.Module):
   """Vision Transformer model."""
 
   num_classes: int
   patches: Any
   transformer: Any
+  mae_decoder: Any
   hidden_size: int
   representation_size: Optional[int] = None
   classifier: str = 'token'
   fix_base_model: bool = False
 
   @nn.compact
-  def __call__(self, inputs, *, train):
+  def __call__(self, inputs, mask, *, train):
     out = {}
 
+    mae_pred_shape = inputs.shape
     x = inputs
-    n, h, w, c = x.shape
 
     # We can merge s2d+emb into a single conv; it's the same.
     x = nn.Conv(
@@ -246,6 +296,9 @@ class VisionTransformer(nn.Module):
     # Transformer.
     n, h, w, c = x.shape
     x = jnp.reshape(x, [n, h * w, c])
+
+    decoder_input_shape = [n, h * w, c]
+    x = x[jnp.arange(n)[:, None], mask]
 
     # If we want to add a class token, add it here.
     if self.classifier == 'token':
@@ -283,12 +336,25 @@ class VisionTransformer(nn.Module):
         kernel_init=nn.initializers.zeros)(
             x)
     out['logits'] = x
+
+    mae_pred = Decoder(
+        dim=c,
+        input_shape=decoder_input_shape,
+        output_shape=mae_pred_shape,
+        name='mae_decoder_block',
+        **self.mae_decoder)(
+            out['transformed'][:, 1:],
+            mask=mask,
+            deterministic=not train)
+    out['mae_pred'] = mae_pred
+
     return x, out
 
 
-def vision_transformer(num_classes: int,
+def vision_transformer_mae(num_classes: int,
                        patches: Any,
                        transformer: Any,
+                       mae_decoder: Any,
                        hidden_size: int,
                        representation_size: Optional[int] = None,
                        classifier: str = 'token',
@@ -296,11 +362,43 @@ def vision_transformer(num_classes: int,
   """Builds a Vision Transformer (ViT) model."""
   # TODO(dusenberrymw): Add API docs once config dict in VisionTransformer is
   # cleaned up.
-  return VisionTransformer(
+  return VisionTransformerMAE(
       num_classes=num_classes,
       patches=patches,
       transformer=transformer,
+      mae_decoder=mae_decoder,
       hidden_size=hidden_size,
       representation_size=representation_size,
       classifier=classifier,
       fix_base_model=fix_base_model)
+
+
+if __name__ == '__main__':
+  
+  import collections
+  nt = lambda d: collections.namedtuple('nt', d)(**d)
+
+  net = vision_transformer_mae(
+      num_classes = 2,
+      patches = nt(dict(size=[32, 32])),
+      transformer = dict(
+          num_layers=12,
+          mlp_dim=3072,
+          num_heads=12,
+          dropout_rate=0.,
+          attention_dropout_rate=0.),
+      mae_decoder = dict(
+          mlp_dim=3072,
+          num_heads=12,
+          dropout_rate=0.,
+          attention_dropout_rate=0.),
+      hidden_size = 768)
+
+  import numpy as np
+  x = np.random.randn(16, 256, 256, 3)
+  m = np.random.randn(16, 64).argsort()[:, :32]
+
+  x = jnp.array(x)
+  m = jnp.array(m)
+
+  net.init(jax.random.PRNGKey(0), x, m, train=False)
