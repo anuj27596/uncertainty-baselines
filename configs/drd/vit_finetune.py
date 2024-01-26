@@ -116,7 +116,7 @@ def get_config():
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.
-  config.lr.base = 0.003
+  config.lr.base = 0.001
   config.lr.decay_type = 'linear'
 
   # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
@@ -137,12 +137,12 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (549 * 20, 300)
+  config.total_and_warmup_steps = (549 * 40, 300)
 
   config.log_training_steps = 50
-  config.log_eval_steps = 549
+  config.log_eval_steps = 549 * 2
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 549
+  config.checkpoint_steps = 549 * 2
   config.checkpoint_timeout = 1
 
   config.args = {}

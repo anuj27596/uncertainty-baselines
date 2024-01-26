@@ -138,12 +138,12 @@ def get_config():
 
   # Varied together for wandb sweep compatibility.
   # TODO(nband): revert this to separate arguments.
-  config.total_and_warmup_steps = (40_000, 500)
+  config.total_and_warmup_steps = (2195 * 100, 1200)
 
-  config.log_training_steps = 200
-  config.log_eval_steps = 2195
+  config.log_training_steps = 2195
+  config.log_eval_steps = 2195 * 10
   # NOTE: eval is very fast O(seconds) so it's fine to run it often.
-  config.checkpoint_steps = 2195
+  config.checkpoint_steps = 2195 * 10
   config.checkpoint_timeout = 1
 
   config.args = {}

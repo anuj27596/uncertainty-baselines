@@ -57,12 +57,12 @@ WORKDIR /src/uncertainty-baselines
 
 
 def main(_):
-	with xm_local.create_experiment(experiment_title = 'ub-vit-dan') as experiment:
+	with xm_local.create_experiment(experiment_title = 'ub-cx-sc-seq-ft') as experiment:
 		spec = xm.PythonContainer(
 				# Package the current directory that this script is in.
 				path = '.',
 				base_image = 'gcr.io/external-collab-experiment/make-conda',
-				entrypoint = xm.ModuleName('baselines.diabetic_retinopathy_detection.jax_finetune_dan'),
+				entrypoint = xm.ModuleName('baselines.chest_xray.jax_finetune_deterministic'),
 				docker_instructions = docker_instructions,
 		)
 
@@ -81,11 +81,12 @@ def main(_):
 					FLAGS.bucket)
 			tensorboard = asyncio.get_event_loop().run_until_complete(tensorboard)
 
-		root_output_dir = f"gs://{FLAGS.bucket}/vit/vit-dan-outputs/{experiment.experiment_id}"
+		root_output_dir = f"gs://{FLAGS.bucket}/vit-cx/vit-simclr-seq/{experiment.experiment_id}"
+		checkpoint = f'gs://{FLAGS.bucket}/vit-cx/vit-simclr-pt/0/checkpoints/checkpoints_69820.npz'
 
-		config_file = 'configs/drd/vit_finetune.py'
+		config_file = 'configs/chest_xray/vit_finetune.py'
 
-		seeds = [1, 2, 3, 4, 5]
+		seeds = range(6)
 
 		for seed in seeds:
 
@@ -107,6 +108,7 @@ def main(_):
 								'output_dir': output_dir,
 								'config': config_file,
 								'config.seed': seed,
+								'config.model_init': checkpoint,
 							},
 					))
 

@@ -21,3 +21,22 @@ dist/
 
 # PyCharm
 .idea
+
+.temp
+
+*.diff
+.logs/
+configs/
+dat.py
+entrypoint.py
+err.txt
+loop-switch.txt
+loop.py
+one-launcher.sh
+one-xm-launch.py
+one-xm-launch.sh
+out.txt
+py-launcher.py
+temp.py
+temp.txt
+xm-launch.py

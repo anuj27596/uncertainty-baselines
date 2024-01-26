@@ -91,9 +91,9 @@ def get_config():
   config.model.classifier = 'token'  # Or 'gap'
 
   config.model.domain_predictor = ml_collections.ConfigDict()
-  config.model.domain_predictor.grl_coeff = 0.1
+  config.model.domain_predictor.grl_coeff = 1
   config.model.domain_predictor.num_layers = 2
-  config.model.domain_predictor.hid_dim = 768
+  config.model.domain_predictor.hid_dim = 256
   config.dp_loss_coeff = 1.0
 
   # This is "no head" fine-tuning, which we use by default
@@ -122,7 +122,7 @@ def get_config():
   config.lr = ml_collections.ConfigDict()
   config.grad_clip_norm = 1.0  # Gradient clipping threshold.
   config.weight_decay = None  # No explicit weight decay.
-  config.lr.base = 1e-4
+  config.lr.base = 1e-3
   config.lr.decay_type = 'linear'
 
   # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
@@ -132,6 +132,8 @@ def get_config():
   #   entropy loss.
   # 'minibatch' will use the proportions of each minibatch to reweight the loss.
   config.class_reweight_mode = None
+
+  config.ood_val_percent = 100
 
   # Evaluation Misc
   config.only_eval = False  # Disables training, only evaluates the model

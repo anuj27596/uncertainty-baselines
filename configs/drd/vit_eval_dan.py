@@ -90,9 +90,9 @@ def get_config():
   config.model.classifier = 'token'  # Or 'gap'
 
   config.model.domain_predictor = ml_collections.ConfigDict()
-  config.model.domain_predictor.grl_coeff = 0.1
+  config.model.domain_predictor.grl_coeff = 1
   config.model.domain_predictor.num_layers = 2
-  config.model.domain_predictor.hid_dim = 768
+  config.model.domain_predictor.hid_dim = 256
   config.dp_loss_coeff = 1.0
 
   # This is "no head" fine-tuning, which we use by default
