@@ -208,7 +208,6 @@ def main(argv):
   train_ood_base_dataset = ub.datasets.get(
       dataset_names['ood_dataset'],
       split=split_names['ood_validation_split'],
-      val_percent=config.get('ood_val_percent'),
       data_dir=config.get('data_dir'))
   train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ood_ds = input_utils.get_data(
@@ -219,12 +218,13 @@ def main(argv):
       preprocess_fn=preproc_fn,
       shuffle_buffer_size=config.shuffle_buffer_size,
       prefetch_size=config.get('prefetch_to_host', 2),
+      percent=config.get('ood_val_percent'),
       data_dir=config.get('data_dir'))
 
   # Start prefetching already.
   train_ood_iter = input_utils.start_input_pipeline(
-      train_ood_ds, config.get('prefetch_to_device', 1))
-  import ipdb;ipdb.set_trace()
+      train_ood_ds,
+      config.get('prefetch_to_device', 1))
 
   write_note('Initializing val dataset(s)...')
 

@@ -62,8 +62,8 @@ from uncertainty_baselines.datasets.zhang_pneumonia import ZhangPneumoniaDataset
 from uncertainty_baselines.datasets.chexpert_custom import ChexpertCustomDataset  # Karm
 from uncertainty_baselines.datasets.rxrx1_id  import Rxrx1IdDataset  # Karm
 from uncertainty_baselines.datasets.rxrx1_ood import Rxrx1OodDataset  # Karm
-
-
+from uncertainty_baselines.datasets.isic_id import IsicIdDataset  # Karm
+from uncertainty_baselines.datasets.isic_ood import IsicOodDataset  # Karm
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -140,7 +140,9 @@ DATASETS = {
     'zhang_pneumonia': ZhangPneumoniaDataset,  # anuj,
     'chexpert_custom': ChexpertCustomDataset, # karm
     'rxrx1_id': Rxrx1IdDataset, # karm
-    'rxrx1_ood': Rxrx1OodDataset # karm
+    'rxrx1_ood': Rxrx1OodDataset, # karm
+    'isic_id': IsicIdDataset, # karm
+    'isic_ood': IsicOodDataset # karm   
 }
 
 

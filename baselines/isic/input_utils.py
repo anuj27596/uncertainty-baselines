@@ -155,7 +155,6 @@ def get_data(
     data_dir: Optional[str] = None,
     process_index: Optional[int] = None,
     process_count: Optional[int] = None,
-    percent: Optional[int] = None,
 ) -> tf.data.Dataset:
   """Creates a standard input pipeline (shuffle, preprocess, batch).
 
@@ -239,9 +238,6 @@ def get_data(
       drop_remainder=drop_remainder,
   )
 
-  if percent is not None:
-    dataset = dataset.take(round(percent * 733 / 100)).repeat()
-
   num_devices = jax.local_device_count()
   if drop_remainder:
     # If we're dropping the remainder, we can take the fast path of double
@@ -279,7 +275,7 @@ def get_data(
   return dataset.prefetch(prefetch_size)
 
 
-def start_input_pipeline(dataset, n_prefetch, devices=None):
+def start_input_pipeline(dataset, n_prefetch, devices=None, percent=None):
   """Creates a data iterator with optional prefetching and padding."""
   it = iter(dataset)
 
