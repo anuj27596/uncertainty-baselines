@@ -44,18 +44,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
 print(f"ub - {ub.__path__}")
-# import checkpoint_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import input_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
-# import train_utils  # local file import from baselines.chest_xray  # EDIT(anuj)
+# import checkpoint_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import input_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import train_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.chest_xray.checkpoint_utils as checkpoint_utils  # EDIT(Karm)
-import baselines.chest_xray.input_utils as input_utils  # EDIT(Karm)
-import baselines.chest_xray.preprocess_utils as preprocess_utils  # EDIT(Karm)
-import baselines.chest_xray.train_utils as train_utils  # EDIT(Karm)
-from baselines.chest_xray.utils import results_storage_utils  # EDIT(Karm)
-from baselines.chest_xray.utils import vit_utils  # EDIT(Karm)
+import baselines.rxrx1.checkpoint_utils as checkpoint_utils  # EDIT(Karm)
+import baselines.rxrx1.input_utils as input_utils  # EDIT(Karm)
+import baselines.rxrx1.preprocess_utils as preprocess_utils  # EDIT(Karm)
+import baselines.rxrx1.train_utils as train_utils  # EDIT(Karm)
+from baselines.rxrx1.utils import results_storage_utils  # EDIT(Karm)
+from baselines.rxrx1.utils import vit_utils  # EDIT(Karm)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -95,7 +95,7 @@ def main(argv):
 
   # Dataset Split Flags
   dist_shift = config.distribution_shift
-  print(f'Distribution Shift: chest_xray({dist_shift}).')
+  print(f'Distribution Shift: rxrx1({dist_shift}).')
   dataset_names, split_names = vit_utils.get_dataset_and_split_names(dist_shift)
 
   # LR / Optimization Flags
@@ -185,24 +185,28 @@ def main(argv):
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
 
-  if dist_shift == 'chxToch14':
-    builder_config = {
+  builder_config = {
         d: f'{dataset_names[d]}/processed'
         for d in ('in_domain_dataset', 'ood_dataset')}
-  elif dist_shift == 'chxfToch14':
-    builder_config = {
-        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-        'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
-  elif dist_shift == 'chxfToch14r':
-    builder_config = {
-        'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-        'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
-  elif dist_shift == 'ch14Tochx':
-    builder_config = {
-        d: f'{dataset_names[d]}/processed_swap'
-        for d in ('in_domain_dataset', 'ood_dataset')}
-  else:
-    raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
+  
+  # if dist_shift == 'chxToch14':
+  #   builder_config = {
+  #       d: f'{dataset_names[d]}/processed'
+  #       for d in ('in_domain_dataset', 'ood_dataset')}
+  # elif dist_shift == 'chxfToch14':
+  #   builder_config = {
+  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+  #       'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
+  # elif dist_shift == 'chxfToch14r':
+  #   builder_config = {
+  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
+  #       'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
+  # elif dist_shift == 'ch14Tochx':
+  #   builder_config = {
+  #       d: f'{dataset_names[d]}/processed_swap'
+  #       for d in ('in_domain_dataset', 'ood_dataset')}
+  # else:
+  #   raise NotImplementedError(f'rxrx1 distribution shift: {dist_shift}')
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
@@ -483,6 +487,7 @@ def main(argv):
       if not config.get('only_eval', False):
         if train_loop_rngs.shape[0] == 1 and train_loop_rngs.shape[0] < jax.device_count():  # EDIT(anuj): temp fix
           train_loop_rngs = jax.random.split(train_loop_rngs[0])
+        # import pdb; pdb.set_trace()  
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
