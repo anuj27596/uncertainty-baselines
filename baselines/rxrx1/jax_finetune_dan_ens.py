@@ -43,18 +43,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-# import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import input_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import train_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import checkpoint_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import input_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
+# import train_utils  # local file import from baselines.rxrx1  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
+import baselines.rxrx1.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.rxrx1.input_utils as input_utils  # EDIT(anuj)
+import baselines.rxrx1.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.rxrx1.train_utils as train_utils  # EDIT(anuj)
+from baselines.rxrx1.utils import results_storage_utils  # EDIT(anuj)
+from baselines.rxrx1.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -576,26 +576,26 @@ def main(argv):
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
           domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
           labels = labels.flatten()  # EDIT(anuj)
-          y_pred = probs[:, 1]
+          y_pred = np.max(probs, axis=-1) 
 
-          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
+          # batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
 
-          results_arrs['y_true'].append(labels[:batch_trunc])
-          results_arrs['y_pred'].append(y_pred[:batch_trunc])
-          results_arrs['logits'].append(logits[:batch_trunc])
-          results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
-          if config.only_eval:  # EDIT(anuj)
-            pre_logits = np.array(pre_logits[0])
-            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
-            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
+          # results_arrs['y_true'].append(labels[:batch_trunc])
+          # results_arrs['y_pred'].append(y_pred[:batch_trunc])
+          # results_arrs['logits'].append(logits[:batch_trunc])
+          # results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
+          # if config.only_eval:  # EDIT(anuj)
+          #   pre_logits = np.array(pre_logits[0])
+          #   pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+          #   results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
+          # results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
-            results_arrs['y_pred'], axis=0).astype('float64')
-        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
+        results_arrs['y_pred'], axis=0).astype('float64')
+        # results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
