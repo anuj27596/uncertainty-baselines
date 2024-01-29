@@ -266,15 +266,15 @@ def store_eval_results(eval_results_dir,
 
   eval_results_dir = os.path.join(eval_results_dir, eval_results_name)
 
-  tf.io.gfile.makedirs(eval_results_dir)
-  assert tf.io.gfile.isdir(eval_results_dir)
+  # tf.io.gfile.makedirs(eval_results_dir)
+  # assert tf.io.gfile.isdir(eval_results_dir)
 
-  for key, arr in dict_of_lists.items():
-    np_eval_results_path = os.path.join(eval_results_dir, f'{key}.npy')
-    if not allow_overwrite and tf.io.gfile.exists(np_eval_results_path):
-      raise ValueError(f'The file {np_eval_results_path} exists already!!!')
-    with tf.io.gfile.GFile(np_eval_results_path, 'w') as f:
-      np.save(f, np.array(arr))
+  # for key, arr in dict_of_lists.items():
+  #   np_eval_results_path = os.path.join(eval_results_dir, f'{key}.npy')
+  #   if not allow_overwrite and tf.io.gfile.exists(np_eval_results_path):
+  #     raise ValueError(f'The file {np_eval_results_path} exists already!!!')
+  #   with tf.io.gfile.GFile(np_eval_results_path, 'w') as f:
+  #     np.save(f, np.array(arr))
 
   logging.info(f'Stored eval results to {eval_results_dir}')
 
