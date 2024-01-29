@@ -115,6 +115,10 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
           name="processed_site1",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
+      Rxrx1IdConfig(
+          name="processed_site2",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
       # Rxrx1IdConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -201,9 +205,11 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
       
-      if "site1" in self.builder_config.name:
-        df = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
+      if "site" in self.builder_config.name:
+        site_no = int(self.builder_config.name[-1])
+        df = df[(df['dataset'] == "train") & (df['site'] == site_no)][["path", "sirna_id"]]
         df_train_val, df_test = train_test_split(df, test_size=0.1, stratify=df['sirna_id'], random_state=0)
+        
         if split == "test":
           data = df_test
         else:

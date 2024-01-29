@@ -19,9 +19,9 @@ import tqdm
 import uncertainty_baselines.datasets as datasets
 
 os.environ['CUDA_VISIBLE_DEVICES'] = ''
-dataset='isic_id'
+dataset='rxrx1'
 data_dir = f'/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/{dataset}'
-for ds_name in ['isic_id']:
+for ds_name in ['rxrx1_ood']:
     for split in ['train','test','validation']:
         if 'ood' in ds_name and split == "train":
             continue
@@ -29,8 +29,8 @@ for ds_name in ['isic_id']:
         # split = 'validation'
         # op_csv = "eye_labels/train_eyepacs_eyelabels.csv"
         batch_size = 16
-        # config = "processed_site1"
-        config = "processed_512_onehot"
+        config = "processed_site2"
+        # config = "processed_512_onehot"
         
 
         builder = datasets.get(

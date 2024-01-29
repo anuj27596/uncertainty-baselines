@@ -113,6 +113,10 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
           name="processed_512",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=512),
+      IsicIdConfig(
+          name="processed_512_onehot",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
       # IsicIdConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -137,7 +141,8 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
             "image": tfds.features.Image(),
             # From 0 (no DR) to 4 (Proliferative DR). -1 if no label provided.
             # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES), # Karm
-            "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES) # Karm
+            # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES) # Karm
+            "label": tfds.features.Tensor(shape = (_NUM_CLASSES, ), dtype=tf.dtypes.float32)
         }),
         homepage="https://www.kaggle.com/c/aptos2019-blindness-detection/data",
         citation=_CITATION)
@@ -211,7 +216,7 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
         data = test_df
         print(f" test target sum - {sum(test_df['target'])}")
       
-      import pdb; pdb.set_trace()
+      # import pdb; pdb.set_trace()
         
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
@@ -224,7 +229,7 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
       record = {
           "name": path,
           "image": self._process_image(image_filepath),
-          "label": int(label) # Karm
+          "label": tf.one_hot(label, _NUM_CLASSES).numpy() if "onehot" in self.builder_config.name else int(label) # Karm
       }
       yield path, record
 

@@ -113,6 +113,10 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
       Rxrx1OodConfig(
           name="processed_site1",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
+      Rxrx1OodConfig(
+          name="processed_site2",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300)
       # Rxrx1OodConfig(
       #     name="frontal",
@@ -200,12 +204,13 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
       
-      if "site1" in self.builder_config.name:    
+      if "site" in self.builder_config.name:
+        site_no = int(self.builder_config.name[-1])    
         if split=="validation":
-          data = df[(df['dataset'] == "val") & (df['site'] == 1)][["path", "sirna_id"]] # ood validation
+          data = df[(df['dataset'] == "val") & (df['site'] == site_no)][["path", "sirna_id"]] # ood validation
         
         elif split=="test":
-          data = df[(df['dataset'] == "test") & (df['site'] == 1)][["path", "sirna_id"]]
+          data = df[(df['dataset'] == "test") & (df['site'] == site_no)][["path", "sirna_id"]]
       else:
         if split=="validation":
           data = df[df['dataset'] == "val"][["path", "sirna_id"]] # ood validation
