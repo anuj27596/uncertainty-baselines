@@ -206,7 +206,6 @@ def main(argv):
         d: f'{dataset_names[d]}/processed'
         for d in ('in_domain_dataset', 'ood_dataset')}
   
-  
 
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
@@ -558,7 +557,6 @@ def main(argv):
 
           # From one-hot to integer labels.
           int_labels = np.argmax(np.array(labels[0]), axis=-1)
-
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           int_labels = int_labels.flatten()
           # pred_ind = np.argmax(probs, axis=-1)
@@ -621,6 +619,7 @@ def main(argv):
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty
       # entries.
+      write_note(f" ============================== \n{metrics_results}\n ==============================")
       flattened_metric_results = {}
       for dic in metrics_results.values():
         for key, value in dic.items():

@@ -218,7 +218,7 @@ def main(argv):
       preprocess_fn=preproc_fn,
       shuffle_buffer_size=config.shuffle_buffer_size,
       prefetch_size=config.get('prefetch_to_host', 2),
-      percent=config.get('ood_val_percent'),
+      # percent=config.get('ood_val_percent'),
       data_dir=config.get('data_dir'))
 
   # Start prefetching already.
@@ -565,17 +565,20 @@ def main(argv):
           domain_pred = np.array(domain_pred[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          domain_pred = domain_pred.flatten()
-          labels = labels.flatten()  # EDIT(anuj)
+          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
+          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
 
-          y_pred = probs[:, 1]
+          # domain_pred = domain_pred.flatten()
+          # int_labels = int_labels.flatten()  # EDIT(anuj)
 
+          y_pred = np.max(probs, axis=-1) # karm
+
+          # import pdb; pdb.set_trace()
           batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
 
           results_arrs['y_true'].append(labels[:batch_trunc])
-          results_arrs['y_pred'].append(y_pred[:batch_trunc])
+          results_arrs['y_pred'].append(probs[:batch_trunc])
           results_arrs['logits'].append(logits[:batch_trunc])
           results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
 
@@ -613,6 +616,9 @@ def main(argv):
           return_per_pred_results=True
       )
 
+      write_note(f"=========================\n {metrics_results} \n =========================")
+      # import pdb; pdb.set_trace()
+      
       for eval_name in eval_iter_splits.keys():
         metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
 
