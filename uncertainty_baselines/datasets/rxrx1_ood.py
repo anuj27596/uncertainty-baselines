@@ -110,6 +110,10 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
           name="processed",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
+      Rxrx1OodConfig(
+          name="processed_site1",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300)
       # Rxrx1OodConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -195,13 +199,20 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
       # if 'swap' in self.builder_config.name and split == 'validation':
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
-          
-      if split=="validation":
-        data = df[df['dataset'] == "val"][["path", "sirna_id"]] # ood validation
       
-      elif split=="test":
-        data = df[df['dataset'] == "test"][["path", "sirna_id"]]
-      
+      if "site1" in self.builder_config.name:    
+        if split=="validation":
+          data = df[(df['dataset'] == "val") & (df['site'] == 1)][["path", "sirna_id"]] # ood validation
+        
+        elif split=="test":
+          data = df[(df['dataset'] == "test") & (df['site'] == 1)][["path", "sirna_id"]]
+      else:
+        if split=="validation":
+          data = df[df['dataset'] == "val"][["path", "sirna_id"]] # ood validation
+        
+        elif split=="test":
+          data = df[df['dataset'] == "test"][["path", "sirna_id"]]
+        
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
             # if fname.endswith(".png") # Karm
@@ -222,10 +233,14 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
       if self.builder_config.name.startswith("processed") \
           or self.builder_config.name.startswith("frontal"):
-        return _pneumonia_processing(
+          
+          return _resize_image_if_necessary(  # pylint: disable=protected-access
             image_fobj=image_fobj,
-            filepath=filepath,
             target_pixels=self.builder_config.target_pixels)
+        # return _pneumonia_processing(
+        #     image_fobj=image_fobj,
+        #     filepath=filepath,
+        #     target_pixels=self.builder_config.target_pixels)
       else:
         return _resize_image_if_necessary(  # pylint: disable=protected-access
             image_fobj=image_fobj,

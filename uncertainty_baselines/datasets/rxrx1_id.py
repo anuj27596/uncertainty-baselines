@@ -111,6 +111,10 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
           name="processed",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=300),
+      Rxrx1IdConfig(
+          name="processed_site1",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=300),
       # Rxrx1IdConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -196,15 +200,28 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
       # if 'swap' in self.builder_config.name and split == 'validation':
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
-      if split == "test":
-        data = df[(df['dataset'] == "train") & (df['site'] == 2)][["path", "sirna_id"]]
+      
+      if "site1" in self.builder_config.name:
+        df = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
+        df_train_val, df_test = train_test_split(df, test_size=0.1, stratify=df['sirna_id'], random_state=0)
+        if split == "test":
+          data = df_test
+        else:
+          df_train, df_val = train_test_split(df_train_val, test_size=0.1, stratify=df_train_val['sirna_id'], random_state=0)
+          if split == "train":
+            data = df_train
+          elif split == "validation":
+            data = df_val
       else:
-        df_train = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
-        df_train, df_val = train_test_split(df_train, test_size=0.1, stratify=df_train['sirna_id'])
-        if split == "train":
-          data = df_train
-        elif split == "validation":
-          data = df_val
+        if split == "test":
+          data = df[(df['dataset'] == "train") & (df['site'] == 2)][["path", "sirna_id"]]
+        else:
+          df_train = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
+          df_train, df_val = train_test_split(df_train, test_size=0.1, stratify=df_train['sirna_id'])
+          if split == "train":
+            data = df_train
+          elif split == "validation":
+            data = df_val
 
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
@@ -225,9 +242,12 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
       if self.builder_config.name.startswith("processed") \
           or self.builder_config.name.startswith("frontal"):
-        return _pneumonia_processing(
+        # return _pneumonia_processing(
+        #     image_fobj=image_fobj,
+        #     filepath=filepath,
+        #     target_pixels=self.builder_config.target_pixels)
+        return _resize_image_if_necessary(  # pylint: disable=protected-access
             image_fobj=image_fobj,
-            filepath=filepath,
             target_pixels=self.builder_config.target_pixels)
       else:
         return _resize_image_if_necessary(  # pylint: disable=protected-access

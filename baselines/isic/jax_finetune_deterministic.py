@@ -202,7 +202,7 @@ def main(argv):
   ood_train_base_dataset = ub.datasets.get(
       dataset_names['ood_dataset'],
       split=split_names['ood_test_split'],
-      builder_config='isic_ood/processed',
+      builder_config=f'isic_ood/{config.builder_config}',
       data_dir=config.get('data_dir'))
   ood_train_dataset_builder = ood_train_base_dataset._dataset_builder  # pylint: disable=protected-access
   ood_train_ds = input_utils.get_data(
@@ -219,7 +219,7 @@ def main(argv):
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
       data_dir=config.get('data_dir'),
-      builder_config='isic_id/processed') # Karm
+      builder_config=f'isic_id/{config.builder_config}') # Karm
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,

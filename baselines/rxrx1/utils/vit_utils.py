@@ -432,29 +432,9 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
   data_dir = config.get('data_dir')
   
   builder_config = {
-        d: f'{dataset_names[d]}/processed'
+        d: f'{dataset_names[d]}/{config.builder_config}'
         for d in ('in_domain_dataset', 'ood_dataset')}
      
-  # dist_shift = config.get('distribution_shift')
-  # if dist_shift == 'chxToch14':
-  #   builder_config = {
-  #       d: f'{dataset_names[d]}/processed'
-  #       for d in ('in_domain_dataset', 'ood_dataset')}
-  # elif dist_shift == 'chxfToch14':
-  #   builder_config = {
-  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-  #       'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
-  # elif dist_shift == 'chxfToch14r':
-  #   builder_config = {
-  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-  #       'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
-  # elif dist_shift == 'ch14Tochx':
-  #   builder_config = {
-  #       d: f'{dataset_names[d]}/processed_swap'
-  #       for d in ('in_domain_dataset', 'ood_dataset')}
-  # else:
-  #   raise NotImplementedError(f'chest_xray distribution shift: {dist_shift}')
-
   def get_dataset(dataset_name, split_name, builder_config):
     base_dataset = ub.datasets.get(
         dataset_name,

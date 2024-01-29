@@ -456,29 +456,27 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
         split_name=split_names['train_split'], 
-        builder_config ='isic_id/processed')
+        builder_config =f'isic_id/{config.builder_config}')
   if use_validation:
     datasets['in_domain_validation'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
         split_name=split_names['in_domain_validation_split'], 
-        builder_config ='isic_id/processed')
-        # builder_config ='isic_id/processed-left') # Karm: This will not do anything
+        builder_config =f'isic_id/{config.builder_config}')
+    
     datasets['ood_validation'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
         split_name=split_names['ood_validation_split'],
-        builder_config = "isic_ood/processed")
-        # builder_config = "isic_ood/processed-left") # Karm
+        builder_config = f"isic_ood/{config.builder_config}")
   if use_test:
     datasets['in_domain_test'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],
         split_name=split_names['in_domain_test_split'],
-        builder_config ='isic_id/processed')
-        # builder_config ='isic_id/processed-left') # Karm
+        builder_config =f'isic_id/{config.builder_config}')
+
     datasets['ood_test'] = get_dataset(
         dataset_name=dataset_names['ood_dataset'],
         split_name=split_names['ood_test_split'],
-        builder_config = "isic_ood/processed")
-        # builder_config = "isic_ood/processed-left")
+        builder_config = f"isic_ood/{config.builder_config}")
 
   return datasets
 

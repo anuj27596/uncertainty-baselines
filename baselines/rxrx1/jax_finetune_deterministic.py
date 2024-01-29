@@ -182,28 +182,9 @@ def main(argv):
   write_note('Initializing train dataset...')
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
-
-  # if dist_shift == 'chxToch14':
-  #   builder_config = {
-  #       d: f'{dataset_names[d]}/processed'
-  #       for d in ('in_domain_dataset', 'ood_dataset')}
-  # elif dist_shift == 'chxfToch14':
-  #   builder_config = {
-  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-  #       'ood_dataset': dataset_names['ood_dataset'] + '/processed'}
-  # elif dist_shift == 'chxfToch14r':
-  #   builder_config = {
-  #       'in_domain_dataset': dataset_names['in_domain_dataset'] + '/frontal',
-  #       'ood_dataset': dataset_names['ood_dataset'] + '/resampled'}
-  # elif dist_shift == 'ch14Tochx':
-  #   builder_config = {
-  #       d: f'{dataset_names[d]}/processed_swap'
-  #       for d in ('in_domain_dataset', 'ood_dataset')}
-  # else:
-  #   raise NotImplementedError(f'rxrx1 distribution shift: {dist_shift}')
   
   builder_config = {
-        d: f'{dataset_names[d]}/processed'
+        d: f'{dataset_names[d]}/{config.builder_config}'
         for d in ('in_domain_dataset', 'ood_dataset')}
   
 

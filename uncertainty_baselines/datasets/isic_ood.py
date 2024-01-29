@@ -108,7 +108,11 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
       IsicOodConfig(
           name="processed",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
-          target_pixels=300),
+          target_pixels=256),
+      IsicOodConfig(
+          name="processed_512",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
       # IsicOodConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
@@ -195,16 +199,15 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
         data = df[df["anatom_site_general_challenge"].isin(organs)]
         data['path'] = data["image_name"].apply(lambda x: os.path.join(x+".jpg"))
         data =data[["path", "target"]]
-        train_df, test_df = train_test_split(data, test_size=0.1, stratify=data['target'])
+        train_df, test_df = train_test_split(data, test_size=0.5, stratify=data['target'])
         if split == "validation":
-          data = test_df[:16] 
-        
-        elif split == "train":
-          data = train_df
-        
-        else:
           data = test_df
+        
+        elif split=="test":
+          data = train_df
           print(f" test target sum - {sum(test_df['target'])}")
+        
+        import pdb; pdb.set_trace()
         
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
@@ -223,16 +226,9 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
 
   def _process_image(self, filepath):
     with tf.io.gfile.GFile(filepath, mode="rb") as image_fobj:
-      if self.builder_config.name.startswith("processed") \
-          or self.builder_config.name.startswith("frontal"):
-        return _pneumonia_processing(
-            image_fobj=image_fobj,
-            filepath=filepath,
-            target_pixels=self.builder_config.target_pixels)
-      else:
-        return _resize_image_if_necessary(  # pylint: disable=protected-access
-            image_fobj=image_fobj,
-            target_pixels=self.builder_config.target_pixels)
+      return _resize_image_if_necessary(  # pylint: disable=protected-access
+          image_fobj=image_fobj,
+          target_pixels=self.builder_config.target_pixels)
 
 
 class IsicOodDataset(base.BaseDataset):
