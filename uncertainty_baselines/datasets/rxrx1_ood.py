@@ -195,24 +195,18 @@ class Rxrx1Ood(tfds.core.GeneratorBasedBuilder):
       # if 'swap' in self.builder_config.name and split == 'validation':
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
-      split = (split,)
-      
-      if "validation" in split:
+          
+      if split=="validation":
         data = df[df['dataset'] == "val"][["path", "sirna_id"]] # ood validation
       
-      elif "test" in split:
+      elif split=="test":
         data = df[df['dataset'] == "test"][["path", "sirna_id"]]
       
-      # labels = df.iloc[:,2:].apply(lambda x: list(x), axis=1) # Karm Extract lables of size _NUM_CLASSES
-      # data = [(idx, lbls) for idx, s, lbls in zip(df["id"], df["split"], labels) if s in split] # Karm
-
-      # if self.builder_config.name.startswith('frontal'):
-      #   data = [(idx, lbls) for idx, lbls in data if idx.endswith('frontal.jpg')]
-
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
             # if fname.endswith(".png") # Karm
-
+            
+    import pdb; pdb.set_trace()
     print(f"Using BuilderConfig {self.builder_config.name}.")
 
     for idx, (path, label) in data.iterrows(): # Karm

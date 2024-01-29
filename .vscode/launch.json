@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args" : [
+                "config","configs/rxrx1/vit_finetune.py" ,
+                "config.data_dir","/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/rxrx1" ,
+                "config.model_init","/troy/anuj/gub-og/checkpoints/vit_imgnet21k/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0.npz" ,
+                "config.batch_size","16" ,
+                "config.log_training_steps","100" ,
+                "config.log_eval_steps","4390" ,
+                "config.checkpoint_steps","4390" ,
+                "config.seed","0" ,
+                "output_dir","/troy/anuj/karm/outputs/rxrx1/vit/0"
+            ],
+            "purpose": ["debug-in-terminal"]
+        }
+    ]
+}

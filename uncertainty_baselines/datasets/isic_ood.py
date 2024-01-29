@@ -26,6 +26,7 @@ import tensorflow_datasets as tfds
 
 from uncertainty_baselines.datasets import base
 from uncertainty_baselines.datasets.processing_pneumonia import _pneumonia_processing, _resize_image_if_necessary
+from sklearn.model_selection import train_test_split
 
 _DESCRIPTION = """\
 APTOS is a dataset containing the 3,662 high-resolution fundus images
@@ -191,22 +192,19 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
         df = pd.read_csv(csv_f)
         df = df.sample(frac=1, random_state=1)
         organs = ["lower extremity"]
-
-      # if 'swap' in self.builder_config.name and split == 'validation':
-      #   split = ('train', 'validation') # consider train & validation as validation split
-      # else:
-      # split = (split,)
-      
-      # karm: validation = test, because test labels are not availabe
-      if split == "validation":
         data = df[df["anatom_site_general_challenge"].isin(organs)]
         data['path'] = data["image_name"].apply(lambda x: os.path.join(x+".jpg"))
-        data = data[["path", "target"]]
-      
-      else:
-        data = df[df["anatom_site_general_challenge"].isin(organs)]
-        data['path'] = data["image_name"].apply(lambda x: os.path.join(x+".jpg"))
-        data = data[["path", "target"]]
+        data =data[["path", "target"]]
+        train_df, test_df = train_test_split(data, test_size=0.1, stratify=data['target'])
+        if split == "validation":
+          data = test_df[:16] 
+        
+        elif split == "train":
+          data = train_df
+        
+        else:
+          data = test_df
+          print(f" test target sum - {sum(test_df['target'])}")
         
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D

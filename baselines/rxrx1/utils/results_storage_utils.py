@@ -260,7 +260,9 @@ def store_eval_results(eval_results_dir,
   if epoch is None:
     eval_results_name = 'eval_results'
   else:
-    eval_results_name = f'eval_results_{epoch}'
+    # eval_results_name = f'eval_results_{epoch}'
+    eval_results_name = f'eval_results' # karm
+
 
   eval_results_dir = os.path.join(eval_results_dir, eval_results_name)
 

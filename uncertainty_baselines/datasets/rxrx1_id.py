@@ -26,6 +26,7 @@ import tensorflow_datasets as tfds
 
 from uncertainty_baselines.datasets import base
 from uncertainty_baselines.datasets.processing_pneumonia import _pneumonia_processing, _resize_image_if_necessary
+from sklearn.model_selection import train_test_split
 
 _DESCRIPTION = """\
 APTOS is a dataset containing the 3,662 high-resolution fundus images
@@ -195,29 +196,20 @@ class Rxrx1Id(tfds.core.GeneratorBasedBuilder):
       # if 'swap' in self.builder_config.name and split == 'validation':
       #   split = ('train', 'validation') # consider train & validation as validation split
       # else:
-      split = (split,)
-      
-      if split == "validation":
-        data = df[df['dataset'] == "val"][["path", "sirna_id"]] # ood validation
-      
-      elif split == "train":
-        data = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
-      
+      if split == "test":
+        data = df[(df['dataset'] == "train") & (df['site'] == 2)][["path", "sirna_id"]]
       else:
-        data = df[(df['dataset'] == "test") & (df['site'] == 2)][["path", "sirna_id"]]
-        
-        
-      
-      # labels = df.iloc[:,2:].apply(lambda x: list(x), axis=1) # Karm Extract lables of size _NUM_CLASSES
-      # data = [(idx, lbls) for idx, s, lbls in zip(df["id"], df["split"], labels) if s in split] # Karm
-
-      # if self.builder_config.name.startswith('frontal'):
-      #   data = [(idx, lbls) for idx, lbls in data if idx.endswith('frontal.jpg')]
+        df_train = df[(df['dataset'] == "train") & (df['site'] == 1)][["path", "sirna_id"]]
+        df_train, df_val = train_test_split(df_train, test_size=0.1, stratify=df_train['sirna_id'])
+        if split == "train":
+          data = df_train
+        elif split == "validation":
+          data = df_val
 
     else:
       data = [(fname, [-1]*_NUM_CLASSES) for fname in tf.io.gfile.listdir(images_dir_path)] # Karm D
             # if fname.endswith(".png") # Karm
-
+    import pdb; pdb.set_trace()
     print(f"Using BuilderConfig {self.builder_config.name}.")
 
     for idx, (path, label) in data.iterrows(): # Karm

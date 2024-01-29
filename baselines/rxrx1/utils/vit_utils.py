@@ -158,6 +158,8 @@ def get_eval_split(dataset,
       prefetch_size=config.get('prefetch_to_host', 2),
       drop_remainder=False,
       data_dir=data_dir)
+  #import pdb; pdb.set_trace()
+  # [each['labels'] for each in dataset.take(2)]
   eval_iter = input_utils.start_input_pipeline(
       eval_ds, config.get('prefetch_to_device', 1))
   return eval_iter, eval_steps
@@ -460,6 +462,7 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
         builder_config=builder_config,
         data_dir=data_dir)
     dataset_builder = base_dataset._dataset_builder  # pylint:disable=protected-access
+    #import pdb; pdb.set_trace()
     return get_eval_split(
         dataset_builder,
         split_name,
@@ -469,6 +472,7 @@ def init_evaluation_datasets(use_train,  # EDIT(anuj)
         local_batch_size_eval)
 
   datasets = {}
+  #import pdb; pdb.set_trace()
   if use_train:  # EDIT(anuj)
     datasets['train'] = get_dataset(
         dataset_name=dataset_names['in_domain_dataset'],

@@ -56,6 +56,7 @@ import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # ED
 from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # EDIT(anuj)
 from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
 import wandb
+
 # pylint: enable=g-import-not-at-top,line-too-long
 
 # TODO(nband): lock config after separating total and warmup steps arguments.
@@ -117,14 +118,6 @@ def main(argv):
   # else:
   #   class_weights = None
 
-  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
-    class_weights = 0.5 * 35126 / jnp.array([28253, 6873])  # TODO(anuj): remove hardcode
-    if config.loss == 'softmax_xent':
-      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
-    else:
-      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
-  else:
-    base_loss_fn = getattr(train_utils, config.loss)
 
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -194,8 +187,7 @@ def main(argv):
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'),
-      builder_config='ub_diabetic_retinopathy_detection/btgraham-300') # Karm
+      data_dir=config.get('data_dir'))
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -210,6 +202,28 @@ def main(argv):
   # Start prefetching already.
   train_iter = input_utils.start_input_pipeline(
       train_ds, config.get('prefetch_to_device', 1))
+
+  rng, train_ood_ds_rng = jax.random.split(rng)
+  train_ood_ds_rng = jax.random.fold_in(train_ood_ds_rng, jax.process_index())
+  train_ood_base_dataset = ub.datasets.get(
+      dataset_names['ood_dataset'],
+      split=split_names['ood_validation_split'],
+      data_dir=config.get('data_dir'))
+  train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
+  train_ood_ds = input_utils.get_data(
+      dataset=train_ood_dataset_builder,
+      split=split_names['ood_validation_split'],
+      rng=train_ood_ds_rng,
+      process_batch_size=local_batch_size,
+      preprocess_fn=preproc_fn,
+      shuffle_buffer_size=config.shuffle_buffer_size,
+      prefetch_size=config.get('prefetch_to_host', 2),
+      data_dir=config.get('data_dir'))
+
+  # Start prefetching already.
+  train_ood_iter = input_utils.start_input_pipeline(
+      train_ood_ds,
+      config.get('prefetch_to_device', 1))
 
   write_note('Initializing val dataset(s)...')
 
@@ -282,7 +296,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = base_loss_fn(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
+    losses = train_utils.softmax_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -314,11 +328,23 @@ def main(argv):
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
     def loss_fn(params, images, labels):
-      logits, out = model.apply(
-          {'params': flax.core.freeze(params)}, images,
+      images_id, images_ood = images
+      logits, out_id = model.apply(
+          {'params': flax.core.freeze(params)}, images_id,
           train=True, rngs={'dropout': rng_model_local})
-      import ipdb;ipdb.set_trace()
-      return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
+      _, out_ood = model.apply(
+          {'params': flax.core.freeze(params)}, images_ood,
+          train=True, rngs={'dropout': rng_model_local})
+
+      cmd_loss = train_utils.cmd_loss(
+        id_features=out_id['pre_logits'],
+        ood_features=out_ood['pre_logits'],
+        max_order=config.cmd_max_order)
+
+      loss = (
+          train_utils.softmax_xent(logits=logits, labels=labels)
+          + config.cmd_loss_coeff * cmd_loss)  # EDIT(anuj)
+      return loss
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -418,11 +444,12 @@ def main(argv):
     write_note('Advancing iterators after resuming from a checkpoint...')
     lr_iter = itertools.islice(lr_iter, first_step, None)
     train_iter = itertools.islice(train_iter, first_step, None)
+    train_ood_iter = itertools.islice(train_ood_iter, first_step, None)
 
   # Using a python integer for step here, because opt.state.step is allocated
   # on TPU during replication.
-  for step, train_batch, lr_repl in zip(
-      range(first_step + 1, total_steps + 1), train_iter, lr_iter):
+  for step, train_batch, train_ood_batch, lr_repl in zip(
+      range(first_step + 1, total_steps + 1), train_iter, train_ood_iter, lr_iter):
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
@@ -431,7 +458,10 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            train_batch['image'],
+            (
+              train_batch['image'],
+              train_ood_batch['image'],
+            ),
             train_batch['labels'],
             rng=train_loop_rngs)
 
@@ -500,11 +530,13 @@ def main(argv):
         results_arrs = {
             'y_true': [],
             'y_pred': [],
+            'logits': [],
             'y_pred_entropy': [],
         }
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = []
 
+        write_note(f'Evaluating on split: {eval_name}')
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
               evaluation_fn(
@@ -523,20 +555,31 @@ def main(argv):
           probs = jax.nn.softmax(logits)
 
           # From one-hot to integer labels.
-          int_labels = np.argmax(np.array(labels[0]), axis=-1)
+          labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          int_labels = int_labels.flatten()
+          
+          logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
+          labels = labels.flatten()  # EDIT(anuj)
+
           y_pred = probs[:, 1]
-          results_arrs['y_true'].append(int_labels)
-          results_arrs['y_pred'].append(y_pred)
+
+          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
+
+          results_arrs['y_true'].append(labels[:batch_trunc])
+          results_arrs['y_pred'].append(y_pred[:batch_trunc])
+          results_arrs['logits'].append(logits[:batch_trunc])
+
           if config.only_eval:  # EDIT(anuj)
-            results_arrs['pre_logits'].append(pre_logits)
+            pre_logits = np.array(pre_logits[0])
+            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs)
+          results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
+        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
@@ -546,7 +589,7 @@ def main(argv):
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = eval_steps * batch_size_eval
+        results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
 
         all_eval_results[eval_name] = results_arrs
 

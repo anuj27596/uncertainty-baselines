@@ -46,6 +46,15 @@ def sigmoid_xent(*, logits, labels, reduction=True):
   nll = -jnp.sum(labels * log_p + (1. - labels) * log_not_p, axis=-1)
   return jnp.mean(nll) if reduction else nll
 
+def reweighted_sigmoid_xent(class_one_weight=0.5): # karm
+  """Computes a sigmoid cross-entropy (Bernoulli NLL) loss over examples."""
+  def loss_fn(*, logits, labels, reduction=True):
+    log_p = jax.nn.log_sigmoid(logits)
+    log_not_p = jax.nn.log_sigmoid(-logits)
+    nll = -jnp.sum(class_one_weight*labels * log_p + (1-class_one_weight)*(1. - labels) * log_not_p, axis=-1)
+    return jnp.mean(nll) if reduction else nll
+  return loss_fn
+
 
 def softmax_xent(*, logits, labels, reduction=True, kl=False):
   """Computes a softmax cross-entropy (Categorical NLL) loss over examples."""

@@ -143,6 +143,25 @@ class LocalSpatialLoss:  # EDIT(anuj): def get_local_spatial loss
     return jnp.mean(loss) if reduction else loss
 
 
+def cmd_loss(*, id_features, ood_features, max_order=5, clip_magnitude=10):
+  id_features = jnp.clip(id_features / (clip_magnitude * 2), -0.5, 0.5)
+  ood_features = jnp.clip(ood_features / (clip_magnitude * 2), -0.5, 0.5)
+  id_mu = jnp.mean(id_features, axis=0)
+  ood_mu = jnp.mean(ood_features, axis=0)
+  id_features = id_features - id_mu
+  ood_features = ood_features - ood_mu
+  id_power = id_features
+  ood_power = ood_features
+  loss = jnp.linalg.norm(id_mu - ood_mu)
+  for k in range(2, max_order + 1):
+    id_power = id_power * id_features
+    ood_power = ood_power * ood_features
+    id_moment = jnp.mean(id_power, axis=0)
+    ood_moment = jnp.mean(ood_power, axis=0)
+    loss = loss + jnp.linalg.norm(id_moment - ood_moment)
+  return loss
+
+
 def accumulate_gradient(loss_and_grad_fn, params, images, labels, accum_steps):
   """Accumulates gradients over multiple steps to save on memory."""
   if accum_steps and accum_steps > 1:
