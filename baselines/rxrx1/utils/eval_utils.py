@@ -740,18 +740,18 @@ def compute_log_loss_arr(results, labels=np.asarray([0, 1]), eps=1e-15):
 
   # Check if dimensions are consistent.
   transformed_labels = check_array(transformed_labels)
-  if len(lb.classes_) != y_pred.shape[1]:
-    if labels is None:
-      raise ValueError('y_true and y_pred contain different number of '
-                       'classes {0}, {1}. Please provide the true '
-                       'labels explicitly through the labels argument. '
-                       'Classes found in '
-                       'y_true: {2}'.format(transformed_labels.shape[1],
-                                            y_pred.shape[1], lb.classes_))
-    else:
-      raise ValueError('The number of classes in labels is different '
-                       'from that in y_pred. Classes found in '
-                       'labels: {0}'.format(lb.classes_))
+  # if len(lb.classes_) != y_pred.shape[1]:
+  #   if labels is None:
+  #     raise ValueError('y_true and y_pred contain different number of '
+  #                      'classes {0}, {1}. Please provide the true '
+  #                      'labels explicitly through the labels argument. '
+  #                      'Classes found in '
+  #                      'y_true: {2}'.format(transformed_labels.shape[1],
+  #                                           y_pred.shape[1], lb.classes_))
+  #   else:
+  #     raise ValueError('The number of classes in labels is different '
+  #                      'from that in y_pred. Classes found in '
+  #                      'labels: {0}'.format(lb.classes_))
 
   # Renormalize
   # y_pred /= y_pred.sum(axis=1)[:, np.newaxis]

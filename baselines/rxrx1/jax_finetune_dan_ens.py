@@ -56,7 +56,6 @@ import baselines.rxrx1.train_utils as train_utils  # EDIT(anuj)
 from baselines.rxrx1.utils import results_storage_utils  # EDIT(anuj)
 from baselines.rxrx1.utils import vit_utils  # EDIT(anuj)
 import wandb
-
 # pylint: enable=g-import-not-at-top,line-too-long
 
 # TODO(nband): lock config after separating total and warmup steps arguments.
@@ -184,6 +183,7 @@ def main(argv):
   write_note('Initializing train dataset...')
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
+
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
@@ -218,13 +218,12 @@ def main(argv):
       preprocess_fn=preproc_fn,
       shuffle_buffer_size=config.shuffle_buffer_size,
       prefetch_size=config.get('prefetch_to_host', 2),
-      # percent=config.get('ood_val_percent'),
       data_dir=config.get('data_dir'))
 
   # Start prefetching already.
   train_ood_iter = input_utils.start_input_pipeline(
-      train_ood_ds,
-      config.get('prefetch_to_device', 1))
+      train_ood_ds, config.get('prefetch_to_device', 1))
+
 
   write_note('Initializing val dataset(s)...')
 
@@ -261,7 +260,7 @@ def main(argv):
       total_steps, total_steps * batch_size / ntrain_img, steps_per_epoch)
 
   write_note('Initializing model...')
-  model_dict = vit_utils.initialize_model('dan', config)
+  model_dict = vit_utils.initialize_model('dan_ens', config)
   model = model_dict['model']
 
   # We want all parameters to be created in host RAM, not on any device, they'll
@@ -328,7 +327,10 @@ def main(argv):
     rng, rng_model = jax.random.split(rng, 2)
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
-    def loss_fn(params, images, labels):
+    rng_model_local, dd_ens_key = jax.random.split(rng_model_local, 2)
+    dd_ens_id = jax.random.randint(dd_ens_key, shape=(), minval=0, maxval=5)
+
+    def loss_fn(params, images, labels, dd_ens_id):
       images_id, images_ood = images
       logits, out_id = model.apply(
           {'params': flax.core.freeze(params)}, images_id,
@@ -337,25 +339,32 @@ def main(argv):
           {'params': flax.core.freeze(params)}, images_ood,
           train=True, rngs={'dropout': rng_model_local})
 
+      domain_pred_id = out_id['domain_pred'][..., dd_ens_id, None]
+      domain_pred_ood = out_ood['domain_pred'][..., dd_ens_id, None]
+
+      # domain_pred_id = out_id['domain_pred'][..., 0, None]
+      # domain_pred_ood = out_ood['domain_pred'][..., 0, None]
+
       domain_pred = jnp.concatenate([
-          out_id['domain_pred'],
-          out_ood['domain_pred']])
+          domain_pred_id,
+          domain_pred_ood])
       domain_labels = jnp.concatenate([
-          jnp.zeros((*out_id['domain_pred'].shape[:-1], 1)),
-          jnp.ones((*out_ood['domain_pred'].shape[:-1], 1))])
+          jnp.zeros((*domain_pred_id.shape[:-1], 1)),
+          jnp.ones((*domain_pred_ood.shape[:-1], 1))])
 
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
 
       loss = (
-          train_utils.softmax_xent(logits=logits, labels=labels)
-          + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
+          train_utils.sigmoid_xent(logits=logits, labels=labels)
+          + domain_loss)  # EDIT(anuj)
       return loss
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
-    l, g = train_utils.accumulate_gradient(
-        jax.value_and_grad(loss_fn), opt.target, images, labels,
-        config.get('grad_accum_steps'))
+    # l, g = train_utils.accumulate_gradient(  # EDIT(anuj)
+    #     jax.value_and_grad(loss_fn), opt.target, images, labels,
+    #     config.get('grad_accum_steps'))
+    l, g = jax.value_and_grad(loss_fn)(opt.target, images, labels, dd_ens_id)
     l, g = jax.lax.pmean((l, g), axis_name='batch')
 
     # Log the gradient norm only if we need to compute it anyways (clipping)
@@ -560,40 +569,33 @@ def main(argv):
           logits = np.array(logits[0])
           probs = jax.nn.softmax(logits)
 
-          # From one-hot to integer labels.
           labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
           domain_pred = np.array(domain_pred[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
           domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
+          labels = labels.flatten()  # EDIT(anuj)
+          y_pred = np.max(probs, axis=-1) 
 
-          # domain_pred = domain_pred.flatten()
-          # int_labels = int_labels.flatten()  # EDIT(anuj)
+          # batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
 
-          y_pred = np.max(probs, axis=-1) # karm
-
-          # import pdb; pdb.set_trace()
-          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
-
-          results_arrs['y_true'].append(labels[:batch_trunc])
-          results_arrs['y_pred'].append(probs[:batch_trunc])
-          results_arrs['logits'].append(logits[:batch_trunc])
-          results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
-
-          if config.only_eval:  # EDIT(anuj)
-            pre_logits = np.array(pre_logits[0])
-            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
-            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
+          # results_arrs['y_true'].append(labels[:batch_trunc])
+          # results_arrs['y_pred'].append(y_pred[:batch_trunc])
+          # results_arrs['logits'].append(logits[:batch_trunc])
+          # results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
+          # if config.only_eval:  # EDIT(anuj)
+          #   pre_logits = np.array(pre_logits[0])
+          #   pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
+          #   results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
+          # results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
-        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
-            results_arrs['y_pred'], axis=0).astype('float64')
+        results_arrs['y_pred'], axis=0).astype('float64')
+        # results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
@@ -604,7 +606,7 @@ def main(argv):
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
         results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
 
-        domain_pred_mean = np.mean(results_arrs['domain_pred'] > 0)
+        domain_pred_mean = np.mean((1 / (1 + np.exp(-results_arrs['domain_pred']))).mean(axis=1) > 0.5)
         results_arrs['domain_pred_recall'] = domain_pred_mean if 'ood' in eval_name else (1 - domain_pred_mean)
 
         all_eval_results[eval_name] = results_arrs
@@ -616,9 +618,6 @@ def main(argv):
           return_per_pred_results=True
       )
 
-      write_note(f"=========================\n {metrics_results} \n =========================")
-      # import pdb; pdb.set_trace()
-      
       for eval_name in eval_iter_splits.keys():
         metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
 

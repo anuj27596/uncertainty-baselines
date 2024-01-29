@@ -75,6 +75,10 @@ from uncertainty_baselines.models.resnet50_vae import resnet50_vae # anuj
 from uncertainty_baselines.models.resnet50_cvae import resnet50_cvae # anuj
 from uncertainty_baselines.models.vit_keras import vit_keras # anuj
 
+from uncertainty_baselines.models.vit import vision_transformer
+from uncertainty_baselines.models.vit_simclr import vision_transformer_simclr  # EDIT(anuj)
+from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
+from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
 
 # pylint: disable=g-import-not-at-top
 try:
@@ -83,7 +87,6 @@ try:
   from uncertainty_baselines.models import vit_batchensemble_gp
   from uncertainty_baselines.models.bit_resnet import bit_resnet
   from uncertainty_baselines.models.bit_resnet_heteroscedastic import bit_resnet_heteroscedastic
-  from uncertainty_baselines.models.vit import vision_transformer
   from uncertainty_baselines.models.vit_batchensemble import vision_transformer_be
   from uncertainty_baselines.models.vit_batchensemble_gp import vision_transformer_be_gp
   from uncertainty_baselines.models.vit_gp import vision_transformer_gp
@@ -91,10 +94,7 @@ try:
   from uncertainty_baselines.models.vit_hetgp import vision_transformer_hetgp
   from uncertainty_baselines.models.vit_mimo import vision_transformer_mimo
   from uncertainty_baselines.models.vit_heteroscedastic import vision_transformer_het
-  from uncertainty_baselines.models.vit_simclr import vision_transformer_simclr  # EDIT(anuj)
   from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
-  from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
-  from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
   from uncertainty_baselines.models.vit_mim import vision_transformer_mim  # EDIT(anuj)
   from uncertainty_baselines.models.vit_mae import vision_transformer_mae  # EDIT(anuj)
   from uncertainty_baselines.models.vit_osp import vision_transformer_osp  # EDIT(anuj)
