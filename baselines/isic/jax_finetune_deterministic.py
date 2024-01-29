@@ -117,20 +117,20 @@ def main(argv):
   # else:
   #   class_weights = None
 
-  # if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
-  #   class_weights = 0.5 * 35126 / jnp.array([28253, 6873])  # TODO(anuj): remove hardcode
-  #   if config.loss == 'softmax_xent':
-  #     base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
-  #   else:
-  #     raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
-  # else:
-  #   base_loss_fn = getattr(train_utils, config.loss)
-  
-  if config.class_reweight_mode == 'constant':
-    class_one_weight = 0.9
-    base_loss_fn = train_utils.reweighted_sigmoid_xent(class_one_weight)
+  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
+    class_weights = 0.5 * 15160 / jnp.array([int(0.95*15160), int(0.05*15160)])  # TODO(anuj): remove hardcode
+    if config.loss == 'softmax_xent':
+      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
+    else:
+      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
   else:
     base_loss_fn = getattr(train_utils, config.loss)
+  
+  # if config.class_reweight_mode == 'constant':
+  #   class_one_weight = 0.9
+  #   base_loss_fn = train_utils.reweighted_sigmoid_xent(class_one_weight)
+  # else:
+  #   base_loss_fn = getattr(train_utils, config.loss)
     
 
   # Shows the number of available devices.
@@ -558,6 +558,9 @@ def main(argv):
 
           # Entropy is computed at the per-epoch level (see below).
           results_arrs['y_pred_entropy'].append(probs)
+          
+          # import pdb; pdb.set_trace()
+          
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
@@ -583,7 +586,7 @@ def main(argv):
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty
       # entries.
-      # import pdb; pdb.set_trace()
+      # 
       print(f"============================ ID accuracy{metrics_results['in_domain_test']['in_domain_test/accuracy']} ============================ ")
       flattened_metric_results = {}
       for dic in metrics_results.values():
