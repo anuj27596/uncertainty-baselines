@@ -117,6 +117,18 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
           name="processed_512_onehot",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=512),
+      IsicIdConfig(
+          name="processed_512_o_head_neck",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
+      IsicIdConfig(
+          name="processed_512_onehot_o_head_neck",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
+      IsicIdConfig(
+          name="processed_512_onehot_o_upper_extremity",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
       # IsicIdConfig(
       #     name="frontal",
       #     description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
