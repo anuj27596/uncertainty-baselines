@@ -87,7 +87,7 @@ def main(argv):
 
   # Wandb and Checkpointing Setup
   output_dir = FLAGS.output_dir
-  config.output_dir = FLAGS.output_dir  # EDIT(anuj)
+  config.output_dir = output_dir  # EDIT(anuj)
   wandb_run, output_dir = vit_utils.maybe_setup_wandb(config)
   tf.io.gfile.makedirs(output_dir)
   logging.info('Saving checkpoints at %s', output_dir)
@@ -575,19 +575,19 @@ def main(argv):
         results_arrs['dataset_size'] = eval_steps * batch_size_eval
 
         all_eval_results[eval_name] = results_arrs
-
+      
       per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
           dataset_split_to_containers=all_eval_results,
           is_deterministic=True,
           num_bins=15,
           return_per_pred_results=True
       )
-
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty
       # entries.
       # 
       print(f"============================ ID accuracy{metrics_results['in_domain_test']['in_domain_test/accuracy']} ============================ ")
+      # import pdb; pdb.set_trace()
       flattened_metric_results = {}
       for dic in metrics_results.values():
         for key, value in dic.items():

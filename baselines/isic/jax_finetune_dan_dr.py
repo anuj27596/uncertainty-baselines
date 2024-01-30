@@ -126,7 +126,8 @@ def main(argv):
       raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
   else:
     base_loss_fn = getattr(train_utils, config.loss)
-    
+
+
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
   # In a TPU runtime this will be 8 cores.
@@ -355,7 +356,8 @@ def main(argv):
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
 
       loss = (
-          base_loss_fn(logits=logits, labels=labels)
+          base_loss_fn(logits=logits, labels=labels, reduction=False) 
+          # train_utils.softmax_xent(logits=logits, labels=labels)
           + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
       return loss
 
@@ -573,16 +575,13 @@ def main(argv):
           domain_pred = np.array(domain_pred[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
+          
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
-          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
+          domain_pred = domain_pred.flatten()
+          labels = labels.flatten()  # EDIT(anuj)
 
-          # domain_pred = domain_pred.flatten()
-          # int_labels = int_labels.flatten()  # EDIT(anuj)
+          y_pred = probs[:, 1]
 
-          y_pred = probs[:, 1] #np.max(probs, axis=-1) # karm
-
-          # import pdb; pdb.set_trace()
           batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
 
           results_arrs['y_true'].append(labels[:batch_trunc])
@@ -624,9 +623,6 @@ def main(argv):
           return_per_pred_results=True
       )
 
-      write_note(f"=========================\n {metrics_results} \n =========================")
-      # import pdb; pdb.set_trace()
-      
       for eval_name in eval_iter_splits.keys():
         metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
 

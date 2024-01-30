@@ -73,20 +73,10 @@ class IsicPreprocess:
         size=(self.pp_input_res, self.pp_input_res), method="bilinear")
 
     # * Binarize task *
-
-    # Get decision threshold
-    if self.decision_threshold == "mild":
-      highest_negative_class = 0
-    elif self.decision_threshold == "moderate":
-      highest_negative_class = 1
-    else:
-      raise NotImplementedError
-
     # Perform binarization using given threshold
-    labels = features["label"]
-    labels = tf.cast(labels > highest_negative_class, tf.int32)
+    # labels = tf.cast(labels > highest_negative_class, tf.int32)
     features[self.key_result or self.key] = decoded_image
-    features["labels"] = labels
+    features["labels"] = tf.cast(features["label"], tf.int32)
     del features["label"]
     return features
 

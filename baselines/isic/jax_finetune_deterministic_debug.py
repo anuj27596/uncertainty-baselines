@@ -19,6 +19,7 @@ import itertools
 import multiprocessing
 import numbers
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = "2"
 import time
 
 from absl import app
@@ -40,8 +41,11 @@ tf.config.experimental.set_visible_devices([], 'TPU_SYSTEM')
 tf.config.experimental.set_visible_devices([], 'TPU')
 
 logging.info(tf.config.experimental.get_visible_devices())
+# import jax
 
 # pylint: disable=g-import-not-at-top,line-too-long
+import sys
+sys.path.insert(0, "/data3/home/karmpatel/uncertainty-baselines")
 import uncertainty_baselines as ub
 # import checkpoint_utils  # local file import from baselines.isic  # EDIT(anuj)
 # import input_utils  # local file import from baselines.isic  # EDIT(anuj)
@@ -56,7 +60,6 @@ import baselines.isic.train_utils as train_utils  # EDIT(anuj)
 from baselines.isic.utils import results_storage_utils  # EDIT(anuj)
 from baselines.isic.utils import vit_utils  # EDIT(anuj)
 import wandb
-
 # pylint: enable=g-import-not-at-top,line-too-long
 
 # TODO(nband): lock config after separating total and warmup steps arguments.
@@ -73,10 +76,134 @@ flags.DEFINE_string('tpu', None,
 FLAGS = flags.FLAGS
 
 
+def get_config():
+  """Config for training a patch-transformer on JFT."""
+  config = ml_collections.ConfigDict()
+
+  # Data load / output flags
+
+  # The directory where the model weights and training/evaluation summaries
+  #   are stored.
+  # config.output_dir = (
+      # '/troy/anuj/gub-og/outputs/local')
+  config.output_dir = None
+
+  # Fine-tuning dataset
+  # config.data_dir = '/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/diabetic_retinopathy_diagnosis'
+  config.data_dir = '/data3/home/karmpatel/datasets/isic_id'
+
+  # REQUIRED: distribution shift.
+  # 'aptos': loads APTOS (India) OOD validation and test datasets.
+  #   Kaggle/EyePACS in-domain datasets are unchanged.
+  # 'severity': uses DiabeticRetinopathySeverityShift dataset, a subdivision
+  #   of the Kaggle/EyePACS dataset to hold out clinical severity labels as OOD.
+  config.distribution_shift = 'aptos'
+
+  # If checkpoint path is provided, resume training and/or conduct evaluation
+  #   with this checkpoint. See `checkpoint_utils.py`.
+  config.resume = None
+
+  config.prefetch_to_device = 2
+  config.trial = 0
+
+  # Logging and hyperparameter tuning
+
+  config.use_wandb = False  # Use wandb for logging.
+  config.wandb_dir = 'wandb'  # Directory where wandb logs go.
+  config.project = 'ub-debug'  # Wandb project name.
+  config.exp_name = None  # Give experiment a name.
+  config.exp_group = None  # Give experiment a group name.
+
+  # Model Flags
+
+  # TODO(nband): fix issue with sigmoid loss.
+  config.num_classes = 2
+
+  # pre-trained model ckpt file
+  # !!!  The below section should be modified per experiment
+  # config.model_init = '/troy/anuj/gub-og/checkpoints/vit_imgnet21k/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
+  # config.model_init = 'gs://ue-usrl-anuj/vit-simclr-outputs/1680700740884/checkpoint_900.npz'
+  # config.model_init = 'gs://vit_models/augreg/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0.npz'
+  config.model_init = '/data3/home/karmpatel/datasets/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0.npz'
+
+  # Model definition to be copied from the pre-training config
+  config.model = ml_collections.ConfigDict()
+  config.model.patches = ml_collections.ConfigDict()
+  config.model.patches.size = [32, 32]
+  config.model.hidden_size = 768
+  config.model.transformer = ml_collections.ConfigDict()
+  config.model.transformer.attention_dropout_rate = 0.
+  config.model.transformer.dropout_rate = 0.
+  config.model.transformer.mlp_dim = 3072
+  config.model.transformer.num_heads = 12
+  config.model.transformer.num_layers = 12
+  config.model.classifier = 'token'  # Or 'gap'
+
+  # This is "no head" fine-tuning, which we use by default
+  config.model.representation_size = None
+
+  # Preprocessing
+
+  # Input resolution of each retina image. (Default: 512)
+  config.pp_input_res = 512  # pylint: disable=invalid-name
+  # pp_common = f'|onehot({config.num_classes})'
+  pp_common = f''
+
+  config.pp_train = (
+      f'isic_preprocess({config.pp_input_res})' + pp_common)
+  # 'diabetic_retinopathy_preprocess(512)|onehot(2)'
+  config.pp_eval = (
+      f'isic_preprocess({config.pp_input_res})' + pp_common)
+
+  # Training Misc
+  config.batch_size = 32  # using TPUv3-8
+  config.seed = 0  # Random seed.
+  config.shuffle_buffer_size = 10_000  # Per host, so small-ish is ok.
+
+  # Optimization
+  config.optim_name = 'Momentum'
+  config.optim = ml_collections.ConfigDict()
+  config.loss =  'softmax_xent' #'softmax_xent'  # or 'sigmoid_xent'
+  config.lr = ml_collections.ConfigDict()
+  config.grad_clip_norm = 1.0  # Gradient clipping threshold.
+  config.weight_decay = None  # No explicit weight decay.
+  config.lr.base = 0.001
+  config.lr.decay_type = 'linear'
+
+  # The dataset is imbalanced (e.g., in Country Shift, we have 19.6%, 18.8%,
+  # 19.2% positive examples in train, val, test respectively).
+  # None (default) will not perform any loss reweighting.
+  # 'constant' will use the train proportions to reweight the binary cross
+  #   entropy loss.
+  # 'minibatch' will use the proportions of each minibatch to reweight the loss.
+  config.class_reweight_mode = 'constant'
+
+  # Evaluation Misc
+  config.only_eval = False  # Disables training, only evaluates the model
+  config.eval_on_train = False  # Whether to eval on train split
+  config.use_validation = True  # Whether to use a validation split
+  config.use_test = True  # Whether to use a test split
+
+  # Step Counts
+
+  # Varied together for wandb sweep compatibility.
+  # TODO(nband): revert this to separate arguments.
+  one_epoch=474
+  config.total_and_warmup_steps = (one_epoch*200, one_epoch*1)
+
+  config.log_training_steps = 100
+  config.log_eval_steps = one_epoch*5
+  # NOTE: eval is very fast O(seconds) so it's fine to run it often.
+  config.checkpoint_steps = one_epoch*20
+  config.checkpoint_timeout = 1
+  config.builder_config = "processed_512_onehot" 
+  config.args = {}
+  return config
 def main(argv):
   del argv  # unused arg
 
-  config = FLAGS.config
+  # config = FLAGS.config
+  config = get_config()
 
   # Unpack total and warmup steps
   # TODO(nband): revert this to separate arguments.
@@ -87,8 +214,9 @@ def main(argv):
   config.lr.warmup_steps = warmup_steps
 
   # Wandb and Checkpointing Setup
-  output_dir = FLAGS.output_dir
-  config.output_dir = FLAGS.output_dir  # EDIT(anuj)
+  # output_dir = FLAGS.output_dir
+  output_dir = f"/data5/scratch/karmpatel/outputs/isic/vit/{config.seed}" # karm: debug only
+  config.output_dir = output_dir  # EDIT(anuj)
   wandb_run, output_dir = vit_utils.maybe_setup_wandb(config)
   tf.io.gfile.makedirs(output_dir)
   logging.info('Saving checkpoints at %s', output_dir)
@@ -126,7 +254,14 @@ def main(argv):
       raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
   else:
     base_loss_fn = getattr(train_utils, config.loss)
+  
+  # if config.class_reweight_mode == 'constant':
+  #   class_one_weight = 0.9
+  #   base_loss_fn = train_utils.reweighted_sigmoid_xent(class_one_weight)
+  # else:
+  #   base_loss_fn = getattr(train_utils, config.loss)
     
+
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
   # In a TPU runtime this will be 8 cores.
@@ -192,10 +327,28 @@ def main(argv):
   write_note('Initializing train dataset...')
   rng, train_ds_rng = jax.random.split(rng)
   train_ds_rng = jax.random.fold_in(train_ds_rng, jax.process_index())
+  
+  ood_train_base_dataset = ub.datasets.get(
+      dataset_names['ood_dataset'],
+      split=split_names['ood_test_split'],
+      builder_config=f'isic_ood/{config.builder_config}',
+      data_dir=config.get('data_dir'))
+  ood_train_dataset_builder = ood_train_base_dataset._dataset_builder  # pylint: disable=protected-access
+  ood_train_ds = input_utils.get_data(
+      dataset=ood_train_dataset_builder,
+      split=split_names['ood_test_split'],
+      rng=train_ds_rng,
+      process_batch_size=local_batch_size,
+      preprocess_fn=preproc_fn,
+      shuffle_buffer_size=config.shuffle_buffer_size,
+      prefetch_size=config.get('prefetch_to_host', 2),
+      data_dir=config.get('data_dir'))
+  
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      builder_config=f'isic_id/{config.builder_config}') # Karm
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -210,29 +363,6 @@ def main(argv):
   # Start prefetching already.
   train_iter = input_utils.start_input_pipeline(
       train_ds, config.get('prefetch_to_device', 1))
-
-  rng, train_ood_ds_rng = jax.random.split(rng)
-  train_ood_ds_rng = jax.random.fold_in(train_ood_ds_rng, jax.process_index())
-  train_ood_base_dataset = ub.datasets.get(
-      dataset_names['ood_dataset'],
-      split=split_names['ood_validation_split'],
-      data_dir=config.get('data_dir'))
-  train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
-  train_ood_ds = input_utils.get_data(
-      dataset=train_ood_dataset_builder,
-      split=split_names['ood_validation_split'],
-      rng=train_ood_ds_rng,
-      process_batch_size=local_batch_size,
-      preprocess_fn=preproc_fn,
-      shuffle_buffer_size=config.shuffle_buffer_size,
-      prefetch_size=config.get('prefetch_to_host', 2),
-      # percent=config.get('ood_val_percent'),
-      data_dir=config.get('data_dir'))
-
-  # Start prefetching already.
-  train_ood_iter = input_utils.start_input_pipeline(
-      train_ood_ds,
-      config.get('prefetch_to_device', 1))
 
   write_note('Initializing val dataset(s)...')
 
@@ -269,7 +399,7 @@ def main(argv):
       total_steps, total_steps * batch_size / ntrain_img, steps_per_epoch)
 
   write_note('Initializing model...')
-  model_dict = vit_utils.initialize_model('dan', config)
+  model_dict = vit_utils.initialize_model('deterministic', config)
   model = model_dict['model']
 
   # We want all parameters to be created in host RAM, not on any device, they'll
@@ -305,7 +435,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = train_utils.softmax_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
+    losses = base_loss_fn(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -315,7 +445,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out['pre_logits'], out['domain_pred']], axis_name='batch')
+        logits, labels, out['pre_logits']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -337,27 +467,10 @@ def main(argv):
     rng_model_local = jax.random.fold_in(rng_model, jax.lax.axis_index('batch'))
 
     def loss_fn(params, images, labels):
-      images_id, images_ood = images
-      logits, out_id = model.apply(
-          {'params': flax.core.freeze(params)}, images_id,
+      logits, _ = model.apply(
+          {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      _, out_ood = model.apply(
-          {'params': flax.core.freeze(params)}, images_ood,
-          train=True, rngs={'dropout': rng_model_local})
-
-      domain_pred = jnp.concatenate([
-          out_id['domain_pred'],
-          out_ood['domain_pred']])
-      domain_labels = jnp.concatenate([
-          jnp.zeros((*out_id['domain_pred'].shape[:-1], 1)),
-          jnp.ones((*out_ood['domain_pred'].shape[:-1], 1))])
-
-      domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
-
-      loss = (
-          base_loss_fn(logits=logits, labels=labels)
-          + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
-      return loss
+      return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
@@ -457,12 +570,11 @@ def main(argv):
     write_note('Advancing iterators after resuming from a checkpoint...')
     lr_iter = itertools.islice(lr_iter, first_step, None)
     train_iter = itertools.islice(train_iter, first_step, None)
-    train_ood_iter = itertools.islice(train_ood_iter, first_step, None)
 
   # Using a python integer for step here, because opt.state.step is allocated
   # on TPU during replication.
-  for step, train_batch, train_ood_batch, lr_repl in zip(
-      range(first_step + 1, total_steps + 1), train_iter, train_ood_iter, lr_iter):
+  for step, train_batch, lr_repl in zip(
+      range(first_step + 1, total_steps + 1), train_iter, lr_iter):
 
     with jax.profiler.TraceAnnotation('train_step', step_num=step, _r=1):
       if not config.get('only_eval', False):
@@ -471,10 +583,7 @@ def main(argv):
         opt_repl, loss_value, train_loop_rngs, extra_measurements = update_fn(
             opt_repl,
             lr_repl,
-            (
-              train_batch['image'],
-              train_ood_batch['image'],
-            ),
+            train_batch['image'],
             train_batch['labels'],
             rng=train_loop_rngs)
 
@@ -543,14 +652,11 @@ def main(argv):
         results_arrs = {
             'y_true': [],
             'y_pred': [],
-            'logits': [],
-            'domain_pred': [],
             'y_pred_entropy': [],
         }
         if config.only_eval:  # EDIT(anuj)
           results_arrs['pre_logits'] = []
 
-        write_note(f'Evaluating on split: {eval_name}')
         for _, batch in zip(range(eval_steps), eval_iter):
           batch_ncorrect, batch_losses, batch_n, batch_metric_args = (  # pylint: disable=unused-variable
               evaluation_fn(
@@ -564,45 +670,30 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, pre_logits, domain_pred = batch_metric_args  # EDIT(anuj)
+          logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
           probs = jax.nn.softmax(logits)
 
           # From one-hot to integer labels.
-          labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
-          domain_pred = np.array(domain_pred[0])  # EDIT(anuj)
+          int_labels = np.argmax(np.array(labels[0]), axis=-1)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
-          logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
-          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
-
-          # domain_pred = domain_pred.flatten()
-          # int_labels = int_labels.flatten()  # EDIT(anuj)
-
-          y_pred = probs[:, 1] #np.max(probs, axis=-1) # karm
-
-          # import pdb; pdb.set_trace()
-          batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
-
-          results_arrs['y_true'].append(labels[:batch_trunc])
-          results_arrs['y_pred'].append(y_pred[:batch_trunc])
-          results_arrs['logits'].append(logits[:batch_trunc])
-          results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
-
+          int_labels = int_labels.flatten()
+          y_pred = probs[:, 1]
+          results_arrs['y_true'].append(int_labels)
+          results_arrs['y_pred'].append(y_pred)
           if config.only_eval:  # EDIT(anuj)
-            pre_logits = np.array(pre_logits[0])
-            pre_logits = np.reshape(pre_logits, (pre_logits.shape[0] * pre_logits.shape[1], -1))
-            results_arrs['pre_logits'].append(pre_logits[:batch_trunc])
+            results_arrs['pre_logits'].append(pre_logits)
 
           # Entropy is computed at the per-epoch level (see below).
-          results_arrs['y_pred_entropy'].append(probs[:batch_trunc])
+          results_arrs['y_pred_entropy'].append(probs)
+          
+          # import pdb; pdb.set_trace()
+          
 
         results_arrs['y_true'] = np.concatenate(results_arrs['y_true'], axis=0)
-        results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
-        results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
         if config.only_eval:  # EDIT(anuj)
@@ -610,29 +701,23 @@ def main(argv):
 
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
-        results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
-
-        domain_pred_mean = np.mean(results_arrs['domain_pred'] > 0)
-        results_arrs['domain_pred_recall'] = domain_pred_mean if 'ood' in eval_name else (1 - domain_pred_mean)
+        results_arrs['dataset_size'] = eval_steps * batch_size_eval
 
         all_eval_results[eval_name] = results_arrs
 
+      
       per_pred_results, metrics_results = vit_utils.evaluate_vit_predictions(  # pylint: disable=unused-variable
           dataset_split_to_containers=all_eval_results,
           is_deterministic=True,
           num_bins=15,
           return_per_pred_results=True
       )
-
-      write_note(f"=========================\n {metrics_results} \n =========================")
-      # import pdb; pdb.set_trace()
-      
-      for eval_name in eval_iter_splits.keys():
-        metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
-
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty
       # entries.
+      # 
+      print(f"============================ ID accuracy{metrics_results['in_domain_test']['in_domain_test/accuracy']} ============================ ")
+      # import pdb; pdb.set_trace()
       flattened_metric_results = {}
       for dic in metrics_results.values():
         for key, value in dic.items():
