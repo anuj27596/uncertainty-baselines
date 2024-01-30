@@ -208,6 +208,15 @@ def initialize_dan_model(config):  # EDIT(anuj)
   return {
       'model': model
   }
+  
+def initialize_dan_model_intermed(config):  # EDIT(anuj)
+  logging.info('config.model = %s', config.get('model'))
+  model = ub.models.vision_transformer_dan_intermed(
+      num_classes=config.num_classes,
+      **config.get('model', {}))
+  return {
+      'model': model
+  }
 
 
 def initialize_dan_ens_model(config):  # EDIT(anuj)
@@ -289,6 +298,7 @@ VIT_MODEL_INIT_MAP = {
     'mim': initialize_mim_model,  # EDIT(anuj)
     'mae': initialize_mae_model,  # EDIT(anuj)
     'osp': initialize_osp_model,  # EDIT(anuj)
+    'dan_intermed': initialize_dan_model_intermed
 }
 
 
