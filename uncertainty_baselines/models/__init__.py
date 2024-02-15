@@ -79,6 +79,7 @@ from uncertainty_baselines.models.vit import vision_transformer
 from uncertainty_baselines.models.vit_simclr import vision_transformer_simclr  # EDIT(anuj)
 from uncertainty_baselines.models.vit_dan import vision_transformer_dan  # EDIT(anuj)
 from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens  # EDIT(anuj)
+from uncertainty_baselines.models.vit_dan_intermed import vision_transformer_dan_intermed  # EDIT(anuj)
 
 # pylint: disable=g-import-not-at-top
 try:

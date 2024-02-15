@@ -153,8 +153,8 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
             "image": tfds.features.Image(),
             # From 0 (no DR) to 4 (Proliferative DR). -1 if no label provided.
             # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES), # Karm
-            "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES) # Karm
-            # "label": tfds.features.Tensor(shape = (_NUM_CLASSES, ), dtype=tf.dtypes.float32)
+            # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES) # Karm
+            "label": tfds.features.Tensor(shape = (_NUM_CLASSES, ), dtype=tf.dtypes.float32)
         }),
         homepage="https://www.kaggle.com/c/aptos2019-blindness-detection/data",
         citation=_CITATION)
