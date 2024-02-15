@@ -43,18 +43,18 @@ logging.info(tf.config.experimental.get_visible_devices())
 
 # pylint: disable=g-import-not-at-top,line-too-long
 import uncertainty_baselines as ub
-# import checkpoint_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import input_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import preprocess_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
-# import train_utils  # local file import from baselines.diabetic_retinopathy_detection  # EDIT(anuj)
+# import checkpoint_utils  # local file import from baselines.isic  # EDIT(anuj)
+# import input_utils  # local file import from baselines.isic  # EDIT(anuj)
+# import preprocess_utils  # local file import from baselines.isic  # EDIT(anuj)
+# import train_utils  # local file import from baselines.isic  # EDIT(anuj)
 # from utils import results_storage_utils  # EDIT(anuj)
 # from utils import vit_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.input_utils as input_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.preprocess_utils as preprocess_utils  # EDIT(anuj)
-import baselines.diabetic_retinopathy_detection.train_utils as train_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import results_storage_utils  # EDIT(anuj)
-from baselines.diabetic_retinopathy_detection.utils import vit_utils  # EDIT(anuj)
+import baselines.isic.checkpoint_utils as checkpoint_utils  # EDIT(anuj)
+import baselines.isic.input_utils as input_utils  # EDIT(anuj)
+import baselines.isic.preprocess_utils as preprocess_utils  # EDIT(anuj)
+import baselines.isic.train_utils as train_utils  # EDIT(anuj)
+from baselines.isic.utils import results_storage_utils  # EDIT(anuj)
+from baselines.isic.utils import vit_utils  # EDIT(anuj)
 import wandb
 # pylint: enable=g-import-not-at-top,line-too-long
 
@@ -111,6 +111,18 @@ def main(argv):
       'lr': config.lr
   })
 
+  # if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
+  #   class_weights = 0.5 * 15160 / jnp.array([int(0.95*15160), int(0.05*15160)])  # TODO(anuj): remove hardcode
+  #   if config.loss == 'softmax_xent':
+  #     base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
+  #   else:
+  #     raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
+  # else:
+  #   base_loss_fn = getattr(train_utils, config.loss)
+
+  class_weights = 0.5 * 15160 / jnp.array([int(0.95*15160), int(0.05*15160)])
+  base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
+    
   # Reweighting loss for class imbalance
   # class_reweight_mode = config.class_reweight_mode
   # if class_reweight_mode == 'constant':
@@ -187,7 +199,7 @@ def main(argv):
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
       data_dir=config.get('data_dir'),
-      builder_config='ub_diabetic_retinopathy_detection/btgraham-300') # Karm
+      builder_config=f'isic_id/{config.builder_config}') # Karm
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -286,7 +298,8 @@ def main(argv):
     logits = jnp.stack(logits_list, axis=-1)
     pre_list = jnp.stack(pre_list, axis=-2)
     probs = jnp.mean(jax.nn.softmax(logits, axis=-2), axis=-1)
-    losses = -jnp.sum(labels * jnp.log(probs), axis=-1)
+    # import pdb; pdb.set_trace()
+    losses = base_loss_fn(logits=logits, labels=labels, reduction=False) #-jnp.sum(labels * jnp.log(probs), axis=-1)
 
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(probs, axis=1)
@@ -322,7 +335,7 @@ def main(argv):
       logits, _ = model.apply(
           {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      return train_utils.softmax_xent(logits=logits, labels=labels)  # EDIT(anuj)
+      return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at
     # https://docs.google.com/document/d/1g3kMEvqu1DOawaflKNyUsIoQ4yIVEoyE5ZlIPkIl4Lc/edit?hl=en#
