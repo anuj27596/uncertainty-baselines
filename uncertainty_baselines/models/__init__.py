@@ -82,6 +82,10 @@ from uncertainty_baselines.models.vit_dan_ens import vision_transformer_dan_ens 
 from uncertainty_baselines.models.vit_dan_intermed import vision_transformer_dan_intermed  # EDIT(anuj)
 
 # pylint: disable=g-import-not-at-top
+from uncertainty_baselines.models.vit_mim import vision_transformer_mim  # EDIT(anuj)
+from uncertainty_baselines.models.vit_mae import vision_transformer_mae  # EDIT(anuj)
+from uncertainty_baselines.models.vit_osp import vision_transformer_osp  # EDIT(anuj)
+
 try:
   # Try to import ViT models.
   from uncertainty_baselines.models import vit_batchensemble
@@ -96,9 +100,6 @@ try:
   from uncertainty_baselines.models.vit_mimo import vision_transformer_mimo
   from uncertainty_baselines.models.vit_heteroscedastic import vision_transformer_het
   from uncertainty_baselines.models.vit_local_spatial import vision_transformer_local_spatial  # EDIT(anuj)
-  from uncertainty_baselines.models.vit_mim import vision_transformer_mim  # EDIT(anuj)
-  from uncertainty_baselines.models.vit_mae import vision_transformer_mae  # EDIT(anuj)
-  from uncertainty_baselines.models.vit_osp import vision_transformer_osp  # EDIT(anuj)
 except ImportError:
   logging.warning('Skipped ViT models due to ImportError.', exc_info=True)
 except tf.errors.NotFoundError:
