@@ -67,7 +67,7 @@ def softmax_xent(*, logits, labels, reduction=True, kl=False):
 
 def reweighted_softmax_xent(class_weights):  # EDIT(anuj): def reweighted softmax_xent
   def loss_fn(*, logits, labels, reduction=True):
-    if logits.ndim == 3:
+    if logits.ndim == 3: # for OSP
       log_p = jnp.log(jnp.mean(jax.nn.softmax(logits, axis=-2), axis=-1))
     else:
       log_p = jax.nn.log_softmax(logits)
