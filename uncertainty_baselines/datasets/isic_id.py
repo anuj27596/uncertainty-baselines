@@ -154,6 +154,7 @@ class IsicId(tfds.core.GeneratorBasedBuilder):
             # From 0 (no DR) to 4 (Proliferative DR). -1 if no label provided.
             # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES), # Karm
             # "label": tfds.features.ClassLabel(num_classes=_NUM_CLASSES) # Karm
+            # "label": tfds.features.Tensor(shape = (_NUM_CLASSES, ), dtype=tf.dtypes.float32)
             "label": tfds.features.Tensor(shape = (_NUM_CLASSES, ), dtype=tf.dtypes.float32) if "onehot" in self.builder_config.name else tfds.features.ClassLabel(num_classes=_NUM_CLASSES)
         }),
         homepage="https://www.kaggle.com/c/aptos2019-blindness-detection/data",
