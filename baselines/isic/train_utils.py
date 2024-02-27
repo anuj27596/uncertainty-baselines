@@ -73,6 +73,20 @@ def reweighted_sigmoid_xent(class_one_weight=0.5): # karm
     return jnp.mean(nll) if reduction else nll
   return loss_fn
 
+def simclr_loss_debiased(*, projections, temp=0.1, tau_plus=0.1, reduction=True):  # EDIT(anuj): def simclr loss
+  n, d = projections.shape
+  N = n - 2
+  positive_idx = (jnp.arange(n) + n // 2) % n
+  projections = projections / jnp.linalg.norm(projections, axis=1, keepdims=True)
+  cossim = projections @ projections.T
+  cossim = cossim - jnp.diagflat(1e9 * jnp.ones(n))
+  expcossim = jnp.exp(cossim / temp)
+  pos = expcossim[jnp.arange(n), positive_idx]
+  neg = jnp.sum(expcossim, axis=1) - pos
+  Ng = (-tau_plus * N * pos + neg) / (1 - tau_plus)
+  Ng = jnp.clip(Ng, a_min = N * jnp.exp(-1 / temp), a_max = None)
+  loss = -jnp.log(pos / (pos + Ng))
+  return jnp.mean(loss) if reduction else loss
 
 def softmax_xent(*, logits, labels, reduction=True, kl=False):
   """Computes a softmax cross-entropy (Categorical NLL) loss over examples."""
