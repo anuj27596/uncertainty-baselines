@@ -117,14 +117,8 @@ def main(argv):
   #   class_weights = utils.get_diabetic_retinopathy_class_balance_weights()
   # else:
   #   class_weights = None
-  if config.class_reweight_mode == 'constant':  # EDIT(anuj): class weighting
-    class_weights = 0.5 * 15160 / jnp.array([int(0.95*15160), int(0.05*15160)])  # TODO(anuj): remove hardcode
-    if config.loss == 'softmax_xent':
-      base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
-    else:
-      raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
-  else:
-    base_loss_fn = getattr(train_utils, config.loss)
+  class_weights = 0.5 * 15160 / jnp.array([int(0.95*15160), int(0.05*15160)])
+  base_loss_fn = train_utils.reweighted_softmax_xent(class_weights)
 
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -194,7 +188,8 @@ def main(argv):
   train_base_dataset = ub.datasets.get(
       dataset_names['in_domain_dataset'],
       split=split_names['train_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      builder_config=f'isic_id/{config.builder_config}')
   train_dataset_builder = train_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ds = input_utils.get_data(
       dataset=train_dataset_builder,
@@ -215,7 +210,8 @@ def main(argv):
   train_ood_base_dataset = ub.datasets.get(
       dataset_names['ood_dataset'],
       split=split_names['ood_validation_split'],
-      data_dir=config.get('data_dir'))
+      data_dir=config.get('data_dir'),
+      builder_config=f'isic_ood/{config.builder_config}')
   train_ood_dataset_builder = train_ood_base_dataset._dataset_builder  # pylint: disable=protected-access
   train_ood_ds = input_utils.get_data(
       dataset=train_ood_dataset_builder,
@@ -304,7 +300,7 @@ def main(argv):
   def evaluation_fn(params, images, labels):
     logits, out = model.apply(
         {'params': flax.core.freeze(params)}, images, train=False)
-    losses = train_utils.softmax_xent(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
+    losses = base_loss_fn(logits=logits, labels=labels, reduction=False)  # EDIT(anuj)
     loss = jax.lax.psum(losses, axis_name='batch')
     top1_idx = jnp.argmax(logits, axis=1)
 
@@ -354,8 +350,7 @@ def main(argv):
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
 
       loss = (
-          # train_utils.softmax_xent(logits=logits, labels=labels)
-        base_loss_fn(logits=logits, labels=labels)
+          base_loss_fn(logits=logits, labels=labels)
           + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
       return loss
 
