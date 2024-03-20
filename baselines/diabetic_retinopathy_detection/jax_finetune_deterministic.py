@@ -317,7 +317,7 @@ def main(argv):
       logits, out = model.apply(
           {'params': flax.core.freeze(params)}, images,
           train=True, rngs={'dropout': rng_model_local})
-      import ipdb;ipdb.set_trace()
+      # import ipdb;ipdb.set_trace()
       return base_loss_fn(logits=logits, labels=labels)  # EDIT(anuj)
 
     # Implementation considerations compared and summarized at

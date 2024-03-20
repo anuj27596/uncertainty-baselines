@@ -1,0 +1,1196 @@
+gsutil -m rsync -r processed_onehot_tum/ gs://ue-usrl-anuj/data/histopathology/crc/processed_onehot_tum
+gsutil -m cp -r gs://ue-usrl-anuj/data/histopathology/processed_onehot gs://ue-usrl-anuj/data/histopathology/processed_onehot_tum
+
+# download eval results
+gsutil -m rsync -r gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/eval/ eval/ 
+gsutil -m rsync -r gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/eval/ eval/
+
+------------------------------------  swap new -------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_*/crop_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.0001/crop_0.36/0 : 0.9772276412649427
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.0001/crop_0.64/0 : 0.9761073137579311
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.0001/crop_0.81/0 : 0.9768376930166458
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.001/crop_0.36/0 : 0.946267916729337
+102400
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.001/crop_0.64/0 : 0.9722975812686192
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune/lr_0.001/crop_0.81/0 : 0.9780440567244718
+5120
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_*/crop_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.0001/crop_0.36/0 : 0.9764328895969854
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.0001/crop_0.64/0 : 0.9757080810275323
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.0001/crop_0.81/0 : 0.9767887947442403
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.001/crop_0.36/0 : 0.960348762285691
+15360
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.001/crop_0.64/0 : 0.973030126906491
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_finetune_debiased/lr_0.001/crop_0.81/0 : 0.956740193575262
+5120
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_*/llr_*/plr_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_0.1/plr_0.3/0 : 0.9610998768877673
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_0.1/plr_1/0 : 0.9608717881107873
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_0.1/plr_3/0 : 0.9621335492284904
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_1/plr_0.3/0 : 0.9614700182409124
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_1/plr_1/0 : 0.9615155122032139
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_1/plr_3/0 : 0.9617491716694551
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_10/plr_0.3/0 : 0.9619521923447588
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_10/plr_1/0 : 0.9624334380003948
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.0001/llr_10/plr_3/0 : 0.9615257251335263
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_0.1/plr_0.3/0 : 0.9522650732019518
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_0.1/plr_1/0 : 0.946519835677046
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_0.1/plr_3/0 : 0.9496422070080508
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_1/plr_0.3/0 : 0.9501940147276644
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_1/plr_1/0 : 0.9483795174421376
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_1/plr_3/0 : 0.9496134251135337
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_10/plr_0.3/0 : 0.9486753829384643
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_10/plr_1/0 : 0.9471378727023227
+25600
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/lr_0.001/llr_10/plr_3/0 : 0.9494258785750671
+5120
+
+0.9610998768877673, 0.9608717881107873, 0.9621335492284904, 0.9614700182409124, 0.9615155122032139, 0.9617491716694551, 0.9619521923447588, 0.9624334380003948, 0.9615257251335263, 0.9522650732019518, 0.946519835677046, 0.9496422070080508, 0.9501940147276644, 0.9483795174421376, 0.9496134251135337, 0.9486753829384643, 0.9471378727023227, 0.9494258785750671
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_*/dr_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.0001/dr_0.01/0 : 0.9751813414095949
+46080
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.0001/dr_0.03/0 : 0.9538988325692205
+30720
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.0001/dr_0.1/0 : 0.9331684409311964
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.0001/dr_0.3/0 : 0.9420289316841617
+97280
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.001/dr_0.01/0 : 0.9796778160917405
+15360
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.001/dr_0.03/0 : 0.9737307958224783
+46080
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.001/dr_0.1/0 : 0.913966894012685
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/lr_0.001/dr_0.3/0 : 0.9730582898355348
+51200
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_*/mr_*
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.0001/mr_0.4/0 : 0.9698325512704575
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.0001/mr_0.6/0 : 0.9359729734915657
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.0001/mr_0.8/0 : 0.9564316392867289
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.001/mr_0.4/0 : 0.9407024886744793
+61440
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.001/mr_0.6/0 : 0.9592157459864731
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mim_finetune/lr_0.001/mr_0.8/0 : 0.9574925461082855
+5120
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_*/mr_*
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.1/0 : 0.9374683940755101
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.2/0 : 0.9220202537882234
+46080
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.25/0 : 0.9294221524029167
+46080
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.4/0 : 0.9518940034005963
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.6/0 : 0.9574176512859937
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.0001/mr_0.8/0 : 0.9624492216199688
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.1/0 : 0.9636760111884198
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.2/0 : 0.9560243600051744
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.25/0 : 0.9544487833924136
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.4/0 : 0.9651256283273263
+5120
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.6/0 : 0.9498452276833547
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae_finetune/lr_0.001/mr_0.8/0 : 0.9653404093466262
+25600
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_*/dlc_*
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.0001/dlc_0.05/0 : 0.9758053270671329
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.0001/dlc_0.1/0 : 0.9760738557451194
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.0001/dlc_3/0 : 0.9763842175257593
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.001/dlc_0.05/0 : 0.9509951099095051
+92160
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.001/dlc_0.1/0 : 0.9553521271535085
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan_iw/lr_0.001/dlc_3/0 : 0.9584414021818553
+30720
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_*/dlc_*
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.0001/dlc_0.05/0 : 0.9763045354254666
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.0001/dlc_0.1/0 : 0.9761973630005728
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.0001/dlc_3/0 : 0.9766403954782001
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.001/dlc_0.05/0 : 0.9513795760434172
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.001/dlc_0.1/0 : 0.9528050888176531
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_iw/lr_0.001/dlc_3/0 : 0.9513257906257195
+40960
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_*/clc_*/cmo_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_0.1/cmo_1/0 : 0.9718148474844759
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_0.1/cmo_2/0 : 0.9712642441714534
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_0.1/cmo_3/0 : 0.9709710140423766
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_0.1/cmo_5/0 : 0.9705486989108254
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_0.1/cmo_8/0 : 0.9709012922046205
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_1.0/cmo_1/0 : 0.9687478834442109
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_1.0/cmo_2/0 : 0.9691327479886247
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_1.0/cmo_3/0 : 0.9702084563425757
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_1.0/cmo_5/0 : 0.9695032697549856
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_1.0/cmo_8/0 : 0.9693654197214792
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_10.0/cmo_1/0 : 0.965844267709546
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_10.0/cmo_2/0 : 0.9659454639769176
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_10.0/cmo_3/0 : 0.9662235545069391
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_10.0/cmo_5/0 : 0.9661629961107168
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.0001/clc_10.0/cmo_8/0 : 0.9648554128449139
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_0.1/cmo_1/0 : 0.9717244083006438
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_0.1/cmo_2/0 : 0.9675052410901467
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_0.1/cmo_3/0 : 0.970465829526521
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_0.1/cmo_5/0 : 0.9693064549672625
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_0.1/cmo_8/0 : 0.9729778077382475
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_1.0/cmo_1/0 : 0.9726284017284641
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_1.0/cmo_2/0 : 0.9624227183229787
+102400
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_1.0/cmo_3/0 : 0.9621645483180303
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_1.0/cmo_5/0 : 0.955410295086722
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_1.0/cmo_8/0 : 0.9657928727548573
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_10.0/cmo_1/0 : 0.9626912470009651
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_10.0/cmo_2/0 : 0.9602155241448717
+153600
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_10.0/cmo_3/0 : 0.9651697587305686
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_10.0/cmo_5/0 : 0.9622673382274078
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_cmd/lr_0.001/clc_10.0/cmo_8/0 : 0.5
+1
+
+[0.9718148474844759,0.9712642441714534,0.9709710140423766,0.9705486989108254,0.9709012922046205,0.9687478834442109,0.9691327479886247,0.9702084563425757,0.9695032697549856,0.9693654197214792,0.965844267709546,0.9659454639769176,0.9662235545069391,0.9661629961107168,0.9648554128449139,0.9717244083006438,0.9675052410901467,0.970465829526521,0.9693064549672625,0.9729778077382475,0.9726284017284641,0.9624227183229787,0.9621645483180303,0.955410295086722,0.9657928727548573,0.9626912470009651,0.9602155241448717,0.9651697587305686,0.9622673382274078]
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_*/gc_*/nl_*/hdim_*/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_2/hdim_256/0 : 0.9752236477349965
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_2/hdim_512/0 : 0.976880238600081
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_2/hdim_768/0 : 0.9763160893300089
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_3/hdim_256/0 : 0.9748897797347701
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_3/hdim_512/0 : 0.975635205783008
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_3/hdim_768/0 : 0.9757383941028872
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_5/hdim_256/0 : 0.9751148816680968
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_5/hdim_512/0 : 0.9751447624557066
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.05/nl_5/hdim_768/0 : 0.9749511349519955
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_2/hdim_256/0 : 0.975114084847094
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_2/hdim_512/0 : 0.9776794500660166
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_2/hdim_768/0 : 0.9755033319070238
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/0 : 0.9761870043275348
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/1 : 0.9763240575400384
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/2 : 0.9758228571291974
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/3 : 0.9761766456544969
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/4 : 0.9757256449668402
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_256/5 : 0.9756770388856618
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_512/0 : 0.9767997596787854
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_3/hdim_768/0 : 0.9753630914105086
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_5/hdim_256/0 : 0.9755300254106217
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_5/hdim_512/0 : 0.9758244507712032
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.1/nl_5/hdim_768/0 : 0.9751120927945867
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_2/hdim_256/0 : 0.9777121197271366
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_2/hdim_512/0 : 0.9765973671440422
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_2/hdim_768/0 : 0.9760993540172128
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_3/hdim_256/0 : 0.976451947311008
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_3/hdim_512/0 : 0.9750316138732911
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_3/hdim_768/0 : 0.9755128937590589
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_5/hdim_256/0 : 0.9756292296254861
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_5/hdim_512/0 : 0.9755873965228326
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_0.3/nl_5/hdim_768/0 : 0.9773790485479134
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_2/hdim_256/0 : 0.9741606885170921
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_2/hdim_512/0 : 0.9733845848602415
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_2/hdim_768/0 : 0.9724586788548407
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_3/hdim_256/0 : 0.9772882109535795
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_3/hdim_512/0 : 0.9760348115159758
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_3/hdim_768/0 : 0.9766587223612674
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_5/hdim_256/0 : 0.9761184777212831
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_5/hdim_512/0 : 0.9764148951343719
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_1/nl_5/hdim_768/0 : 0.980124096902996
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_2/hdim_256/0 : 0.9745495371665205
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_2/hdim_512/0 : 0.9729949393898104
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_2/hdim_768/0 : 0.9721064839715471
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_3/hdim_256/0 : 0.975532814284132
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_3/hdim_512/0 : 0.9749981473911681
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_3/hdim_768/0 : 0.9756866007376969
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_5/hdim_256/0 : 0.9772360191778879
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_5/hdim_512/0 : 0.9764021459983252
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0001/gc_3/nl_5/hdim_768/0 : 0.9759463643846509
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/0 : 0.9750292234102824
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/1 : 0.9740810064167995
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/2 : 0.9681355265034619
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/3 : 0.9736375755286707
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/4 : 0.9714299829400623
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.0005/gc_0.1/nl_3/hdim_256/5 : 0.9736483326122104
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_2/hdim_256/0 : 0.9739013232806395
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_2/hdim_512/0 : 0.9746423668133614
+30720
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_2/hdim_768/0 : 0.9695817566237738
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_3/hdim_256/0 : 0.9708718098275122
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_3/hdim_512/0 : 0.9734523146454903
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_3/hdim_768/0 : 0.970330768366525
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_5/hdim_256/0 : 0.9740654684072424
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_5/hdim_512/0 : 0.9737726366886669
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.05/nl_5/hdim_768/0 : 0.9733598834091508
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_2/hdim_256/0 : 0.9731602797479179
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_2/hdim_512/0 : 0.9718092697374554
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_2/hdim_768/0 : 0.9750427693673321
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/0 : 0.9768643021800226
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/1 : 0.9727865706975451
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/2 : 0.9756897880217087
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/3 : 0.9668343178056824
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/4 : 0.9726021066353674
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_256/5 : 0.9733088868649636
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_512/0 : 0.9709933250304584
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_3/hdim_768/0 : 0.968650671281854
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_5/hdim_256/0 : 0.9698881342993991
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_5/hdim_512/0 : 0.9711048799708681
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.1/nl_5/hdim_768/0 : 0.9700502873734945
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_2/hdim_256/0 : 0.9742260278393322
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_2/hdim_512/0 : 0.9750264345367721
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_2/hdim_768/0 : 0.9779200900089006
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_3/hdim_256/0 : 0.9701036743806908
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_3/hdim_512/0 : 0.970613639822564
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_3/hdim_768/0 : 0.9727439407738885
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_5/hdim_256/0 : 0.9665060275524766
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_5/hdim_512/0 : 0.9758224587186959
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_0.3/nl_5/hdim_768/0 : 0.9725519069121831
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_2/hdim_256/0 : 0.9726857728406748
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_2/hdim_512/0 : 0.9702813654643435
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_2/hdim_768/0 : 0.9723718253655216
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_3/hdim_256/0 : 0.9739029169226454
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_3/hdim_512/0 : 0.9760479590625242
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_3/hdim_768/0 : 0.9735443474713283
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_5/hdim_256/0 : 0.9708893398895765
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_5/hdim_512/0 : 0.9692841439791807
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_1/nl_5/hdim_768/0 : 0.9677231716344472
+122880
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_2/hdim_256/0 : 0.9671797397104511
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_2/hdim_512/0 : 0.9656825130459519
+51200
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_2/hdim_768/0 : 0.9631239208055542
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_3/hdim_256/0 : 0.9712080682907471
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_3/hdim_512/0 : 0.9738985344071293
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_3/hdim_768/0 : 0.9658020361963909
+20480
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_5/hdim_256/0 : 0.972423618730712
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_5/hdim_512/0 : 0.9716040883292019
+10240
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/lr_0.001/gc_3/nl_5/hdim_768/0 : 0.9683275603651671
+153600
+
+--------------------------------------- swap new end ----------------------------------------
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_2/hdim_256/0 : 0.972792546855067
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_2/hdim_512/0 : 0.9768662942325298
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_2/hdim_768/0 : 0.9707582628345952
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_3/hdim_256/0 : 0.9763901936832811
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_3/hdim_512/0 : 0.9754929732339858
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_3/hdim_768/0 : 0.9729064922584855
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_4/hdim_256/0 : 0.9695379314686129
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_4/hdim_512/0 : 0.9723379604728974
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_4/hdim_768/0 : 0.9711630479040818
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_5/hdim_256/0 : 0.971937956329428
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_5/hdim_512/0 : 0.9749208557538844
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.1/nl_5/hdim_768/0 : 0.9731574908744075
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_2/hdim_256/0 : 0.9713690261333384
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_2/hdim_512/0 : 0.9757599082699662
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_2/hdim_768/0 : 0.9773973754309806
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_3/hdim_256/0 : 0.975729629071855
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_3/hdim_512/0 : 0.9711491035365306
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_3/hdim_768/0 : 0.973608491562064
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_4/hdim_256/0 : 0.971673013345955
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_4/hdim_512/0 : 0.9703148319464663
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_4/hdim_768/0 : 0.9608836585558258
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_5/hdim_256/0 : 0.9733997244592971
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_5/hdim_512/0 : 0.9711331671164721
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_0.3/nl_5/hdim_768/0 : 0.9625079781702918
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_2/hdim_512/0 : 0.9715184300713872
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_2/hdim_768/0 : 0.9698729947003436
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_3/hdim_256/0 : 0.9752531301121048
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_3/hdim_512/0 : 0.9759439739216422
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_3/hdim_768/0 : 0.9755535316302081
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_4/hdim_256/0 : 0.9700889331921367
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_4/hdim_512/0 : 0.9723869649645772
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_4/hdim_768/0 : 0.9722546926780914
+57344
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_256/0 : 0.9719124580573344
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_512/0 : 0.9707331629730029
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/0 : 0.9618757007044694
+196608
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_2/hdim_256/0 : 0.967469384145015
+155648
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_2/hdim_512/0 : 0.9626984183899913
+163840
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_2/hdim_768/0 : 0.9640498268109551
+163840
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_3/hdim_256/0 : 0.9630362704952323
+49152
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_3/hdim_512/0 : 0.961723906303412
+90112
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_3/hdim_768/0 : 0.9642809049018037
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_4/hdim_256/0 : 0.9731319926023139
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_4/hdim_512/0 : 0.9693662165424821
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_4/hdim_768/0 : 0.9678108219447692
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_5/hdim_256/0 : 0.9755336111051349
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_5/hdim_512/0 : 0.9704833595885853
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_10/nl_5/hdim_768/0 : 0.9754862002554607
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_2/hdim_256/0 : 0.9640665600520164
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_2/hdim_512/0 : 0.9662020403398601
+49152
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_2/hdim_768/0 : 0.9647410690309939
+49152
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_3/hdim_256/0 : 0.9778722807487248
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_3/hdim_512/0 : 0.9732339856906884
+24576
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_3/hdim_768/0 : 0.9698714010583377
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_4/hdim_256/0 : 0.9746547175389069
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_4/hdim_512/0 : 0.974843165706099
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_4/hdim_768/0 : 0.9755953647328619
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_5/hdim_256/0 : 0.9762706705328421
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_5/hdim_512/0 : 0.9692670123276178
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_3/nl_5/hdim_768/0 : 0.9706156318750712
+8192
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/1 : 0.9591163095713342
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/2 : 0.9702745924858186
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/3 : 0.9623681360842782
+131072
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/4 : 0.9647593959140612
+163840
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_dan/gc_1/nl_5/hdim_768/5 : 0.97017698191296
+32768
+
+[0.972792546855067,0.9768662942325298,0.9707582628345952,0.9763901936832811,0.9754929732339858,0.9729064922584855,0.9695379314686129,0.9723379604728974,0.9711630479040818,0.971937956329428,0.9749208557538844,0.9731574908744075,0.9713690261333384,0.9757599082699662,0.9773973754309806,0.975729629071855,0.9711491035365306,0.973608491562064,0.971673013345955,0.9703148319464663,0.9608836585558258,0.9733997244592971,0.9711331671164721,0.9625079781702918,0.9715184300713872,0.9698729947003436,0.9752531301121048,0.9759439739216422,0.9755535316302081,0.9700889331921367,0.9723869649645772,0.9722546926780914,0.9719124580573344,0.9707331629730029,0.9618757007044694,0.967469384145015,0.9626984183899913,0.9640498268109551,0.9630362704952323,0.961723906303412,0.9642809049018037,0.9731319926023139,0.9693662165424821,0.9678108219447692,0.9755336111051349,0.9704833595885853,0.9754862002554607,0.9640665600520164,0.9662020403398601,0.9647410690309939,0.9778722807487248,0.9732339856906884,0.9698714010583377,0.9746547175389069,0.974843165706099,0.9755953647328619,0.9762706705328421,0.9692670123276178,0.9706156318750712]
+
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/0 : 0.8747124217834135
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/1 : 0.881410193880251
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/2 : 0.8812039988894006
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/3 : 0.8644642327146692
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/4 : 0.875890707878058
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_osp/llr_1/plr_0.3/5 : 0.87993065634518
+16384
+
+[16384, 16384, 16384, 16384, 16384, 16384]
+
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/0 : 0.8897679530001783
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/1 : 0.8854335163628354
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/2 : 0.8932508955949974
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/3 : 0.8904688036273449
+147456
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/4 : 0.8895548513153254
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mcd/dr_0.1/5 : 0.8869850153909193
+49152
+
+[40960, 65536, 32768, 147456, 98304, 49152]
+
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/0 : 0.8799460827852362
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/1 : 0.8725342725225215
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/2 : 0.8797317443029674
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/3 : 0.8721265466081836
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/4 : 0.8737260553552302
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan_iw/dlc_0.1/5 : 0.8851006315933246
+32768
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/0 : 0.8571799057181134
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/1 : 0.869526520905894
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/2 : 0.8766170152978168
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/3 : 0.8777228705124775
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/4 : 0.8791974161543646
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_iw/dlc_3/5 : 0.8802546115863608
+32768
+
+[81920, 65536, 32768, 32768, 32768, 32768]
+
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/0 : 0.8824547717434305
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/1 : 0.8833841411822727
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/2 : 0.8834273564486026
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/3 : 0.8719120404877108
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/4 : 0.8758516966053537
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mim_finetune/mr_0.6/5 : 0.8768744591502595
+16384
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/0 : 0.8891096787515197
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/1 : 0.8860866273548125
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/2 : 0.8878083927813485
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/3 : 0.8788148918500194
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/4 : 0.8917002235820529
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/5 : 0.8825270387105038
+65536
+
+[32768,65536,65536,65536,32768,65536]
+
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/0 : 0.8783283610786543
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/1 : 0.8823815771782952
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/2 : 0.8797807728896807
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/3 : 0.8768183171157589
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/4 : 0.8789415909419134
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_mae_finetune/mr_0.6/5 : 0.8719060073750156
+16384
+
+
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_2/hdim_256/0 : 
+0.8833699198746383
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_2/hdim_512/0 : 
+0.8841943776001593
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_2/hdim_768/0 : 
+0.8880676545769806
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_3/hdim_256/0 : 
+0.8636882429192015
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_3/hdim_512/0 : 
+0.8698059905556883
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_3/hdim_768/0 : 
+0.8819347766612646
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_4/hdim_256/0 : 
+0.8567417814094604
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_4/hdim_512/0 : 
+0.8825759946539954
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_4/hdim_768/0 : 
+0.8849265635329365
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_5/hdim_256/0 : 
+0.8777895048358983
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_5/hdim_512/0 : 
+0.8808430254074958
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.1/nl_5/hdim_768/0 : 
+0.8799133095163653
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_2/hdim_256/0 : 
+0.8860150421164352
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_2/hdim_512/0 : 
+0.8815282316649411
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_2/hdim_768/0 : 
+0.8824489416592265
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_3/hdim_256/0 : 
+0.8765401755330693
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_3/hdim_512/0 : 
+0.8826674357063065
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_3/hdim_768/0 : 
+0.8851435954023488
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_4/hdim_256/0 : 
+0.8859925171297653
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_4/hdim_512/0 : 
+0.8742612328707331
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_4/hdim_768/0 : 
+0.8886573741134599
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_5/hdim_256/0 : 
+0.8816216396721784
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_5/hdim_512/0 : 
+0.8828391810462465
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_0.3/nl_5/hdim_768/0 : 
+0.864603890239728
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_2/hdim_256/0 : 
+0.8820960651025722
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_2/hdim_512/0 : 
+0.8798649477571743
+262144
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_2/hdim_768/0 : 
+0.8755427934122404
+393216
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_3/hdim_256/0 : 
+0.8838372970498795
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_3/hdim_512/0 : 
+0.8871508822178411
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_3/hdim_768/0 : 
+0.8825287877357648
+81920
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_4/hdim_256/0 : 
+0.8871281374388595
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_4/hdim_512/0 : 
+0.880123691737021
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_4/hdim_768/0 : 
+0.8826971411960453
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_256/0 : 
+0.886119756389205
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_512/0 : 
+0.8843598607218588
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_1/nl_5/hdim_768/0 : 
+0.8891096787515197
+32768
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_2/hdim_256/0 : 
+0.8812768358263674
+622592
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_2/hdim_512/0 : 
+0.8833600403964859
+294912
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_2/hdim_768/0 : 
+0.880661177071798
+491520
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_3/hdim_256/0 : 
+0.8835882239317536
+327680
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_3/hdim_512/0 : 
+0.8809766405066257
+262144
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_3/hdim_768/0 : 
+0.879084908567758
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_4/hdim_256/0 : 
+0.8826560977757797
+131072
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_4/hdim_512/0 : 
+0.8845909257715876
+131072
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_4/hdim_768/0 : 
+0.8846343533796426
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_5/hdim_256/0 : 
+0.8873480713118466
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_5/hdim_512/0 : 
+0.8785645558574239
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_10/nl_5/hdim_768/0 : 
+0.8836860389611079
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_2/hdim_256/0 : 
+0.8797098991823469
+360448
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_2/hdim_512/0 : 
+0.8835561342542253
+262144
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_2/hdim_768/0 : 
+0.8802947162326842
+229376
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_3/hdim_256/0 : 
+0.882022928279485
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_3/hdim_512/0 : 
+0.8832941902473301
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_3/hdim_768/0 : 
+0.8826686743663689
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_4/hdim_256/0 : 
+0.8810304300183309
+65536
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_4/hdim_512/0 : 
+0.8780789992502884
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_4/hdim_768/0 : 
+0.8813134498727554
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_5/hdim_256/0 : 
+0.881434244374577
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_5/hdim_512/0 : 
+0.8819535763545137
+98304
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_dan/gc_3/nl_5/hdim_768/0 : 
+0.8778572977255732
+98304
+
+
+[0.8833699198746383, 0.8841943776001593, 0.8880676545769806, 0.8636882429192015, 0.8698059905556883, 0.8819347766612646, 0.8567417814094604, 0.8825759946539954, 0.8849265635329365, 0.8777895048358983, 0.8808430254074958, 0.8799133095163653, 0.8860150421164352, 0.8815282316649411, 0.8824489416592265, 0.8765401755330693, 0.8826674357063065, 0.8851435954023488, 0.8859925171297653, 0.8742612328707331, 0.8886573741134599, 0.8816216396721784, 0.8828391810462465, 0.864603890239728, 0.8820960651025722, 0.8798649477571743, 0.8755427934122404, 0.8838372970498795, 0.8871508822178411, 0.8825287877357648, 0.8871281374388595, 0.880123691737021, 0.8826971411960453, 0.886119756389205, 0.8843598607218588, 0.8891096787515197, 0.8812768358263674, 0.8833600403964859, 0.880661177071798, 0.8835882239317536, 0.8809766405066257, 0.879084908567758, 0.8826560977757797, 0.8845909257715876, 0.8846343533796426, 0.8873480713118466, 0.8785645558574239, 0.8836860389611079, 0.8797098991823469, 0.8835561342542253, 0.8802947162326842, 0.882022928279485, 0.8832941902473301, 0.8826686743663689, 0.8810304300183309, 0.8780789992502884, 0.8813134498727554, 0.881434244374577, 0.8819535763545137, 0.8778572977255732]
+
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/0 : 0.8092763634567776
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/1 : 0.8177700343382794
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/2 : 0.8169352469214317
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/3 : 0.8131043662954641
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/4 : 0.7995424947797591
+40960
+gs://ue-usrl-anuj/karm/outputs/histopathology/vit/lr_0.001/5 : 0.8192521767443294
+40960
+
+[40960, 40960, 40960, 40960, 40960, 40960]
+
+============================================ isic upper upper_extremity started ============================================================
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/0 : 0.9780348910783694
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/1 : 0.9641824098345838
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/2 : 0.9890400433878695
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/3 : 0.955346650998825
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/4 : 0.9690409473018169
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/crop_0.81/5 : 0.9691765343939257
+9480
+
+[35550, 7110, 9480, 33180, 35550, 9480]
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/0 : 0.9319794129920712
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/1 : 0.9260907868502806
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/2 : 0.9629526591551908
+71100
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/3 : 0.9326749200166922
+71100
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/4 : 0.9398386423702879
+42660
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw/dlc_0.05/5 : 0.9497380256873927
+66360
+
+[37920, 47400, 71100, 71100, 42660, 66360]
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/0 : 0.925232994853248
+23700
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/1 : 0.9261603375527426
+23700
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/2 : 0.9270644966847499
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/3 : 0.9421338155515371
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/4 : 0.9321185143969953
+71100
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_iw2/dlc_0.05/5 : 0.9265544582000279
+47400
+
+[23700, 23700, 33180, 37920, 71100, 47400]
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/0 : 0.9673009129530868
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/1 : 0.9702160354334267
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/2 : 0.9588719153936546
+16590
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/3 : 0.9561714724758203
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/4 : 0.967752869926783
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/mr_0.2/5 : 0.9599340142818404
+35550
+
+[9480, 35550, 16590, 35550, 35550, 35550]
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/0 : 0.9492279872026708
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/1 : 0.9732925302545555
+94800
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/2 : 0.9497843928223675
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/3 : 0.9497843928223675
+18960
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/4 : 0.9502944313070896
+94800
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_dan/gc_0.3/nl_3/hdim_256/5 : 0.9460750220243891
+94800
+
+[75840, 94800, 47400, 18960, 94800, 94800]
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/0 : 0.9624194371029814
+18960
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/1 : 0.9735011823619419
+42660
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/2 : 0.9687485510270321
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/3 : 0.97554133630083
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/4 : 0.9633931469374507
+18960
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_cmd/clc_0.1/cmo_2/5 : 0.9784392822367506
+61620
+
+[18960, 42660, 28440, 47400, 18960, 61620]
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/0 : 0.9855334538878843
+132720
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/1 : 0.9626049056428803
+56880
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/2 : 0.9570872165808875
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/3 : 0.9668938656280429
+132720
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/4 : 0.9936940696434367
+104280
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_dan/gc_0.3/nl_3/hdim_256/5 : 0.9950155329902165
+94800
+
+132720, 56880, 47400, 132720, 104280, 94800
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/0 : 0.9341354847683961
+56880
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/1 : 0.9441507859229378
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/2 : 0.9462373069968006
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/3 : 0.9717276394491585
+104280
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/4 : 0.9341586683358836
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_dan/gc_0.3/nl_3/hdim_256/5 : 0.9621180507256457
+132720
+
+56880, 28440, 37920, 104280, 47400, 132720
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/0 : 0.9517781796262809
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/1 : 0.9883386655538554
+85320
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/2 : 0.9539574349700932
+94800
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/3 : 0.9805258033106135
+85320
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/4 : 0.9602169981916817
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_dan/gc_0.3/nl_3/hdim_256/5 : 0.9529605415681367
+28440
+
+[47400, 85320, 94800, 85320, 37920, 28440]
+
+================================= head neck started ============================================
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/0 : 0.9595950465515684
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/1 : 0.9689053602097081
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/2 : 0.9393247762812981
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/3 : 0.9421043116695292
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/4 : 0.9746000180782789
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit/lr_0.001/5 : 0.94083883214318
+7110
+
+7110 35550 9480 7110 7110 7110
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/0 : 0.9800235017626322
+14220
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/1 : 0.972272439663744
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/2 : 0.9533354424658773
+11850
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/3 : 0.9506462984723855
+11850
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/4 : 0.9470080448341318
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_osp/llr_0.1/plr_0.3/5 : 0.9674139021965109
+16590
+
+14220,33180,11850,11850,9480,16590
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/0 : 0.9720351622525536
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/1 : 0.9599453132061828
+11850
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/2 : 0.9597758293410468
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/3 : 0.9742158546506372
+18960
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/4 : 0.9573352616830878
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mcd/dr_0.01/5 : 0.9801364910060562
+30810
+
+28440,11850,33180,18960,9480,30810
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/0 : 0.9594983075995734
+82950
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/1 : 0.9636945333147865
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/2 : 0.9436871145731905
+61620
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/3 : 0.9517549960587937
+82950
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/4 : 0.9387953818333565
+42660
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw/dlc_0.05/5 : 0.9518013631937683
+47400
+
+82950,75840,61620,82950,42660,47400
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/0 : 0.9769275964928139
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/1 : 0.9344888366627498
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/2 : 0.9754587363283015
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/3 : 0.9443640965380097
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/4 : 0.9249751423664467
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_mim_finetune/mr_0.2/5 : 0.9594142637620898
+30810
+
+35550,35550,33180,7110,7110,30810
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/0 : 0.9734927234927235
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/1 : 0.94605893518937
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/2 : 0.9475503932025672
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/3 : 0.9593012745186659
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/4 : 0.9593351712916931
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_simclr_finetune/crop_0.81/5 : 0.9626570550483595
+28440
+
+28440,35550,35550,33180,35550,28440
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/0 : 0.9297306069457968
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/1 : 0.9286641628413781
+23700
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/2 : 0.9323967172068438
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/3 : 0.9357583344925117
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/4 : 0.9385519543747392
+82950
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_iw2/dlc_0.05/5 : 0.93260536931423
+47400
+
+28440,23700,75840,37920,82950,47400
+
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/0 : 0.9888023369036028
+52140
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/1 : 0.969444058051653
+66360
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/2 : 0.9619325821857466
+23700
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/3 : 0.9629758427226782
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/4 : 0.965131914499003
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_cmd/clc_0.1/cmo_2/5 : 0.9740344044141512
+33180
+
+52140,66360,23700,28440,28440,33180
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/0 : 0.9909931840311587
+94800
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/1 : 0.9840265220012056
+132720
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/2 : 0.9819979598460611
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/3 : 0.9563917095562665
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/4 : 0.9694208744841656
+47400
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_2/5 : 0.9891732739834005
+18960
+
+94800, 132720, 75840, 75840, 47400, 18960
+
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/0 : 0.9684239810822088
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/1 : 0.937427551351602
+75840
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/2 : 0.9572379097695553
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/3 : 0.9800505401771225
+37920
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/4 : 0.9822413873046785
+94800
+gs://ue-usrl-anuj/karm/outputs/isic/head_neck/vit_dan_intermed/grl_5/5 : 0.9753095006259563
+75840
+
+28440, 75840, 37920, 37920, 94800, 75840

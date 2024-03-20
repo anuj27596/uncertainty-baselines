@@ -31,18 +31,17 @@ then
 		--config.batch_size=2 \
 		--output_dir=$output_dir \
 
-elif [ "$1" == "dvp" ]
+elif [ "$1" == "cmd" ]
 then
 	output_dir=/troy/anuj/gub-og/outputs/local/temp
 	rm -r $output_dir/*
 
 	CUDA_VISIBLE_DEVICES="0" \
-	python -m baselines.diabetic_retinopathy_detection.jax_finetune_dan \
-		--config=configs/drd/vit_finetune_dan.py \
+	python -m baselines.diabetic_retinopathy_detection.jax_finetune_cmd \
+		--config=configs/drd/vit_finetune_cmd.py \
 		--config.data_dir=$data_dir \
 		--config.model_init=$chkpt \
 		--config.batch_size=2 \
-		--config.ood_val_percent=50 \
 		--output_dir=$output_dir \
 
 else

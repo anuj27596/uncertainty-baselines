@@ -129,6 +129,14 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
           name="processed_512_onehot_o_upper_extremity",
           description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
           target_pixels=512),
+      IsicOodConfig(
+          name="processed_512_onehot_o_lower_extremity",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
+      IsicOodConfig(
+          name="processed_512_onehot_o_palms_soles",
+          description=_BTGRAHAM_DESCRIPTION_PATTERN.format(300),
+          target_pixels=512),
       # processed_512_o_head_neck
       # IsicOodConfig(
       #     name="frontal",
@@ -218,6 +226,10 @@ class IsicOod(tfds.core.GeneratorBasedBuilder):
           org = self.builder_config.name.split("_o_")[-1].replace("_"," ")
           if "head" in org:
             org = 'head/neck'
+          
+          if "palms" in org:
+            org = "palms/soles"
+            
         else:
           org = "lower extremity"
           

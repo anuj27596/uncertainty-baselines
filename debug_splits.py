@@ -2,7 +2,6 @@ import os
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import uncertainty_baselines as ub
-import baselines.isic.input_utils as input_utils
 
 from tqdm import tqdm
 from PIL import Image                
@@ -19,10 +18,10 @@ import tqdm
 import uncertainty_baselines.datasets as datasets
 
 os.environ['CUDA_VISIBLE_DEVICES'] = ''
-dataset='isic_id'
+dataset='histopathology'
 data_dir = f'/troy/anuj/gub-mod/uncertainty-baselines/data/downloads/manual/{dataset}'
-for ds_name in ['isic_id']:
-    for split in ['train','test','validation']:
+for ds_name in ['crc', 'pcam']:
+    for split in ['test','validation']:
         if 'ood' in ds_name and split == "train":
             continue
         # ds_name = 'rxrx1_id' # zhang_pneumonia
@@ -30,9 +29,8 @@ for ds_name in ['isic_id']:
         # op_csv = "eye_labels/train_eyepacs_eyelabels.csv"
         batch_size = 16
         # config = "processed_site1"
-        config = "processed_512_onehot"
+        config = "processed_onehot_tum_swap" #"processed_512_onehot_o_upper_extremity" #"processed_512_onehot_o_head_neck"
         
-
         builder = datasets.get(
             ds_name,
             split = split,

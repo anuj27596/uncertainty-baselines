@@ -575,8 +575,11 @@ def main(argv):
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
-          labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
-          domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
+          # labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
+          labels = labels.flatten()
+          
+          domain_pred = domain_pred.flatten()
+          # domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
 
           # domain_pred = domain_pred.flatten()
           # int_labels = int_labels.flatten()  # EDIT(anuj)

@@ -306,7 +306,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out['pre_logits']], axis_name='batch')
+        logits, labels, out['pre_logits'], out['reverse_pred']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -332,7 +332,7 @@ def main(argv):
       logits, out_id = model.apply(
           {'params': flax.core.freeze(params)}, images_id,
           train=True, rngs={'dropout': rng_model_local})
-      _, out_ood = model.apply(
+      logits_ood, out_ood = model.apply(
           {'params': flax.core.freeze(params)}, images_ood,
           train=True, rngs={'dropout': rng_model_local})
 
@@ -341,8 +341,12 @@ def main(argv):
         ood_features=out_ood['pre_logits'],
         max_order=config.cmd_max_order)
 
+      ood_reverse_pred = out_ood['reverse_pred']
+      ood_pseudo_labels = (logits_ood > 0).astype(int)
+
       loss = (
           train_utils.softmax_xent(logits=logits, labels=labels)
+          + train_utils.sigmoid_xent(logits=ood_reverse_pred, labels=ood_pseudo_labels)
           + config.cmd_loss_coeff * cmd_loss)  # EDIT(anuj)
       return loss
 
@@ -531,6 +535,7 @@ def main(argv):
             'y_true': [],
             'y_pred': [],
             'logits': [],
+            'reverse_pred': [],
             'y_pred_entropy': [],
         }
         if config.only_eval:  # EDIT(anuj)
@@ -550,16 +555,18 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, pre_logits = batch_metric_args  # EDIT(anuj)
+          logits, labels, pre_logits, reverse_pred = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
           probs = jax.nn.softmax(logits)
 
           # From one-hot to integer labels.
           labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
+          reverse_pred = np.array(reverse_pred[0])  # EDIT(anuj)
 
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
+          reverse_pred = reverse_pred.flatten()
           labels = labels.flatten()  # EDIT(anuj)
 
           y_pred = probs[:, 1]
@@ -569,6 +576,7 @@ def main(argv):
           results_arrs['y_true'].append(labels[:batch_trunc])
           results_arrs['y_pred'].append(y_pred[:batch_trunc])
           results_arrs['logits'].append(logits[:batch_trunc])
+          results_arrs['reverse_pred'].append(reverse_pred[:batch_trunc])
 
           if config.only_eval:  # EDIT(anuj)
             pre_logits = np.array(pre_logits[0])
@@ -582,6 +590,7 @@ def main(argv):
         results_arrs['logits'] = np.concatenate(results_arrs['logits'], axis=0)
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
+        results_arrs['reverse_pred'] = np.concatenate(results_arrs['reverse_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
         if config.only_eval:  # EDIT(anuj)
@@ -590,6 +599,7 @@ def main(argv):
         time_elapsed = time.time() - start_time
         results_arrs['total_ms_elapsed'] = time_elapsed * 1e3
         results_arrs['dataset_size'] = results_arrs['y_true'].shape[0]
+        results_arrs['reverse_accuracy'] = np.mean((results_arrs['reverse_pred'] > 0) == results_arrs['y_true'])
 
         all_eval_results[eval_name] = results_arrs
 
@@ -599,6 +609,9 @@ def main(argv):
           num_bins=15,
           return_per_pred_results=True
       )
+
+      for eval_name in eval_iter_splits.keys():
+        metrics_results[eval_name][f'{eval_name}/reverse_accuracy'] = all_eval_results[eval_name]['reverse_accuracy']
 
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty

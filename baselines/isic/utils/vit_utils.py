@@ -297,7 +297,7 @@ VIT_MODEL_INIT_MAP = {
     'dan_ens': initialize_dan_ens_model,  # EDIT(anuj)
     'mim': initialize_mim_model,  # EDIT(anuj)
     'mae': initialize_mae_model,  # EDIT(anuj)
-    'osp': initialize_osp_model,  # EDIT(anuj)
+    'osp': initialize_osp_model,  # EDIT(anuj
     'dan_intermed': initialize_dan_model_intermed
 }
 

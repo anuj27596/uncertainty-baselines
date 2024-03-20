@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64
+best validation steps
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/0 : 0.875354559923619
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/1 : 0.8827085182421528
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/2 : 0.8774846584873206
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/3 : 0.8722637771045785
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/4 : 0.8675323117329559
+16384
+gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum/vit_simclr_finetune/crop_0.64/5 : 0.883192063190841
+16384

@@ -64,6 +64,9 @@ from uncertainty_baselines.datasets.rxrx1_id  import Rxrx1IdDataset  # Karm
 from uncertainty_baselines.datasets.rxrx1_ood import Rxrx1OodDataset  # Karm
 from uncertainty_baselines.datasets.isic_id import IsicIdDataset  # Karm
 from uncertainty_baselines.datasets.isic_ood import IsicOodDataset  # Karm
+from uncertainty_baselines.datasets.inbreast import InbreastDataset  # Karm
+from uncertainty_baselines.datasets.crc import CrcDataset
+from uncertainty_baselines.datasets.pcam import PcamDataset
 
 try:
   from uncertainty_baselines.datasets.smcalflow import MultiWoZDataset  # pylint: disable=g-import-not-at-top
@@ -142,7 +145,10 @@ DATASETS = {
     'rxrx1_id': Rxrx1IdDataset, # karm
     'rxrx1_ood': Rxrx1OodDataset, # karm
     'isic_id': IsicIdDataset, # karm
-    'isic_ood': IsicOodDataset # karm   
+    'isic_ood': IsicOodDataset, # karm
+    'inbreast': InbreastDataset, #karm
+    'crc': CrcDataset,
+    'pcam': PcamDataset
 }
 
 
