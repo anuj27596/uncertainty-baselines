@@ -126,6 +126,8 @@ def main(argv):
       raise NotImplementedError(f'loss `{config.loss}` not implemented for `constant` reweighting mode')
   else:
     base_loss_fn = getattr(train_utils, config.loss)
+  
+  reverse_loss_fn = train_utils.reweighted_sigmoid_xent(class_weights)
     
   # Shows the number of available devices.
   # In a CPU/GPU runtime this will be a single device.
@@ -317,7 +319,7 @@ def main(argv):
     ncorrect = jax.lax.psum(top1_correct, axis_name='batch')
     n = batch_size_eval
     metric_args = jax.lax.all_gather([
-        logits, labels, out['pre_logits'], out['domain_pred']], axis_name='batch')
+        logits, labels, out['pre_logits'], out['domain_pred'], out['reverse_pred']], axis_name='batch')
     return ncorrect, loss, n, metric_args
 
   # Load the optimizer from flax.
@@ -343,7 +345,7 @@ def main(argv):
       logits, out_id = model.apply(
           {'params': flax.core.freeze(params)}, images_id,
           train=True, rngs={'dropout': rng_model_local})
-      _, out_ood = model.apply(
+      logits_ood, out_ood = model.apply(
           {'params': flax.core.freeze(params)}, images_ood,
           train=True, rngs={'dropout': rng_model_local})
 
@@ -355,8 +357,13 @@ def main(argv):
           jnp.ones((*out_ood['domain_pred'].shape[:-1], 1))])
 
       domain_loss = train_utils.sigmoid_xent(logits=domain_pred, labels=domain_labels)
+
+      ood_reverse_pred = out_ood['reverse_pred']
+      ood_pseudo_labels = (logits_ood > 0).astype(int)
+
       loss = (
           base_loss_fn(logits=logits, labels=labels)
+          + reverse_loss_fn(logits=ood_reverse_pred, labels=ood_pseudo_labels)
           + config.dp_loss_coeff * domain_loss)  # EDIT(anuj)
       return loss
 
@@ -545,6 +552,7 @@ def main(argv):
             'y_true': [],
             'y_pred': [],
             'logits': [],
+            'reverse_pred': [],
             'domain_pred': [],
             'y_pred_entropy': [],
         }
@@ -565,9 +573,10 @@ def main(argv):
           # from jft/deterministic.py
 
           # Here we parse batch_metric_args to compute uncertainty metrics.
-          logits, labels, pre_logits, domain_pred = batch_metric_args  # EDIT(anuj)
+          logits, labels, pre_logits, domain_pred, reverse_pred = batch_metric_args  # EDIT(anuj)
           logits = np.array(logits[0])
           probs = jax.nn.softmax(logits)
+          reverse_pred = np.array(reverse_pred[0])  # EDIT(anuj)
 
           # From one-hot to integer labels.
           labels = np.argmax(np.array(labels[0]), axis=-1)  # EDIT(anuj)
@@ -577,6 +586,7 @@ def main(argv):
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
           # labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))
           labels = labels.flatten()
+          reverse_pred = reverse_pred.flatten()
           
           domain_pred = domain_pred.flatten()
           # domain_pred = np.reshape(domain_pred, (domain_pred.shape[0] * domain_pred.shape[1], -1))
@@ -593,6 +603,7 @@ def main(argv):
           results_arrs['y_pred'].append(y_pred[:batch_trunc])
           results_arrs['logits'].append(logits[:batch_trunc])
           results_arrs['domain_pred'].append(domain_pred[:batch_trunc])
+          results_arrs['reverse_pred'].append(reverse_pred[:batch_trunc])
 
           if config.only_eval:  # EDIT(anuj)
             pre_logits = np.array(pre_logits[0])
@@ -607,6 +618,7 @@ def main(argv):
         results_arrs['y_pred'] = np.concatenate(
             results_arrs['y_pred'], axis=0).astype('float64')
         results_arrs['domain_pred'] = np.concatenate(results_arrs['domain_pred'], axis=0)
+        results_arrs['reverse_pred'] = np.concatenate(results_arrs['reverse_pred'], axis=0)
         results_arrs['y_pred_entropy'] = vit_utils.entropy(
             np.concatenate(results_arrs['y_pred_entropy'], axis=0), axis=-1)
         if config.only_eval:  # EDIT(anuj)
@@ -618,6 +630,7 @@ def main(argv):
 
         domain_pred_mean = np.mean(results_arrs['domain_pred'] > 0)
         results_arrs['domain_pred_recall'] = domain_pred_mean if 'ood' in eval_name else (1 - domain_pred_mean)
+        results_arrs['reverse_accuracy'] = np.mean((results_arrs['reverse_pred'] > 0) == results_arrs['y_true'])
 
         all_eval_results[eval_name] = results_arrs
 
@@ -633,6 +646,7 @@ def main(argv):
       
       for eval_name in eval_iter_splits.keys():
         metrics_results[eval_name][f'{eval_name}/domain_pred_recall'] = all_eval_results[eval_name]['domain_pred_recall']
+        metrics_results[eval_name][f'{eval_name}/reverse_accuracy'] = all_eval_results[eval_name]['reverse_accuracy']
 
       # `metrics_results` is a dict of {str: jnp.ndarray} dicts, one for each
       # dataset. Flatten this dict so we can pass to the writer and remove empty

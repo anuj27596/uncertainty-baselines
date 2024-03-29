@@ -1,0 +1,2028 @@
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/0 : 0.8597268439149364 @ 14274
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/1 : 0.8582923528247767 @ 20862
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/2 : 0.8595767103461318 @ 18666
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/3 : 0.8594359618354832 @ 17568
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/4 : 0.8595721683063248 @ 14274
+gs://ue-usrl-anuj/vit-retina-new/vit/finetune/lr_0.0001/5 : 0.8588940362907885 @ 14274
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.01
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.01/0 : 0.8738349667894805 @ 21960
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.03
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.03/0 : 0.8574686019185577 @ 20862
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.1/0 : 0.7867640089641259 @ 18666
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-mcd/finetune/lr_0.0001/drp_0.3/0 : 0.5580127656491329 @ 21960
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/0 : 0.8767299972944765 @ 2196
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_1/0 : 0.8781520661793806 @ 2196
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_10/0 : 0.8780003729944978 @ 2196
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/0 : 0.8783366481103362 @ 2196
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_1/0 : 0.8778890656575385 @ 3843
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_10/0 : 0.8776882308853453 @ 2196
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_0.1/0 : 0.8456219223576055 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_1/0 : 0.8455455285314524 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_10/0 : 0.8454495984617917 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_0.1/0 : 0.8452776576295762 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_1/0 : 0.8446437147362598 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_10/0 : 0.8456045203255733 @ 10431
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.888542477302205 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.8341280029341647 @ 13164
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.7852991107740332 @ 15358
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.8875998867858164 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.6648280078700345 @ 41686
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.8666815054188924 @ 10970
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.8427471116816432 @ 43880
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.7885088702763305 @ 15358
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.8167676251401439 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.8415551072803961 @ 28522
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.7527930928356306 @ 28522
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.6236157092923564 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.8115716119567211 @ 15358
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.6010735287651959 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.8630177900151684 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.5178741563894568 @ 15358
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.8656008595484621 @ 17552
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.6521117467959286 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.8661290092110181 @ 26328
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.5389003935017257 @ 21940
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.8684381388907209 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.6693455285893293 @ 26328
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.7759795225219283 @ 41686
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.7022665919233221 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_0.1/0 : 0.885253412913012 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_0.3/0 : 0.8863401591593572 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/0 : 0.8865966222603267 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_3/0 : 0.8864969553078768 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_10/0 : 0.8854042186022993 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.8639019323352899 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.8630810470663237 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_1/0 : 0.8627112049066807 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_3/0 : 0.8641629294994395 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.0001/dlc_10/0 : 0.862676086526413 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.8868634450086832 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.8613607188703466 @ 37298
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.8061098562289785 @ 30716
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.88621724482842 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.8201907207041995 @ 2194
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.8098408681219635 @ 17552
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.8869719052957857 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.8384375573079039 @ 28522
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.6785425047813757 @ 28522
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.8851505308975798 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.6080306777462683 @ 21940
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.8870598386423091 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.6868941942007958 @ 19746
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.8628368946338675 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.8114799193104713 @ 4388
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.7452677020818219 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.8620435160148607 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.8114799193104713 @ 8776
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.7575627899052518 @ 8776
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.862639566708435 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.8114799193104713 @ 2194
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.7159708940623007 @ 2194
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.8637798149003055 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.8114799193104713 @ 2194
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.7170253248037987 @ 2194
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.8643351964211129 @ 19746
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.8453145057766367 @ 21940
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.7599601277231858 @ 8776
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.8821696179296095 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.8218411883366954 @ 43880
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.829300078040845 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.8752829805007805 @ 10970
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.8114799193104713 @ 8776
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.8684075820528039 @ 8776
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.8618866649079998 @ 8776
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.8206143518213194 @ 8776
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.6872338367517422 @ 2194
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.5348823067115127 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.6413459572643936 @ 2194
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.537073633186045 @ 10970
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.8832844478885005 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.8717219878965707 @ 37298
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.8277400855151794 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.8791223702433555 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.8343113882266642 @ 43880
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.8623813174613641 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.86540180043527 @ 8776
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.814414083990464 @ 2194
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.8559178592626789 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.6843349216294049 @ 2194
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.5502971872320781 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.5879587372771439 @ 2194
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.8114799193104713 @ 15358
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.5247219382707908 @ 39492
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.8827212897623603 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.8351366220429122 @ 43880
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.8372487029831388 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.8791582030820638 @ 10970
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.8621859526865945 @ 43880
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.8658170381850557 @ 13164
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.8568626481127306 @ 8776
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.8517928784980985 @ 10970
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.8584336597858823 @ 28522
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.8299101412066753 @ 15358
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.8187232627668227 @ 15358
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.851475081887929 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.8430475499571326 @ 17552
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.8422505990459231 @ 37298
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.8425607289674426 @ 37298
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.7720517322869266 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.6424019817977973 @ 13164
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.5112293906219085 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.8592079403811912 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.8448390819758624 @ 32910
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.8504206511464311 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.8465396304601113 @ 28522
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.8420572006419135 @ 37298
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.8420311229088351 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.7841640011871002 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.7840802446745366 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.6505250719954274 @ 15358
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.5134422882455099 @ 4388
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.8599510870759964 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.8056054210908131 @ 8776
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.8513718701224471 @ 35104
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.8477050495724242 @ 35104
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.8423740629602761 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.8422080338103717 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.7955762931697774 @ 43880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.7955820088373013 @ 43880
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.6215846963002045 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.5154157323748598 @ 6582
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/0 : 0.9398671246497334 @ 33180
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/1 : 0.9411777998734522 @ 30810
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/2 : 0.9422173009129531 @ 35550
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/3 : 0.9267603724125465 @ 30810
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/4 : 0.9436409653800958 @ 35550
+gs://ue-usrl-anuj/vit-isic-ue-new/vit/finetune/lr_0.0001/5 : 0.9289297658862876 @ 35550
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.01
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.01/0 : 0.9153710566754045 @ 33180
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.03
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.03/0 : 0.8970667992407122 @ 26070
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.1/0 : 0.8555093555093555 @ 35550
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-mcd/finetune/lr_0.0001/drp_0.3/0 : 0.7400795444273706 @ 28440
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/0 : 0.966464792551749 @ 11850
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_1/0 : 0.9489062641236554 @ 35550
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_10/0 : 0.9562392660218747 @ 7110
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/0 : 0.9502395371960588 @ 7110
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_1/0 : 0.9359802946759469 @ 7110
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_10/0 : 0.9611542981108199 @ 30810
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_0.1/0 : 0.9284778089125915 @ 30810
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_1/0 : 0.9420930127451866 @ 33180
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.01/plr_10/0 : 0.9275286992678298 @ 30810
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_0.1/0 : 0.9408840278405496 @ 33180
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_1/0 : 0.9319126819126818 @ 30810
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_10/0 : 0.9374717526891441 @ 33180
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1
+-------------------------------------------------------------------------------
+[ 91] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.0001/llr_0.1/plr_0.1
+-------------------------------------------------------------------------------
+[ 94] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.9837715027588446 @ 75840
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.5683451569527519 @ 18960
+-------------------------------------------------------------------------------
+[ 95] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.9624194371029815 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.5380674178142533 @ 113760
+-------------------------------------------------------------------------------
+[ 96] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.9396068066954144 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.5519775583066723 @ 123240
+-------------------------------------------------------------------------------
+[ 97] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.9368015950294432 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.5242731951592712 @ 85320
+-------------------------------------------------------------------------------
+[ 98] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.9561598738813929 @ 132720
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.5747901887142394 @ 18960
+-------------------------------------------------------------------------------
+[ 99] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.9849074975657255 @ 104280
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.5361663652802893 @ 37920
+-------------------------------------------------------------------------------
+[100] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.9655492187137756 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.576992627625539 @ 104280
+-------------------------------------------------------------------------------
+[101] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.8756897111327492 @ 123240
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.5435387397412713 @ 18960
+-------------------------------------------------------------------------------
+[102] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.8789585941484676 @ 132720
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.5720777113182176 @ 9480
+-------------------------------------------------------------------------------
+[103] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.8533407520749293 @ 142200
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.5626651829183476 @ 56880
+-------------------------------------------------------------------------------
+[104] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/0 : 0.9859739416701442 @ 37920
+-------------------------------------------------------------------------------
+[105] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.3/0 : 0.9806996800667687 @ 18960
+-------------------------------------------------------------------------------
+[106] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_1/0 : 0.9681689618398479 @ 52140
+-------------------------------------------------------------------------------
+[107] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_3/0 : 0.9764223118653498 @ 14220
+-------------------------------------------------------------------------------
+[108] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_10/0 : 0.9622571521305698 @ 23700
+-------------------------------------------------------------------------------
+[109] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.9226596188621505 @ 28440
+-------------------------------------------------------------------------------
+[110] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.9255807483655585 @ 23700
+-------------------------------------------------------------------------------
+[111] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_1/0 : 0.9223814160523021 @ 33180
+-------------------------------------------------------------------------------
+[112] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_3/0 : 0.9304956646728798 @ 52140
+-------------------------------------------------------------------------------
+[113] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.0001/dlc_10/0 : 0.9372652663791904 @ 52140
+-------------------------------------------------------------------------------
+[114] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.9423656512264107 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.5767839755181527 @ 75840
+-------------------------------------------------------------------------------
+[115] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.928084573654194 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.5381833356516901 @ 18960
+-------------------------------------------------------------------------------
+[116] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.9173737654750314 @ 66360
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.538113784949228 @ 80580
+-------------------------------------------------------------------------------
+[117] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.9415774099318402 @ 80580
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.5602772754671489 @ 18960
+-------------------------------------------------------------------------------
+[118] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.9420178977141003 @ 75840
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.5613437195715676 @ 18960
+-------------------------------------------------------------------------------
+[119] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.9534010293503965 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.529860434923726 @ 18960
+-------------------------------------------------------------------------------
+[120] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.9497612092548801 @ 82950
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.519566930959336 @ 4740
+-------------------------------------------------------------------------------
+[121] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.8645615987388139 @ 80580
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.5696434367320442 @ 14220
+-------------------------------------------------------------------------------
+[122] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.8813001344646915 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.571845875643344 @ 4740
+-------------------------------------------------------------------------------
+[123] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.8485649371725321 @ 23700
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.5434691890388094 @ 28440
+-------------------------------------------------------------------------------
+[124] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.9677052904901006 @ 37920
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.5545045671627951 @ 33180
+-------------------------------------------------------------------------------
+[125] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.9498539435248297 @ 37920
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.5568461074790189 @ 37920
+-------------------------------------------------------------------------------
+[126] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.8484490193350953 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.5103630546668521 @ 56880
+-------------------------------------------------------------------------------
+[127] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.7885194973802568 @ 18960
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.5188250567997403 @ 47400
+-------------------------------------------------------------------------------
+[128] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.806730189641582 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.563847544860203 @ 4740
+-------------------------------------------------------------------------------
+[129] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.9780451615894654 @ 52140
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.5688551954374739 @ 33180
+-------------------------------------------------------------------------------
+[130] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.9552788983168731 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.5360272638753651 @ 33180
+-------------------------------------------------------------------------------
+[131] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.8114944127602356 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.5208652107386285 @ 4740
+-------------------------------------------------------------------------------
+[132] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.789388881161033 @ 18960
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.5137594473037512 @ 9480
+-------------------------------------------------------------------------------
+[133] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.7877892150044049 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.544941345574257 @ 18960
+-------------------------------------------------------------------------------
+[134] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.9697686279964761 @ 52140
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.5124032086057402 @ 14220
+-------------------------------------------------------------------------------
+[135] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.9626280892103677 @ 37920
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.5591412806602679 @ 71100
+-------------------------------------------------------------------------------
+[136] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[137] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[138] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[139] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.929104650623638 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.5136319376825705 @ 9480
+-------------------------------------------------------------------------------
+[140] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.885403625909955 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.522418509760282 @ 18960
+-------------------------------------------------------------------------------
+[141] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.8581861176797886 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.5171906152918812 @ 37920
+-------------------------------------------------------------------------------
+[142] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.8044118328928456 @ 52140
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.5623637965410118 @ 9480
+-------------------------------------------------------------------------------
+[143] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.6873000417304215 @ 37920
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.5701998423517411 @ 56880
+-------------------------------------------------------------------------------
+[144] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.9336486298511615 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.5149765845968377 @ 4740
+-------------------------------------------------------------------------------
+[145] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.8923818797236519 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.5202856215514444 @ 23700
+-------------------------------------------------------------------------------
+[146] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.8505471321927018 @ 23700
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.536108406361571 @ 9480
+-------------------------------------------------------------------------------
+[147] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.8161774933926833 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.5345435155561737 @ 66360
+-------------------------------------------------------------------------------
+[148] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.7308851486066676 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.5592224231464737 @ 47400
+-------------------------------------------------------------------------------
+[149] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.9264849074975657 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.5165762507534659 @ 23700
+-------------------------------------------------------------------------------
+[150] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.8896925858951176 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.5190337089071266 @ 23700
+-------------------------------------------------------------------------------
+[151] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.7132540455325266 @ 9480
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.5465062363796541 @ 9480
+-------------------------------------------------------------------------------
+[152] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.6960170631056708 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.5125307182269208 @ 4740
+-------------------------------------------------------------------------------
+[153] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.634163305049381 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.5418115639634626 @ 4740
+-------------------------------------------------------------------------------
+[  0] source: gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/1 : 0.8801468698669478 @ 2745
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/2 : 0.8791366490734678 @ 3294
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/3 : 0.8781872259453571 @ 3843
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/4 : 0.8779617109327664 @ 2745
+gs://ue-usrl-anuj/vit-retina-new/vit-osp/finetune/lr_0.001/llr_0.1/plr_0.1/5 : 0.8764336702395922 @ 3843
+-------------------------------------------------------------------------------
+[  1] source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/1 : 0.8834694101870784 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/2 : 0.8843065631251511 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/3 : 0.8875389105058366 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/4 : 0.8834359405570579 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/5 : 0.8840243795203235 @ 6582
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_0.1/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  2] source: gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/1 : 0.8643368726505309 @ 8776
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/2 : 0.8660410758644947 @ 13164
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/3 : 0.8696522510936711 @ 15358
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/4 : 0.8777966101694915 @ 8776
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/5 : 0.8635768262656905 @ 10970
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan/finetune/lr_0.001/dlc_1/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  3] source: gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/1 : 0.8823972828595925 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/2 : 0.8861896282617776 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/3 : 0.8853805865154214 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/4 : 0.8830441425399547 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-iw/finetune/lr_0.001/dlc_1/5 : 0.8856792851018928 @ 6582
+-------------------------------------------------------------------------------
+[  4] source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/1 : 0.8834306920354371 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/2 : 0.8886770428015566 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/3 : 0.8890722482358372 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/4 : 0.8851987843214845 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/5 : 0.8807843654509883 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  5] source: gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/1 : 0.885565686209853 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/2 : 0.8817933731231726 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/3 : 0.8879009760601464 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/4 : 0.8846133131086636 @ 4388
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/5 : 0.8852421464529887 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-dan-iw/finetune/lr_0.001/dlc_10/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  6] source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.8825640539471082 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.878904542856515 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.8808286069159577 @ 8776
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.8830124590560354 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.8839878597023456 @ 8776
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  7] source: gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/1 : 0.8837254061421442 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/2 : 0.8841694695420872 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/3 : 0.8851013431818682 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/4 : 0.8846149069005693 @ 6582
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/5 : 0.881718217591066 @ 4388
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/1 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/2 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/3 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/4 : 0.8114799193104713 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/5 : 0.8114799193104713 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/1 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/2 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/3 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/4 : 0.5 @ 1
+gs://ue-usrl-anuj/vit-retina-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/5 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[  0] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.9556962025316456 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.1/0 : 0.5391802290536467 @ 28440
+-------------------------------------------------------------------------------
+[  1] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.95020169703714 @ 132720
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/0 : 0.583530393656976 @ 123240
+-------------------------------------------------------------------------------
+[  2] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.9498075763898549 @ 123240
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_1/0 : 0.540594426670376 @ 66360
+-------------------------------------------------------------------------------
+[  3] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.9136875782445403 @ 85320
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_3/0 : 0.5373255436546576 @ 113760
+-------------------------------------------------------------------------------
+[  4] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.9252793619882228 @ 132720
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_10/0 : 0.5612278017341309 @ 9480
+-------------------------------------------------------------------------------
+[  5] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.9815226967125702 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.1/0 : 0.5251309871563036 @ 37920
+-------------------------------------------------------------------------------
+[  6] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.986854917234664 @ 142200
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/0 : 0.5588630778504197 @ 132720
+-------------------------------------------------------------------------------
+[  7] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.8590902768117958 @ 123240
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_1/0 : 0.5630361199981453 @ 37920
+-------------------------------------------------------------------------------
+[  8] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.8580006491398897 @ 85320
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_3/0 : 0.5796123707516112 @ 94800
+-------------------------------------------------------------------------------
+[  9] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.8745305327583809 @ 113760
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_10/0 : 0.5496244262067047 @ 9480
+-------------------------------------------------------------------------------
+[ 10] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.9369638800018547 @ 18960
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.1/0 : 0.5611118838966941 @ 61620
+-------------------------------------------------------------------------------
+[ 11] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.9231001066444104 @ 75840
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_0.3/0 : 0.5545509342977697 @ 9480
+-------------------------------------------------------------------------------
+[ 12] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.9167709927203598 @ 80580
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_1/0 : 0.5538554272731487 @ 28440
+-------------------------------------------------------------------------------
+[ 13] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.9101404924189733 @ 80580
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_3/0 : 0.5536235915982752 @ 9480
+-------------------------------------------------------------------------------
+[ 14] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.9309129688876525 @ 80580
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.001/dlc_10/0 : 0.5558028469420875 @ 75840
+-------------------------------------------------------------------------------
+[ 15] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.937242082811703 @ 61620
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.1/0 : 0.5265683683405202 @ 82950
+-------------------------------------------------------------------------------
+[ 16] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.9647609774192053 @ 75840
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/0 : 0.5221634905179209 @ 9480
+-------------------------------------------------------------------------------
+[ 17] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.8785644735011824 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/0 : 0.5845736541939074 @ 18960
+-------------------------------------------------------------------------------
+[ 18] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.8780776185839477 @ 82950
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_3/0 : 0.571150368618723 @ 14220
+-------------------------------------------------------------------------------
+[ 19] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.8559141280660268 @ 28440
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_10/0 : 0.5637084434552789 @ 37920
+-------------------------------------------------------------------------------
+[ 20] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.9784160986692632 @ 42660
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.1/0 : 0.5447442852506144 @ 33180
+-------------------------------------------------------------------------------
+[ 21] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.9561830574488803 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/0 : 0.5794500857791998 @ 37920
+-------------------------------------------------------------------------------
+[ 22] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.8050609727824917 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_1/0 : 0.5138521815737006 @ 23700
+-------------------------------------------------------------------------------
+[ 23] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.8096860944962211 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_3/0 : 0.5170746974544443 @ 61620
+-------------------------------------------------------------------------------
+[ 24] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.7971321927018129 @ 14220
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_10/0 : 0.5463787267584737 @ 37920
+-------------------------------------------------------------------------------
+[ 25] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.9591273705197756 @ 23700
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.1/0 : 0.5256178420735382 @ 18960
+-------------------------------------------------------------------------------
+[ 26] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.9823341215746278 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_0.3/0 : 0.5221171233829461 @ 23700
+-------------------------------------------------------------------------------
+[ 27] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.810277275467149 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_1/0 : 0.5119974961747114 @ 4740
+-------------------------------------------------------------------------------
+[ 28] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.8285459266471925 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_3/0 : 0.525154170723791 @ 9480
+-------------------------------------------------------------------------------
+[ 29] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.7866068530625492 @ 56880
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_5/clc_10/0 : 0.5290837854128994 @ 4740
+-------------------------------------------------------------------------------
+[ 30] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.9876431585292346 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/0 : 0.5551073399174665 @ 42660
+-------------------------------------------------------------------------------
+[ 31] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.9849306811332127 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.3/0 : 0.5782909074048315 @ 56880
+-------------------------------------------------------------------------------
+[ 32] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_1/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[ 33] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_3/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[ 34] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_10/0 : 0.5 @ 1
+-------------------------------------------------------------------------------
+[ 35] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.9209904020030601 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.1/0 : 0.5118236194185561 @ 61620
+-------------------------------------------------------------------------------
+[ 36] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.8884870403857745 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_0.3/0 : 0.5283998701720221 @ 4740
+-------------------------------------------------------------------------------
+[ 37] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.8443107525386007 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_1/0 : 0.5291069689803867 @ 23700
+-------------------------------------------------------------------------------
+[ 38] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.8110655167617193 @ 52140
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_3/0 : 0.5474335790791488 @ 23700
+-------------------------------------------------------------------------------
+[ 39] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.7349422729169564 @ 14220
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_3/clc_10/0 : 0.561772615570084 @ 56880
+-------------------------------------------------------------------------------
+[ 40] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.9230537395094357 @ 52140
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.1/0 : 0.5144433625446284 @ 9480
+-------------------------------------------------------------------------------
+[ 41] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.8890434460054714 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_0.3/0 : 0.5259771873695924 @ 4740
+-------------------------------------------------------------------------------
+[ 42] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.8467334353410303 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_1/0 : 0.5295822321138777 @ 4740
+-------------------------------------------------------------------------------
+[ 43] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.7942806139008671 @ 28440
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_3/0 : 0.5532758380859646 @ 52140
+-------------------------------------------------------------------------------
+[ 44] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.7737399731070616 @ 14220
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_5/clc_10/0 : 0.5542147725692029 @ 14220
+-------------------------------------------------------------------------------
+[ 45] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.9130616219223814 @ 47400
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.1/0 : 0.5146751982195019 @ 9480
+-------------------------------------------------------------------------------
+[ 46] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.8822506607316735 @ 71100
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_0.3/0 : 0.5252353132099967 @ 4740
+-------------------------------------------------------------------------------
+[ 47] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.7074465618769415 @ 9480
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_1/0 : 0.5448717948717949 @ 4740
+-------------------------------------------------------------------------------
+[ 48] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.6441901979876663 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_3/0 : 0.5439792275235312 @ 4740
+-------------------------------------------------------------------------------
+[ 49] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.6224208281170306 @ 4740
+best validation Reverse Accuracy steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.9845697329376855 @ 1
+best validation Reverse AUROC steps
+
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.0001/cmo_8/clc_10/0 : 0.5565331293179394 @ 4740
+-------------------------------------------------------------------------------
+[  0] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/1 : 0.985966735966736 @ 35550
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/2 : 0.9515050167224081 @ 7110
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/3 : 0.978193076019163 @ 33180
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/4 : 0.9624875711832234 @ 35550
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-osp/finetune/lr_0.001/llr_0.01/plr_0.1/5 : 0.9512338425381904 @ 35550
+-------------------------------------------------------------------------------
+[  1] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/1 : 0.9528909908656744 @ 56880
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/2 : 0.9592201047897251 @ 85320
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/3 : 0.9663142764408588 @ 75840
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/4 : 0.9478137895859415 @ 113760
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/5 : 0.9554643668567719 @ 85320
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/1 : 0.5769694440580516 @ 113760
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/2 : 0.5276116288774516 @ 85320
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/3 : 0.5603931933045857 @ 85320
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/4 : 0.5391802290536467 @ 75840
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.001/dlc_0.3/5 : 0.5951917281031205 @ 142200
+-------------------------------------------------------------------------------
+[  2] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/1 : 0.8924746139936013 @ 113760
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/2 : 0.9260907868502806 @ 104280
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/3 : 0.8955812120369082 @ 142200
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/4 : 0.9453099642973061 @ 142200
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/5 : 0.8949784392822367 @ 94800
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/1 : 0.5567533732090695 @ 132720
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/2 : 0.5368618723049103 @ 132720
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/3 : 0.5595585848750406 @ 18960
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/4 : 0.5657022302591922 @ 37920
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan/finetune/lr_0.0001/dlc_0.3/5 : 0.5594658506050911 @ 47400
+-------------------------------------------------------------------------------
+[  3] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/1 : 0.9925348912690685 @ 23700
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/2 : 0.9708466638846387 @ 18960
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/3 : 0.9815458802800574 @ 18960
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/4 : 0.9649116706078732 @ 18960
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-iw/finetune/lr_0.001/dlc_0.1/5 : 0.9602749571104001 @ 14220
+-------------------------------------------------------------------------------
+[  4] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/1 : 0.9150322251588074 @ 75840
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/2 : 0.9393749710205407 @ 61620
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/3 : 0.9392822367505913 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/4 : 0.9617702972133352 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/5 : 0.953308295080447 @ 80580
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/1 : 0.5516529883618492 @ 23700
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/2 : 0.5625724486483981 @ 47400
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/3 : 0.5523484953864701 @ 42660
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/4 : 0.5283535030370473 @ 52140
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_0.3/5 : 0.5566142718041452 @ 4740
+-------------------------------------------------------------------------------
+[  5] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/1 : 0.875365141187926 @ 37920
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/2 : 0.8647702508462003 @ 66360
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/3 : 0.8858209301247276 @ 9480
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/4 : 0.8873742291463811 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/5 : 0.853827606992164 @ 82950
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/1 : 0.5898131404460518 @ 14220
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/2 : 0.5417536050447442 @ 4740
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/3 : 0.5633375063754811 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/4 : 0.552278944684008 @ 28440
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-dan-iw/finetune/lr_0.0001/dlc_1/5 : 0.5522557611165206 @ 28440
+-------------------------------------------------------------------------------
+[  6] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.9418324291742013 @ 33180
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.9613066258635878 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.9642741225019706 @ 66360
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.9635554319098624 @ 37920
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.9808967403904112 @ 52140
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/1 : 0.5550841563499791 @ 52140
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/2 : 0.533801641396578 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/3 : 0.5602309083321741 @ 66360
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/4 : 0.5510038484722029 @ 47400
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_3/clc_0.3/5 : 0.5577734501785135 @ 28440
+-------------------------------------------------------------------------------
+[  7] source: gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1
+best validation steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/1 : 0.9536328650252701 @ 71100
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/2 : 0.9834005656790467 @ 66360
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/3 : 0.9674270876802522 @ 28440
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/4 : 0.9807344554179996 @ 66360
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/5 : 0.9512913247090463 @ 33180
+
+best validation Reverse Accuracy steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/1 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/2 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/3 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/4 : 0.9845697329376855 @ 1
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/5 : 0.9845697329376855 @ 1
+
+best validation Reverse AUROC steps
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/1 : 0.5530903695460657 @ 42660
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/2 : 0.5701534752167663 @ 37920
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/3 : 0.5593035656326796 @ 37920
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/4 : 0.5836231279269254 @ 28440
+gs://ue-usrl-anuj/vit-isic-ue-new/vit-cmd/finetune/lr_0.001/cmo_8/clc_0.1/5 : 0.5836231279269255 @ 42660

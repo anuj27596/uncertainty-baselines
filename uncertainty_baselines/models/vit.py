@@ -215,13 +215,14 @@ class Encoder(nn.Module):
 class ReverseClassifier(nn.Module):
   """Transformer MLP / feed-forward block."""
 
+  features: int = 1
   dtype: Dtype = jnp.float32
 
   @nn.compact
   def __call__(self, inputs):
     x = jax.lax.stop_gradient(inputs)
     output = nn.Dense(
-        features=1,
+        features=self.features,
         dtype=self.dtype,
         kernel_init=nn.initializers.zeros)(  # pytype: disable=wrong-arg-types
             x)
@@ -293,7 +294,7 @@ class VisionTransformer(nn.Module):
     if self.fix_base_model:
       x = jax.lax.stop_gradient(x)
 
-    out['reverse_pred'] = ReverseClassifier()(x)
+    out['reverse_pred'] = ReverseClassifier(features=self.num_classes)(x)
     
     x = nn.Dense(
         features=self.num_classes,

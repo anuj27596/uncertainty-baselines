@@ -1,0 +1,84 @@
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_*/mr_*
+best validation AUROC steps
+
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.1/0 : 0.9656964656964657
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.2/0 : 0.9697866763084154
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.6/0 : 0.9571092831962397
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.8/0 : 0.9423980837024316
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.2/0 : 0.9491096447618187
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.4/0 : 0.9673687064991413
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.6/0 : 0.9715267106571455
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/0 : 0.9751197685980295
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/1 : 0.9606345475910694
+16590
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/2 : 0.9193708758926151
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/3 : 0.9364096538009581
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/4 : 0.9773569556178252
+14220
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/c5 : 0.9461945222814787
+7110
+downloading best validation results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+done

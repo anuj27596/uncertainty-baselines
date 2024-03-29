@@ -10,6 +10,588 @@ from absl import flags
 DATASET_NAME = "histopathology"
 run_settings = [
 
+#   # 1. DR
+#   ('baselines.diabetic_retinopathy_detection.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_<_lr>/crop_<_crop>/<_seed>',
+# 			'config': 'configs/drd/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-retina-new/vit_simclr_finetune/lr_<_lr>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+# 	}, 
+#    {	'_lr': [1e-3],
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step': [3294, 4392, 3294, 3294, 3294, 4392],
+    
+# 	},
+#   {	'_crop': [36, 64, 81][1:2], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_lrp': [1e-4,1e-3,1e-3][1:2]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+#   ('baselines.diabetic_retinopathy_detection.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_<_lr>/crop_<_crop>/<_seed>',
+# 			'config': 'configs/drd/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-retina-new/vit_simclr_finetune_debiased/lr_<_lr>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+# 	}, 
+#    {	'_lr': [1e-3],
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step': [3294]*6,
+    
+# 	},
+#   {	'_crop': [36, 64, 81][0:1], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_lrp': [1e-4,1e-3,1e-3][0:1]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+# 	('baselines.diabetic_retinopathy_detection.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_<_lr>/mr_<_mr>/<_seed>',
+# 			'config': 'configs/drd/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-retina-new/vit_mim_finetune/lr_<_lr>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+# 	},
+#    {	'_lr': [1e-3], # 1e-4 done
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step': [4392, 3294, 4392, 4392, 3294, 5490],
+# 	},
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][2:3],
+#    '_lrp': [1e-3, 1e-3, 1e-3, 1e-3, 1e-3][2:3]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+# ('baselines.diabetic_retinopathy_detection.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_<_lr>/mr_<_mr>/<_seed>',
+# 			'config': 'configs/drd/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-retina-new/vit_mae_finetune/lr_<_lr>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+# 	},
+#    {	'_lr': [1e-3], # 1e-4 done
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step':[2196,3294,3294,2196,3294,2196],
+    
+# 	},
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][3:4],
+#    '_lrp': [1e-4, 1e-3, 1e-4, 1e-4, 1e-3][3:4]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+# 	# 2. CX
+#   ('baselines.chest_xray.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_<_lr>/crop_<_crop>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr_finetune/lr_<_lr>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+# 	}, 
+#    {	'_lr': [1e-3],
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step': [10444,11936,16412,8206,5968,8206],
+    
+# 	},
+#   {	'_crop': [36, 64, 81][1:2], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_lrp': [1e-4,1e-3,1e-3][1:2]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+  ('baselines.chest_xray.jax_finetune_deterministic', {
+			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_<_lr>/crop_<_crop>/<_seed>',
+			'config': 'configs/chest_xray/vit_finetune_eval.py',
+			'config.seed': '<_seed>',
+			'config.lr.base':'<_lr>',
+   			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr_finetune_debiased/lr_<_lr>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+	}, 
+   {	'_lr': [1e-3],
+	}, 
+   {	'_seed': range(6),
+   '_step': [7460, 6714, 8206, 5968, 8952, 9698],
+    
+	},
+  {	'_crop': [36, 64, 81][1:2], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+   '_lrp': [1e-4,1e-3,1e-3][1:2]
+	},
+   {'_organ':['upper_extremity']
+ }
+ ),
+# 	('baselines.chest_xray.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_<_lr>/mr_<_mr>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mim_finetune/lr_<_lr>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+# 	},
+#    {	'_lr': [1e-3], # 1e-4 done
+# 	}, 
+#    {	'_seed': range(6),
+#    '_step': [11190, 9698, 12682, 9698, 8952, 10444],
+# 	},
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][2:3],
+#    '_lrp': [1e-3, 1e-3, 1e-3, 1e-3, 1e-3][2:3]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+# ('baselines.chest_xray.jax_finetune_deterministic', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_<_lr>/mr_<_mr>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_eval.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+#    			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mae_finetune/lr_<_lr>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+# 	},
+#    {	'_lr': [1e-3], # 1e-4 done
+# 	}, 
+#    {'_seed': range(6),
+#    '_step':[14174, 11190, 6714, 6714, 11936, 11936],
+    
+# 	},
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][3:4],
+#    '_lrp': [1e-4, 1e-3, 1e-4, 1e-4, 1e-3][3:4]
+# 	},
+#    {'_organ':['upper_extremity']
+#  }
+#  ),
+
+
+ 
+# # Pretraing + DAN
+
+# # 1. Histopathology
+# # SimCLR+DAN
+# ('baselines.histopathology.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_simclr_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  },
+#    {'_crop': [81], #[36, 64, 81], 
+#    '_step': [204800], #[40960, 40960, 204800],
+#    '_lrp': [1e-3] #[1e-4,1e-4,1e-3]
+# 	},
+#  ),
+
+
+# # SimCLR Deb +DAN
+# ('baselines.histopathology.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_simclr_debiased_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_simclr_debiased/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  },
+#   {	'_crop': [81], # [36, 64, 81], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_step': [122880], # [40960, 40960, 122880],
+#    '_lrp': [1e-3] # [1e-4,1e-4,1e-3]
+# 	},
+#  ),
+
+# # SimCLR MIM+DAN
+# ('baselines.histopathology.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_mae_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]    
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  },
+#   {	'_mr': [0.4], #[0.4, 0.6, 0.8],
+#    '_step':[307200], #[307200, 40960, 225280],
+#    '_lrp': [1e-3] # [1e-3, 1e-3, 1e-3]
+# 	},
+#  ),
+
+# # SimCLR MAE+DAN
+# ('baselines.histopathology.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_mae_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/histopathology/processed_onehot_tum_swap/vit_mae/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  },
+#   {	'_mr':[0.8], #[0.1, 0.2, 0.4, 0.6, 0.8],
+#    '_step': [20480], #[307200, 266240, 20480, 20480, 20480],
+#    '_lrp': [1e-4] #[1e-3, 1e-3, 1e-4, 1e-4, 1e-4] 
+# 	},
+#  ),
+
+# # 2. ISIC
+
+# # SimCLR+DAN
+# ('baselines.isic.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_simclr_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/isic/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_simclr/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_crop': [36, 64, 81][1:2], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_step': [141900, 141900, 42570][1:2],
+#    '_lrp': [1e-4,1e-3,1e-3][1:2]
+# 	},
+#  ),
+
+
+# # SimCLR Deb +DAN
+# ('baselines.isic.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_simclr_debiased_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/isic/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_simclr_debiased/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_crop': [36, 64, 81][0:1], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_step': [14190, 70950, 70950][0:1],
+#    '_lrp': [1e-3,1e-3,1e-3][0:1]
+# 	},
+#  ),
+
+# # SimCLR MIM+DAN
+# ('baselines.isic.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_mim_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/isic/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_mim/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]    
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][-1:],
+#    '_step': [37840, 37840, 37840, 9460, 9460][-1:],
+#    '_lrp': [1e-3, 1e-3, 1e-3, 1e-3, 1e-3][-1:]
+# 	},
+#  ),
+
+# # SimCLR MAE+DAN
+# ('baselines.isic.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_mae_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/isic/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/karm/outputs/isic/<_organ>/vit_mae/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][-1:],
+#    '_step':[28380],
+#    '_lrp': [1e-4]
+# 	},
+#  ),
+
+# # 3. CX
+# # SimCLR+DAN
+# ('baselines.chest_xray.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]    
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_crop': [36, 64, 81][1:2], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_step': [298400, 29840, 29840][1:2],
+#    '_lrp': [1e-4,1e-4,1e-4][1:2]
+# 	},
+#  ),
+
+
+# # SimCLR Deb +DAN
+# ('baselines.chest_xray.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr_debiased_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_simclr_debiased/lr_<_lrp>/crop_<_crop>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_crop': [64, 81][0:1], #[0.1, 0.2, 0.25, 0.4, 0.6, 0.8] 
+#    '_step': [119360, 238720][0:1],
+#    '_lrp': [1e-3,1e-3][0:1]
+# 	},
+#  ),
+
+# # SimCLR MIM+DAN
+# ('baselines.chest_xray.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mim_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mim/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]    
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_mr': [0.4, 0.6, 0.8][-1:],
+#    '_step': [147708, 98472, 135772][-1:],
+#    '_lrp': [1e-3, 1e-3, 1e-3][-1:]
+# 	},
+#  ),
+
+# # SimCLR MAE+DAN
+# ('baselines.chest_xray.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mae_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/chest_xray/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.model_init': 'gs://ue-usrl-anuj/vit-cxfr-new/vit_mae/lr_<_lrp>/mr_<_mr>/0/checkpoints/checkpoint_<_step>.npz'
+   
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+# 	} ,
+#    {	'_dlc': [0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['upper_extremity']
+#  },
+#   {	'_mr': [0.1, 0.2, 0.4, 0.6, 0.8][0:1],
+#    '_step':[149200, 149200, 7460, 149200, 7460][0:1],
+#    '_lrp': [1e-3, 1e-3, 1e-3, 1e-3, 1e-3][0:1]
+# 	},
+#  ),
+
+
 # #  0 ViT	
 #  (f'baselines.{DATASET_NAME}.jax_finetune_deterministic', {
 # 			'output_dir': f'gs://ue-usrl-anuj/karm/outputs/{DATASET_NAME}/<_organ>/vit/lr_<_lr>/<_seed>',
@@ -67,52 +649,52 @@ run_settings = [
 #  ),
 
  # 3 dan+iw: done
- 	('baselines.histopathology.jax_finetune_impwt', {
-			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_dan_iw/lr_<_lr>/dlc_<_dlc>/<_seed>',
-			'config': 'configs/histopathology/vit_finetune_impwt.py',
-			'config.seed': '<_seed>',
-'config.lr.base':'<_lr>',
-   			'config.model.domain_predictor.grl_coeff':'<_grl>',
-			'config.dp_loss_coeff':'<_dlc>',
+#  	('baselines.histopathology.jax_finetune_impwt', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_dan_iw/lr_<_lr>/dlc_<_dlc>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_impwt.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+#    			'config.model.domain_predictor.grl_coeff':'<_grl>',
+# 			'config.dp_loss_coeff':'<_dlc>',
    			
-	},  
-  {	'_seed': range(1),
-	} ,
-  {
-	'_lr': [1e-4, 1e-3]  
+# 	},  
+#   {	'_seed': range(1,6),
+# 	} ,
+#   {
+# 	'_lr': [1e-3] #[1e-4, 1e-3]  
   
-	} ,
- {	'_dlc': [0.1, 0.3, 1, 3, 10], #[0.05, 0.1, 3],
-	},
-  {	'_grl': [1] #[0.05, 0.1, 3],
-	},
- {'_organ':['processed_onehot_tum_swap2']
- }
- ),
+# 	} ,
+#  {	'_dlc': [0.3]# [0.1, 0.3, 1, 3, 10], #[0.05, 0.1, 3],
+# 	},
+#   {	'_grl': [1] #[0.05, 0.1, 3],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  }
+#  ),
   
 
- #4  iw 
- 	('baselines.histopathology.jax_finetune_impwt', {
-			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_iw/lr_<_lr>/dlc_<_dlc>/<_seed>',
-			'config': 'configs/histopathology/vit_finetune_impwt.py',
-			'config.seed': '<_seed>',
-			'config.lr.base':'<_lr>',
-   			'config.model.domain_predictor.grl_coeff':'0',
-			'config.dp_loss_coeff':'<_dlc>',
+#  #4  iw 
+#  	('baselines.histopathology.jax_finetune_impwt', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_iw/lr_<_lr>/dlc_<_dlc>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_impwt.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+#    			'config.model.domain_predictor.grl_coeff':'0',
+# 			'config.dp_loss_coeff':'<_dlc>',
    			
-	},  
-  {	'_seed': range(1,6),
-	} ,
-  {
-	'_lr': [1e-3] #[1e-4, 1e-3]  
+# 	},  
+#   {	'_seed': range(1,6),
+# 	} ,
+#   {
+# 	'_lr': [1e-3] #[1e-4, 1e-3]  
   
-	} ,
- {	'_dlc': [0.1] #[0.1, 0.3, 1, 3, 10],
-	}
- ,
- {'_organ':['processed_onehot_tum_swap2']
- }
- ),
+# 	} ,
+#  {	'_dlc': [0.1] #[0.1, 0.3, 1, 3, 10],
+# 	}
+#  ,
+#  {'_organ':['processed_onehot_tum_swap2']
+#  }
+#  ),
   
 #   # 5 mim_finetune -- done
 #   ('baselines.histopathology.jax_pretrain_mim', {
@@ -178,7 +760,7 @@ run_settings = [
 # ),
 
 #   ('baselines.histopathology.jax_finetune_deterministic', {
-# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_mae_finetune2/lr_<_lr>/mr_<_mr>/<_seed>',
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_mae_finetune/lr_<_lr>/mr_<_mr>/<_seed>',
 # 			'config': 'configs/histopathology/vit_finetune.py',
 # 			'config.seed': '<_seed>',
 # 'config.lr.base':'<_lr>',
@@ -186,9 +768,9 @@ run_settings = [
 # 	}, {	'_lr': [1e-3],
 # 	}, {	'_seed': range(6)
 # 	},
-#   {	'_mr':[], #[0.1, 0.2, 0.4, 0.6, 0.8],
-#    '_step': [], #[307200, 266240, 20480, 20480, 20480],
-#    '_lrp': [] #[1e-3, 1e-3, 1e-4, 1e-4, 1e-4] 
+#   {	'_mr':[0.8], #[0.1, 0.2, 0.4, 0.6, 0.8],
+#    '_step': [20480], #[307200, 266240, 20480, 20480, 20480],
+#    '_lrp': [1e-4] #[1e-3, 1e-3, 1e-4, 1e-4, 1e-4] 
 # 	},
 #    {'_organ':['processed_onehot_tum_swap2']
 #  }
@@ -277,35 +859,35 @@ run_settings = [
   
   
 # 7 DAN
-	('baselines.histopathology.jax_finetune_dan', {
-			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
-			'config': 'configs/histopathology/vit_finetune_dan.py',
-			'config.seed': '<_seed>',
-			'config.lr.base':'<_lr>',
-			'config.model.domain_predictor.grl_coeff': '<_grc>',
-    		'config.model.domain_predictor.num_layers':'<_nl>',
-			'config.model.domain_predictor.hid_dim':'<_hdim>',
-			'config.dp_loss_coeff':'<_dlc>',
-			'config.distribution_shift':'<_organ>'
+# 	('baselines.histopathology.jax_finetune_dan', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_dan/lr_<_lr>/dlc_<_dlc>/grc_<_grc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_dan.py',
+# 			'config.seed': '<_seed>',
+# 			'config.lr.base':'<_lr>',
+# 			'config.model.domain_predictor.grl_coeff': '<_grc>',
+#     		'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+# 			'config.distribution_shift':'<_organ>'
    
-	},  
-  {	'_seed': range(1,6),
-	} ,
-  {
-	'_lr': [0.001] #[1e-4, 1e-3]  
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
   
-	} ,
-   {	'_dlc': [0.1] #[0.1, 0.3, 1, 3, 10]
-	},
- {	'_grc': [1] #[0.05, 0.1, 0.3, 1, 3],
-	},
- {	'_nl': [3] #[2, 3, 5],
-	},
- {	'_hdim': [256] #[256, 512, 768],
-	},
- {'_organ':['processed_onehot_tum_swap2']
- }
- ),
+# 	} ,
+#    {	'_dlc': [1] #[0.01, 0.03] #[0.1, 0.3, 1, 3, 10]
+# 	},
+#  {	'_grc': [0.05, 0.1, 0.3, 1, 3],
+# 	},
+#  {	'_nl': [3] #[2, 3, 5],
+# 	},
+#  {	'_hdim': [256] #[256, 512, 768],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  }
+#  ),
   
 #   ('baselines.histopathology.jax_finetune_deterministic', {
 # 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_simclr_finetune/crop_<_crop>/<_seed>',
@@ -322,30 +904,30 @@ run_settings = [
 #  }
 #  ),
 
-#   8. CMD finetune
+# #   8. CMD finetune
   
-  	('baselines.histopathology.jax_finetune_cmd', {
-			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_cmd/lr_<_lr>/clc_<_clc>/cmo_<_cmo>/<_seed>',
-			'config': 'configs/histopathology/vit_finetune_cmd.py',
-			'config.seed': '<_seed>',
-'config.lr.base':'<_lr>',
-			'config.cmd_loss_coeff':'<_clc>',
-			'config.cmd_max_order':'<_cmo>'
-	},  
-  {	'_seed': range(1)
-	} ,
- {	'_clc': [0.1, 0.3, 1.0, 3, 10.0]
-	},
- {	'_cmo': [3, 5, 8]
-	},
-  {
-	'_lr': [1e-4, 1e-3]  
+#   	('baselines.histopathology.jax_finetune_cmd', {
+# 			'output_dir': 'gs://ue-usrl-anuj/karm/outputs/histopathology/<_organ>/vit_cmd/lr_<_lr>/clc_<_clc>/cmo_<_cmo>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_cmd.py',
+# 			'config.seed': '<_seed>',
+# 'config.lr.base':'<_lr>',
+# 			'config.cmd_loss_coeff':'<_clc>',
+# 			'config.cmd_max_order':'<_cmo>'
+# 	},  
+#   {	'_seed': range(1,6)
+# 	} ,
+#  {	'_clc': [0.3] #[0.1, 0.3, 1.0, 3, 10.0]
+# 	},
+#  {	'_cmo': [8] #[3, 5, 8]
+# 	},
+#   {
+# 	'_lr': [1e-3] #[1e-4, 1e-3]  
   
-	},
+# 	},
  
- {'_organ':['processed_onehot_tum_swap2']
- }
- ),
+#  {'_organ':['processed_onehot_tum_swap2']
+#  }
+#  ),
 
 # # 9 Simclr + DAN
 # 	('baselines.histopathology.jax_finetune_dan', {

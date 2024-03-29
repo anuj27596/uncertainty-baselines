@@ -1,0 +1,16 @@
+ISIC
+/home/anuj/troy/gub-og/outputs/isic/new_sweep_results/vit_simclr_finetune_debiased/lr_0.0001/crop_36
+/home/anuj/troy/gub-og/outputs/isic/new_sweep_results/vit_mae_finetune/lr_0.001/mr_0.8
+/home/anuj/troy/gub-og/outputs/isic/new_sweep_results/vit_simclr_finetune/lr_0.0001/crop_64
+
+DR
+/home/anuj/troy/gub-og/outputs/vit/new_sweep_results/vit_simclr_finetune_debiased/lr_0.001/crop_36
+/home/anuj/troy/gub-og/outputs/vit/new_sweep_results/vit_mae_finetune/lr_0.001/mr_0.6
+/home/anuj/troy/gub-og/outputs/vit/new_sweep_results/vit_simclr_finetune/lr_0.001/crop_64
+/home/anuj/troy/gub-og/outputs/vit/new_sweep_results/vit_mim_finetune/lr_0.001/mr_0.4
+
+CX
+/home/anuj/troy/gub-og/outputs/chest_xray/new_sweep_results/vit_simclr_finetune_debiased/lr_0.001/crop_64
+/home/anuj/troy/gub-og/outputs/chest_xray/new_sweep_results/vit_mae_finetune/lr_0.001/mr_0.1
+/home/anuj/troy/gub-og/outputs/chest_xray/new_sweep_results/vit_simclr_finetune/lr_0.001/crop_64
+/home/anuj/troy/gub-og/outputs/chest_xray/new_sweep_results/vit_mim_finetune/lr_0.001/mr_0.8

@@ -2,6 +2,7 @@ import sys
 from google.cloud import aiplatform
 from tqdm import tqdm
 
+to_print_ids = [3,4]
 def cancel(s):
 	try:
 		j = aiplatform.CustomJob.get(s)
@@ -14,7 +15,7 @@ def print_if_success(s):
 		j = aiplatform.CustomJob.get(s)
 		a = j.job_spec.worker_pool_specs[0].container_spec.args
 		i = [s.split('=')[-1] for s in a if s.startswith('--run_id=')][0]
-		if j.state in [4]:
+		if j.state in to_print_ids:
 			print(i)
 	finally:
 		return

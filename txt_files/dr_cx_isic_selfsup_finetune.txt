@@ -1,0 +1,240 @@
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_*/crop_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/0 : 0.8943207155102669
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/1 : 0.8938267276387173
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/2 : 0.8943207155102669
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/3 : 0.8943207155102669
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/4 : 0.8943207155102669
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune/lr_0.001/crop_64/5 : 0.8938267276387173
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_*/crop_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/0 : 0.8867542517870464
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/1 : 0.8867542517870464
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/2 : 0.8867542517870464
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/3 : 0.8867542517870464
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/4 : 0.8867542517870464
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_36/5 : 0.8867542517870464
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/0 : 0.8826369747869727
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/1 : 0.8811244481695252
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/2 : 0.8826369747869727
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/3 : 0.8826369747869727
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/4 : 0.8811244481695252
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/5 : 0.8748370338006564
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/0 : 0.8873093656641929
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/1 : 0.8846709604082977
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/2 : 0.8846709604082977
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/3 : 0.8873093656641929
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/4 : 0.8846709604082977
+1
+gs://ue-usrl-anuj/vit-retina-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/5 : 0.8873093656641929
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_*/crop_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/0 : 0.8654272511049175
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/1 : 0.8633032791039605
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/2 : 0.8567676379116584
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/3 : 0.8647608406384247
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/4 : 0.8598107839966153
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune/lr_0.001/crop_64/5 : 0.8647608406384247
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_*/crop_*
+best validation AUROC stepsdownloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/0 : 0.8565396958634064
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/1 : 0.8498000859979544
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/2 : 0.852851934356264
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/3 : 0.8498000859979544
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/4 : 0.8508434555476979
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mim_finetune/lr_0.001/mr_0.4/5 : 0.852128811678417
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/0 : 0.8441333075089922
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/1 : 0.8503618008935236
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/2 : 0.841195481915028
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/3 : 0.841195481915028
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/4 : 0.8448321039855049
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_mae_finetune/lr_0.001/mr_0.6/5 : 0.8448321039855049
+1
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_*/crop_*
+best validation AUROC stepsgs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_36/0 : 0.9539681822290519
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/0 : 0.9751649642953991
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/1 : 0.9763400524270089
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/2 : 0.9781930760191629
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/3 : 0.9797975232757842
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/4 : 0.9854695832956701
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_64/5 : 0.9727017987887553
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.0001/crop_81/0 : 0.9645439754135405
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.001/crop_36/0 : 0.9608605260779175
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.001/crop_64/0 : 0.9554144445448793
+4740
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune/lr_0.001/crop_81/0 : 0.9538099972882582
+7110
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_*/crop_*
+best validation AUROC stepsgs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/0 : 0.9575386423212511
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/1 : 0.9614254722950375
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/2 : 0.9667585645846515
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/3 : 0.9477763716894152
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/4 : 0.9538777908343126
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_36/5 : 0.9469176534393926
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_64/0 : 0.9609961131700262
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.0001/crop_81/0 : 0.9515276145710929
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_36/0 : 0.9671201301636084
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_36/1 : 0.9421269095182139
+4740
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_36/2 : 0.949064449064449
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_36/3 : 0.9826448522100696
+11850
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_36/5 : 0.9505107113802767
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_64/0 : 0.9648603452951279
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_simclr_finetune_debiased/lr_0.001/crop_81/0 : 0.9472340233209798
+4740
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.1/0 : 0.9656964656964657
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.2/0 : 0.9697866763084154
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.6/0 : 0.9571092831962397
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.0001/mr_0.8/0 : 0.9423980837024316
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.2/0 : 0.9491096447618187
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.4/0 : 0.9673687064991413
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.6/0 : 0.9715267106571455
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/0 : 0.9751197685980295
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/1 : 0.9606345475910694
+16590
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/2 : 0.9193708758926151
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/3 : 0.9364096538009581
+9480
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/4 : 0.9773569556178252
+14220
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mim_finetune/lr_0.001/mr_0.8/5 : 0.9461945222814787
+7110
+downloading best validation results
+done
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_*/mr_*
+best validation AUROC stepsgs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.0001/mr_0.1/0 : 0.9486576877881226
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.0001/mr_0.2/0 : 0.9390536020970803
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.0001/mr_0.4/0 : 0.9484317093012745
+26070
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.0001/mr_0.6/0 : 0.928997559432342
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.0001/mr_0.8/0 : 0.9319804754587364
+30810
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.1/0 : 0.9403190816234295
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.2/0 : 0.9403868751694838
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.4/0 : 0.983051613486396
+28440
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.6/0 : 0.9421947030642682
+33180
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/0 : 0.9858763445719968
+11850
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/1 : 0.9493356232486667
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/2 : 0.9355961312483051
+35550
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/3 : 0.9615610593871463
+4740
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/4 : 0.9648377474464431
+7110
+gs://ue-usrl-anuj/karm/outputs/isic/upper_extremity/vit_mae_finetune/lr_0.001/mr_0.8/5 : 0.981334176986351
+35550
+downloading best validation results
+done

@@ -131,7 +131,7 @@ def get_config():
   config.only_eval = False  # Disables training, only evaluates the model
   config.eval_on_train = False  # Whether to eval on train split
   config.use_validation = True  # Whether to use a validation split
-  config.use_test = False  # Whether to use a test split
+  config.use_test = True  # Whether to use a test split
 
   # Step Counts
 

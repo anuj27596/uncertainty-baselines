@@ -14,10 +14,10 @@ if __name__ == '__main__':
 	result_datasets = ['in_domain_validation' ,'in_domain_test', 'ood_validation', 'ood_test']
 	DATASET_NAME = "histopathology"
 	organ='processed_onehot_tum_swap2'
-
+	prefix_local_dir = "/home/anuj/troy/karm/outputs_histo/histopathology/eval/"
+	os.makedirs(prefix_local_dir, exist_ok=True)
 	for src_dir, dest_dir in [
      
-
     #  (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit-mcd-dan/lr_0.001/drp_0.01/grl_1/layers_5/dim_768/dlc_0.05/', ''),
     #  (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_simclr_dan/gc_*/nl_*/hdim_*/', ''),
     #  (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mim_dan/gc_*/nl_*/hdim_*/', ''),
@@ -27,19 +27,20 @@ if __name__ == '__main__':
   	(f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_simclr_finetune/lr_*/crop_*', ''),
 	(f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_simclr_finetune_debiased/lr_*/crop_*/', ''),
     (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mim_finetune/lr_*/mr_*', ''),
-    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mae_finetune2/lr_*/mr_*', ''),
+    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mae_finetune/lr_0.001/mr_0.8', ''),
   	(f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_osp/lr_*/llr_*/plr_*/', ''),
-    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mcd/lr_*/dr_*/', ''),
-    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_iw/lr_*/dlc_*', ''), # this is iw
+    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_mcd/lr_0.001/dr_0.01/', ''),
+    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_iw/lr_0.001/dlc_0.1', ''), # this is iw
     
+    # (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256', ''),
+    # (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan/lr_0.001/dlc_0.01/grc_1/nl_3/hdim_256', ''),
     (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan/lr_*/dlc_*/grc_*/nl_3/hdim_256', ''),
-    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_cmd/lr_*/clc_*/cmo_*/', ''),
-    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan_iw/lr_*/dlc_*', ''), # this is dan+iw
+    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_cmd/lr_0.001/clc_0.3/cmo_8', ''),
+    (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan_iw/lr_0.001/dlc_0.3', ''), # this is dan+iw
     
     # (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan_intermed/grl_2/', ''),
     # (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan_intermed/grl_5/', ''),
     # (f'gs://ue-usrl-anuj/karm/outputs/histopathology/{organ}/vit_dan_intermed/grl_8/', ''),
-
 	]:
 
 		print('-' * 79)
@@ -122,7 +123,7 @@ if __name__ == '__main__':
 		for model_path, dataset in tqdm(itertools.product(best.keys(), result_datasets), total = len(best) * len(result_datasets)):
 			_, step = best[model_path]
 			prefix_gcp_dir = "gs://ue-usrl-anuj/karm/outputs/histopathology/"
-			prefix_local_dir = "/media/RADC/karm_8T_backup/outputs_histo/histopathology/eval/"
+			
 			src_regex = os.path.join(model_path, dataset, f"eval_results_{step}", '*')
 			dest_subdir = os.path.join(model_path.replace(prefix_gcp_dir, prefix_local_dir), dataset, 'eval_results_1')
 			os.makedirs(dest_subdir, exist_ok = True)

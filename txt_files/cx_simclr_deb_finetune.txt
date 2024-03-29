@@ -1,0 +1,42 @@
+-------------------------------------------------------------------------------
+source: gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_*/crop_*
+best validation AUROC steps
+
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/0 : 0.8645813334670646
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/1 : 0.8579867824226575
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/2 : 0.8628571845391855
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/3 : 0.8603490042993638
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/4 : 0.8617897478161225
+1
+gs://ue-usrl-anuj/vit-cxfr-new/eval/vit_simclr_finetune_debiased/lr_0.001/crop_64/5 : 0.8599343376460789
+1
+downloading best validation results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+done

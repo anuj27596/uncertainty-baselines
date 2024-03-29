@@ -90,8 +90,8 @@ def ts():
 def main(_):
 
 	jobs = {}
-	done = set([]) # dan done # 14, 15, 17, 18, 20, 22, 23, 26, 28, 29, 33, 37, 43, 46, 62, 68
-
+	# done = set([12,13,18,34,49,29,36,65,30,39,48,28,66,0,61,38,32,33,59,73,75,23,31,76,54,55,8,35,10,41,5,3,27,51,62,26,7]) # dan done # 14, 15, 17, 18, 20, 22, 23, 26, 28, 29, 33, 37, 43, 46, 62, 68
+	done = set([])
 	with xm_local.create_experiment(
 		experiment_title = 'karm-ub-vit'
 	) as experiment:

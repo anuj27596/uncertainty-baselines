@@ -586,7 +586,7 @@ def main(argv):
           probs = np.reshape(probs, (probs.shape[0] * probs.shape[1], -1))
           logits = np.reshape(logits, (logits.shape[0] * logits.shape[1], -1))
           labels = np.reshape(labels, (labels.shape[0] * labels.shape[1], -1))  # EDIT(anuj)
-          reverse_pred = reverse_pred.flatten()
+          reverse_pred = np.reshape(reverse_pred, (reverse_pred.shape[0] * reverse_pred.shape[1], -1))
 
           batch_trunc = int(batch['mask'].sum())  # EDIT(anuj)
 

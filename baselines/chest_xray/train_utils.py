@@ -103,6 +103,55 @@ def mae_loss(*, inputs, pred, mask, patchsize, reduction=True):  # EDIT(anuj): d
   return jnp.mean(loss) if reduction else loss
 
 
+def simclr_loss_debiased(*, projections, temp=0.1, tau_plus=0.1, reduction=True):  # EDIT(anuj): def simclr loss
+  n, d = projections.shape
+  N = n - 2
+  positive_idx = (jnp.arange(n) + n // 2) % n
+  projections = projections / jnp.linalg.norm(projections, axis=1, keepdims=True)
+  cossim = projections @ projections.T
+  cossim = cossim - jnp.diagflat(1e9 * jnp.ones(n))
+  expcossim = jnp.exp(cossim / temp)
+  pos = expcossim[jnp.arange(n), positive_idx]
+  neg = jnp.sum(expcossim, axis=1) - pos
+  Ng = (-tau_plus * N * pos + neg) / (1 - tau_plus)
+  Ng = jnp.clip(Ng, a_min = N * jnp.exp(-1 / temp), a_max = None)
+  loss = -jnp.log(pos / (pos + Ng))
+  return jnp.mean(loss) if reduction else loss
+
+
+def simclr_loss_gender(*, projections, gender, temp=0.1, reduction=True):  # EDIT(anuj): def simclr loss
+  n, d = projections.shape
+  projections = projections / jnp.linalg.norm(projections, axis=1, keepdims=True)
+  cossim = projections @ projections.T
+  mask = jnp.eye(n) + (gender[None, :] ^ gender[:, None])
+  cossim = cossim - 1e9 * mask
+  cossim_log_softmax = jax.nn.log_softmax(cossim / temp)
+  positive_idx = (jnp.arange(n) + n // 2) % n
+  loss = -cossim_log_softmax[jnp.arange(n), positive_idx]
+  loss = jnp.reshape(loss, (2, n // 2))
+  loss = jnp.mean(loss, axis=0)
+  return jnp.mean(loss) if reduction else loss
+
+
+def cmd_loss(*, id_features, ood_features, max_order=5, clip_magnitude=10):
+  id_features = jnp.clip(id_features / (clip_magnitude * 2), -0.5, 0.5)
+  ood_features = jnp.clip(ood_features / (clip_magnitude * 2), -0.5, 0.5)
+  id_mu = jnp.mean(id_features, axis=0)
+  ood_mu = jnp.mean(ood_features, axis=0)
+  id_features = id_features - id_mu
+  ood_features = ood_features - ood_mu
+  id_power = id_features
+  ood_power = ood_features
+  loss = jnp.linalg.norm(id_mu - ood_mu)
+  for k in range(2, max_order + 1):
+    id_power = id_power * id_features
+    ood_power = ood_power * ood_features
+    id_moment = jnp.mean(id_power, axis=0)
+    ood_moment = jnp.mean(ood_power, axis=0)
+    loss = loss + jnp.linalg.norm(id_moment - ood_moment)
+  return loss
+
+
 def decorrelation_loss(*, logits):  # EDIT(anuj): def decorrelation loss
   n, c = logits.shape
   noise = np.random.randn(c, n) * 1e-4
