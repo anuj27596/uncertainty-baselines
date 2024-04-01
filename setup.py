@@ -34,20 +34,21 @@ setup(
         'ml_collections',
         'numpy>=1.7',
         'opt_einsum',
-        ('robustness_metrics @ '
-         'git+https://github.com/google-research/robustness_metrics.git'
-         '#egg=robustness_metrics'),
+        # ('robustness_metrics @ '
+        #  'git+https://github.com/google-research/robustness_metrics.git'
+        #  '#egg=robustness_metrics'),
         # Required because RM does not do lazy loading and RM requires TFP.
-        'tensorflow_probability',
-        'tfds-nightly==4.4.0.dev202111160106',
+        # 'tensorflow_probability',
+        # 'tfds-nightly==4.4.0.dev202111160106',
+        'tfds-nightly==4.4.0.dev202112170108',
         'urllib3',
         'zipp',
-        'dm-haiku'
+        # 'dm-haiku'
     ],
     extras_require={
         'experimental': [],
         'models': [
-            'edward2 @ git+https://github.com/google/edward2.git#egg=edward2',
+            # 'edward2 @ git+https://github.com/google/edward2.git#egg=edward2',
             'pandas',
             'scipy',
         ],
@@ -68,8 +69,8 @@ setup(
         ],
         'tensorflow': [
             'tensorboard',
-            'tensorflow>=2.6',
-            'tensorflow_addons',  # Required for optimizers.py.
+            # 'tensorflow>=2.6',
+            # 'tensorflow_addons',  # Required for optimizers.py.
             'tf-models-official',  # Needed for BERT.
         ],
         'tf-nightly': [
@@ -86,7 +87,7 @@ setup(
         ],
         'retinopathy': [
             'wandb',
-            'dm-haiku',
+            # 'dm-haiku',
             'torch',
             'seaborn',
             'tfds-nightly',
