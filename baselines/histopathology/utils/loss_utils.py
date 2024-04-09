@@ -27,7 +27,7 @@ from typing import Dict, Union
 
 import tensorflow as tf
 import tensorflow.keras.backend as K
-import torch
+# import torch
 
 
 def get_diabetic_retinopathy_class_balance_weights(
@@ -164,7 +164,7 @@ def get_weighted_binary_cross_entropy_keras(weights: Dict[int, float]):
   return weighted_cross_entropy_fn
 
 
-def get_weighted_binary_cross_entropy_torch(weights: Dict[int, float]):
+# def get_weighted_binary_cross_entropy_torch(weights: Dict[int, float]):
   """Return a function to calculate weighted binary xent with multi-hot labels.
 
   Based on implementation from @menrfa
@@ -279,11 +279,11 @@ def get_minibatch_reweighted_loss_fn(labels: tf.Tensor, loss_fn_type='keras'):
   if loss_fn_type == 'keras':
     batch_loss_fn = get_weighted_binary_cross_entropy_keras(
         weights=minibatch_class_weights)
-  elif loss_fn_type == 'torch':
-    for key, value in minibatch_class_weights.items():
-      minibatch_class_weights[key] = value._numpy()  # pylint: disable=protected-access
-    batch_loss_fn = get_weighted_binary_cross_entropy_torch(
-        weights=minibatch_class_weights)
+  # elif loss_fn_type == 'torch':
+  #   for key, value in minibatch_class_weights.items():
+  #     minibatch_class_weights[key] = value._numpy()  # pylint: disable=protected-access
+  #   batch_loss_fn = get_weighted_binary_cross_entropy_torch(
+  #       weights=minibatch_class_weights)
   elif loss_fn_type == 'jax':
     raise NotImplementedError
   else:

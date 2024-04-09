@@ -25,8 +25,38 @@ logger.setLevel(logging.DEBUG)
 DATASET_NAME = "histopathology"
 run_settings = [
 
+    # DAN+IW
+#  	('baselines.histopathology.jax_finetune_impwt', {
+# 			'output_dir': '/data/home/karmpatel/karm_8T/outputs/histopathology/<_organ>/vit_dan_iw/lr_<_lr>/dlc_<_dlc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+# 			'config': 'configs/histopathology/vit_finetune_impwt.py',
+# 			'config.seed': '<_seed>',
+#             'config.lr.base':'<_lr>',
+#             'config.model.domain_predictor.num_layers':'<_nl>',
+# 			'config.model.domain_predictor.hid_dim':'<_hdim>',
+#    			'config.model.domain_predictor.grl_coeff':'<_grl>',
+# 			'config.dp_loss_coeff':'<_dlc>',
+   			
+# 	},  
+#   {	'_seed': range(1),
+# 	} ,
+#   {
+# 	'_lr': [1e-4, 1e-3]  
+# 	} ,
+#  {	'_dlc': [0.1, 0.3, 1, 3], #[0.05, 0.1, 3], # need to add 10
+# 	},
+#   {	'_grl': [1] #[0.05, 0.1, 3],
+# 	},
+#  {	'_nl': [2, 3, 5],
+# 	},
+#  {	'_hdim': [256, 512],
+# 	},
+#  {'_organ':['processed_onehot_tum_swap2']
+#  }
+#  ),
+
+    # IW
  	('baselines.histopathology.jax_finetune_impwt', {
-			'output_dir': '/data/home/karmpatel/karm_8T/outputs/histopathology/<_organ>/vit_dan_iw/lr_<_lr>/dlc_<_dlc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
+			'output_dir': '/data/home/karmpatel/karm_8T/outputs/histopathology/<_organ>/vit_iw/lr_<_lr>/dlc_<_dlc>/nl_<_nl>/hdim_<_hdim>/<_seed>',
 			'config': 'configs/histopathology/vit_finetune_impwt.py',
 			'config.seed': '<_seed>',
             'config.lr.base':'<_lr>',
@@ -43,7 +73,7 @@ run_settings = [
 	} ,
  {	'_dlc': [0.1, 0.3, 1, 3], #[0.05, 0.1, 3], # need to add 10
 	},
-  {	'_grl': [1] #[0.05, 0.1, 3],
+  {	'_grl': [0] #[0.05, 0.1, 3],
 	},
  {	'_nl': [2, 3, 5],
 	},
@@ -54,6 +84,7 @@ run_settings = [
  ),
  ]
 
+run_id = 0
 runs = []
 for module, static_args, *iter_args in run_settings:
     keys = [k for d in iter_args for k in d.keys()]
@@ -67,7 +98,9 @@ for module, static_args, *iter_args in run_settings:
             for s_key, s_val in run['args'].items():
                 if isinstance(s_val, str):
                     run['args'][s_key] = s_val.replace(f'<{k}>', str(v))
+        run['run_id'] = run_id
         runs.append(run)
+        run_id+=1
 
 cmds = ""
 for run in runs:
@@ -77,7 +110,7 @@ for run in runs:
                 *[f'--{key}={val}' for key, val in run['args'].items()]
             ]
     cmd = ' '.join(cmd[:3]) + ' \\\n    '.join([''] + cmd[3:])
-    prefix = f'CUDA_VISIBLE_DEVICES="{gpu}" '
+    prefix = f"run={run['run_id']}" + f'\nCUDA_VISIBLE_DEVICES="{gpu}" '
     cmd = prefix + cmd
     cmds += cmd + "\n =========================== \n"
 
@@ -97,14 +130,12 @@ flags.DEFINE_integer('run_id', None, 'run id')
 flags.DEFINE_bool('run', False, 'whether to run')
 flags.DEFINE_bool('loop', False, 'whether to run')
 
-Q = [3,4,7]
-id=0
+Q = [6]
 lock = threading.Lock()
 def create_cmd_sh(run):
     global Q
-    global id
     global logger
-
+    id = run['run_id']
     # Acquire the lock before accessing shared resource
     lock.acquire()
     try:
@@ -128,12 +159,17 @@ def create_cmd_sh(run):
     if result.returncode != 0:
         # Command failed, print standard error
         with open(f'.logs/{exp_dir}/failed_{id}.txt', "w") as fp:
+            fp.write(str(id) + '\n')
             fp.write(cmd + "\n")
             fp.write(result.stderr)
     else:
         with open(f'.logs/{exp_dir}/succ_{id}.txt', "w") as fp:
+            fp.write(str(id) + '\n')
             fp.write(cmd + "\n")
         
       
+runs_to_execute = list(range(5))
+filtered_runs = [run for run in runs if run['run_id'] in runs_to_execute]  
+print(f'running {len(filtered_runs)}......')    
 with ThreadPoolExecutor(max_workers=len(Q)) as executor:
-    executor.map(create_cmd_sh, runs)
+    executor.map(create_cmd_sh, filtered_runs)
