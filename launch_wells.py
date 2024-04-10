@@ -187,7 +187,7 @@ for run in runs:
 with open(f'.logs/{exp_dir}/cmds.txt', "w") as fp:
     fp.write(cmds)
 
-runs_to_execute = list(range(100))
+runs_to_execute = [9, 16] + list(range(18,100))
 filtered_runs = [run for run in runs if run['run_id'] in runs_to_execute]  
 print(f'running {len(filtered_runs)}......')
 
