@@ -10,6 +10,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 import os
 import sys
+from check_gpus import check_gpu_availability
 
 os.makedirs('.logs', exist_ok=True)
 
@@ -142,7 +143,6 @@ def create_cmd_sh(run):
         # Safely perform operations on Q
         gpu = Q[0]
         Q.append(Q.pop(0))
-        id+=1
     finally:
         # Always release the lock, even if an error occurs
         lock.release()
@@ -151,7 +151,8 @@ def create_cmd_sh(run):
                 *[f'--{key}={val}' for key, val in run['args'].items()]
             ]
     cmd = ' '.join(cmd[:3]) + ' \\\n    '.join([''] + cmd[3:])
-    prefix = f'CUDA_VISIBLE_DEVICES="{gpu}" '
+
+    prefix = f'run={id}\nCUDA_VISIBLE_DEVICES="{gpu}" '
     cmd = prefix + cmd
 
     logger.debug(cmd)
@@ -167,9 +168,52 @@ def create_cmd_sh(run):
             fp.write(str(id) + '\n')
             fp.write(cmd + "\n")
         
-      
-runs_to_execute = list(range(5))
+def create_cmd_sh_gpu_list(run):
+    global Q
+    global logger
+    id = run['run_id']
+    # Acquire the lock before accessing shared resource
+    lock.acquire()
+    try:
+        # Safely perform operations on Q
+        gpu = Q[0]
+        Q.append(Q.pop(0))
+    finally:
+        # Always release the lock, even if an error occurs
+        lock.release()
+    cmd = [
+                'python', '-m', run['module'],
+                *[f'--{key}={val}' for key, val in run['args'].items()]
+            ]
+    cmd = ' '.join(cmd[:3]) + ' \\\n    '.join([''] + cmd[3:])
+    
+    gpu = ",".join(map(str, gpu))
+    prefix = f'run={id}\nCUDA_VISIBLE_DEVICES="{gpu}" '
+    cmd = prefix + cmd
+
+    logger.debug(cmd)
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        # Command failed, print standard error
+        with open(f'.logs/{exp_dir}/failed_{id}.txt', "w") as fp:
+            fp.write(str(id) + '\n')
+            fp.write(cmd + "\n")
+            fp.write(result.stderr)
+    else:
+        with open(f'.logs/{exp_dir}/succ_{id}.txt', "w") as fp:
+            fp.write(str(id) + '\n')
+            fp.write(cmd + "\n")
+
+# runs_to_execute = list(range(5,16)) # gpu 6
+# runs_to_execute = list(range(16,32)) # gpu 3
+# runs_to_execute = list(range(32,100)) # gpu 3
+runs_to_execute =  [32, 40]
+print("checking GPU availability....")
+# Q = check_gpu_availability(21, 4, exlude_ids=[])
+Q = [[2,3], [4,5]]
+print(f"GPUS occupied.... {Q}")
 filtered_runs = [run for run in runs if run['run_id'] in runs_to_execute]  
 print(f'running {len(filtered_runs)}......')    
 with ThreadPoolExecutor(max_workers=len(Q)) as executor:
-    executor.map(create_cmd_sh, filtered_runs)
+    # executor.map(create_cmd_sh, filtered_runs)
+    executor.map(create_cmd_sh_gpu_list, filtered_runs)
