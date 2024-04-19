@@ -1,0 +1,126 @@
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_*/dlc_0.1/grc_1/nl_*/hdim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.1/grc_1/nl_3/hdim_256/0 : 0.9762045343895993
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/0 : 0.9797025785924476
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/1 : 0.978763126629997
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/2 : 0.979175879909513
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/3 : 0.9788093422481666
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/4 : 0.9803846573709527
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grc_1/nl_3/hdim_256/5 : 0.977926464576924
+2400
+done
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_*/dlc_1/grc_1/nl_*/hdim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_1/grc_1/nl_3/hdim_256/0 : 0.9776204853118
+13200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_1/grc_1/nl_3/hdim_256/0 : 0.9764698757835738
+8400
+done
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_*/dlc_0.3/grc_1/nl_*/hdim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.3/grc_1/nl_3/hdim_256/0 : 0.9767065316214432
+10800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.3/grc_1/nl_3/hdim_256/0 : 0.9807814742304104
+1200
+done
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_*/dlc_3/grc_1/nl_*/hdim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_3/grc_1/nl_3/hdim_256/0 : 0.9737837921827079
+13200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_3/grc_1/nl_3/hdim_256/0 : 0.9675542455818268
+19200
+done
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_*/dlc_10/grc_1/nl_*/hdim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_10/grc_1/nl_3/hdim_256/0 : 0.9615199201266627
+24000
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_10/grc_1/nl_3/hdim_256/0 : 0.7825519308168132
+24000
+done
+-------------------------------------------------------------------------------
+source: /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_*/dlc_*/layers_*/dim_*
+best validation AUROC steps
+
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.1/layers_2/dim_256/0 : 0.9760172814539115
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.1/layers_2/dim_512/0 : 0.9767782455117066
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.1/layers_3/dim_512/0 : 0.9769089241561866
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.1/layers_5/dim_512/0 : 0.9767662931966625
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.3/layers_2/dim_512/0 : 0.9766690810343055
+14400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.3/layers_3/dim_256/0 : 0.9767304362515308
+10800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_0.3/layers_3/dim_512/0 : 0.9760858080601632
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_10/layers_3/dim_256/0 : 0.961634662351084
+21600
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_10/layers_5/dim_512/0 : 0.9745033215483507
+19200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_1/layers_2/dim_256/0 : 0.9760611066090725
+13200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_1/layers_2/dim_512/0 : 0.9755375952101497
+10800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_3/layers_2/dim_512/0 : 0.9706355524001443
+22800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.0001/dlc_3/layers_5/dim_256/0 : 0.9779224804719092
+10800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.1/layers_2/dim_256/0 : 0.978559538863749
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.1/layers_2/dim_512/0 : 0.9794276753464378
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.1/layers_3/dim_256/0 : 0.9796356456282016
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.1/layers_5/dim_512/0 : 0.98004082910819
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.3/layers_2/dim_256/0 : 0.9786973888972554
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.3/layers_2/dim_512/0 : 0.9812364590230815
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.3/layers_3/dim_512/0 : 0.9791571546159442
+2400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.3/layers_5/dim_256/0 : 0.9800603512227616
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_0.3/layers_5/dim_512/0 : 0.9793543678141685
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_10/layers_2/dim_512/0 : 0.7276975777438333
+2400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_10/layers_3/dim_512/0 : 0.7445037279270622
+3600
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_1/layers_2/dim_512/0 : 0.9713271930306847
+16800
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_1/layers_3/dim_512/0 : 0.9775240699704459
+8400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_1/layers_5/dim_256/0 : 0.98005716393875
+2400
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_1/layers_5/dim_512/0 : 0.9806093608937781
+1200
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_3/layers_2/dim_512/0 : 0.9461831078728306
+24000
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_3/layers_3/dim_256/0 : 0.9691144211055573
+21600
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_3/layers_3/dim_512/0 : 0.964605211049995
+24000
+/home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_3/layers_5/dim_256/0 : 0.9771001611968889
+9600
+done
+
+0.9762045343895993,0.9797025785924476,0.977620485311813,0.9764698757835738,0.9767065316214432,0.9807814742304104,0.9737837921827079,0.9675542455818268,0.9615199201266627,0.7825519308168132,0.9760172814539115,0.9767782455117066,0.9769089241561866,0.9767662931966625,0.9766690810343055,0.9767304362515308,0.9760858080601632,0.961634662351084,0.9745033215483507,0.9760611066090725,0.9755375952101497,0.9706355524001443,0.9779224804719092,0.978559538863749,0.9794276753464378,0.9796356456282016,0.98004082910819,0.9786973888972554,0.9812364590230815,0.9791571546159442,0.9800603512227616,0.9793543678141685,0.7276975777438333,0.7445037279270622,0.9713271930306847,0.9775240699704459,0.98005716393875,0.9806093608937781,0.9461831078728306,0.9691144211055573,0.964605211049995,0.9771001611968889,
