@@ -1,0 +1,183 @@
+-------------------------------------------------------------------------------
+source: /data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_*/dlc_*/nl_*/hdim_*
+best validation AUROC steps
+
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.1/nl_3/hdim_512/0 : 0.9363611072471832
+66220
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_2/hdim_256/0 : 0.9653869337413641
+61490
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_3/hdim_256/0 : 0.9468632633189594
+56760
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_2/hdim_512/0 : 0.9044837019520564
+52030
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_256/0 : 0.9309361524551398
+37840
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_512/0 : 0.9214772569202949
+37840
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_2/hdim_256/0 : 0.9289191820837391
+33110
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_3/hdim_512/0 : 0.9260907868502805
+42570
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_256/0 : 0.9625237631566744
+28380
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_512/0 : 0.9697106690777578
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_3/hdim_512/0 : 0.9761441090555014
+14190
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_256/0 : 0.9842235823248482
+47300
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_512/0 : 0.9440116845180138
+37840
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_256/0 : 0.9076598506978254
+47300
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_512/0 : 0.9178142532572913
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_256/0 : 0.9554179997217973
+56760
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_512/0 : 0.9194139194139195
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_256/0 : 0.956739463068577
+33110
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_512/0 : 0.9283627764640423
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_256/0 : 0.9112069365233922
+42570
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_512/0 : 0.9041127648722586
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_256/0 : 0.8984791579728288
+61490
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_512/0 : 0.9567858302035517
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_256/0 : 0.9153799786711179
+66220
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_512/0 : 0.9265196828487968
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_256/0 : 0.9116010571706774
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_512/0 : 0.9074511985904391
+61490
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_256/0 : 0.9560671396114434
+70950
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_512/0 : 0.9561598738813928
+70950
+best validation Reverse Accuracy steps
+
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.1/nl_3/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_3/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_2/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_3/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_3/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_512/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_256/0 : 0.9845697329376855
+1
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_512/0 : 0.9845697329376855
+1
+best validation Reverse AUROC steps
+
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.1/nl_3/hdim_512/0 : 0.5124032086057402
+4730
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_2/hdim_256/0 : 0.5530903695460657
+14190
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_0.3/nl_3/hdim_256/0 : 0.5443037974683543
+9460
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_2/hdim_512/0 : 0.556475170399221
+33110
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_256/0 : 0.5513747855520008
+14190
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_1/nl_5/hdim_512/0 : 0.5284462373069968
+4730
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_2/hdim_256/0 : 0.5626188157833727
+9460
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.0001/dlc_3/nl_3/hdim_512/0 : 0.5449761209254881
+33110
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_256/0 : 0.5614364538415171
+28380
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_2/hdim_512/0 : 0.5636388927528169
+66220
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_3/hdim_512/0 : 0.5697593545694811
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_256/0 : 0.5314832846478417
+37840
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.1/nl_5/hdim_512/0 : 0.5519311911716974
+42570
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_256/0 : 0.5427504984467011
+9460
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_2/hdim_512/0 : 0.554064079380535
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_256/0 : 0.5666759400936616
+9460
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_3/hdim_512/0 : 0.5677887513330552
+42570
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_256/0 : 0.56651365512125
+33110
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_0.3/nl_5/hdim_512/0 : 0.5908332174154959
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_256/0 : 0.5816988918254741
+23650
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_2/hdim_512/0 : 0.5628970185932212
+18920
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_256/0 : 0.5622942458385496
+9460
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_3/hdim_512/0 : 0.5412667501275096
+23650
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_256/0 : 0.5797978392915102
+14190
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_1/nl_5/hdim_512/0 : 0.5520471090091343
+52030
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_256/0 : 0.5507720127973292
+42570
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_2/hdim_512/0 : 0.5660036166365281
+28380
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_256/0 : 0.5634766077804052
+47300
+/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_0.001/dlc_3/nl_5/hdim_512/0 : 0.611234756804377
+4730
+done

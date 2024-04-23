@@ -1,0 +1,103 @@
+-------------------------------------------------------------------------------
+source: /data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_*/dlc_*/nl_*/hdim_*
+best validation AUROC steps
+
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_2/hdim_256/0 : 0.9771655005191289
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_2/hdim_512/0 : 0.977336817034758
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_3/hdim_256/0 : 0.9774443878701533
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_3/hdim_512/0 : 0.977239604872401
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_5/hdim_256/0 : 0.9769949808245025
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.1/nl_5/hdim_512/0 : 0.9771009580178919
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_2/hdim_256/0 : 0.9768507562229729
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_2/hdim_512/0 : 0.9769965744665084
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_3/hdim_256/0 : 0.977001355392526
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_3/hdim_512/0 : 0.975798554088608
+6480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_5/hdim_256/0 : 0.9769407969963035
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_0.3/nl_5/hdim_512/0 : 0.9772348239463835
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_2/hdim_256/0 : 0.9769320319652713
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_2/hdim_512/0 : 0.9772583301659699
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_3/hdim_256/0 : 0.977273071354524
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_3/hdim_512/0 : 0.9770802406718158
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_5/hdim_256/0 : 0.9771949828962372
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_1/nl_5/hdim_512/0 : 0.9769662952683972
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_2/hdim_256/0 : 0.9773001632686235
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_2/hdim_512/0 : 0.9770483678316986
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_3/hdim_256/0 : 0.9769535461323504
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_3/hdim_512/0 : 0.9770523519367134
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_5/hdim_256/0 : 0.9771615164141142
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.0001/dlc_3/nl_5/hdim_512/0 : 0.9771822337601903
+8400
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_2/hdim_256/0 : 0.9819428408421762
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_2/hdim_512/0 : 0.9813902454766464
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_3/hdim_256/0 : 0.9817360657919166
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_3/hdim_512/0 : 0.9822448360022852
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_5/hdim_256/0 : 0.9816420409135712
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.1/nl_5/hdim_512/0 : 0.9819607693147419
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_2/hdim_256/0 : 0.9820954320642366
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_2/hdim_512/0 : 0.9820173436059496
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_3/hdim_256/0 : 0.9813759026985936
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_3/hdim_512/0 : 0.980882670497782
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_5/hdim_256/0 : 0.9811496055337625
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_0.3/nl_5/hdim_512/0 : 0.9819105695915575
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_2/hdim_256/0 : 0.9812826746412513
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_2/hdim_512/0 : 0.980742430001267
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_3/hdim_256/0 : 0.9810500029083967
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_3/hdim_512/0 : 0.9810372537723497
+1200
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_5/hdim_256/0 : 0.9809511971040338
+1080
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_1/nl_5/hdim_512/0 : 0.9818707285414112
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_2/hdim_256/0 : 0.9823281037970912
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_2/hdim_512/0 : 0.9817990146511477
+1080
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_3/hdim_256/0 : 0.9817296912238932
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_3/hdim_512/0 : 0.9823432433961468
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_5/hdim_256/0 : 0.9815520001402405
+1440
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_iw/lr_0.001/dlc_3/nl_5/hdim_512/0 : 0.9817966241881391
+1440
+done
+
+0.9771655005191289, 0.977336817034758, 0.9774443878701533, 0.977239604872401, 0.9769949808245025, 0.9771009580178919, 0.9768507562229729, 0.9769965744665084, 0.977001355392526, 0.975798554088608, 0.9769407969963035, 0.9772348239463835, 0.9769320319652713, 0.9772583301659699, 0.977273071354524, 0.9770802406718158, 0.9771949828962372, 0.9769662952683972, 0.9773001632686235, 0.9770483678316986, 0.9769535461323504, 0.9770523519367134, 0.9771615164141142, 0.9771822337601903, 0.9819428408421762, 0.9813902454766464, 0.9817360657919166, 0.9822448360022852, 0.9816420409135712, 0.9819607693147419, 0.9820954320642366, 0.9820173436059496, 0.9813759026985936, 0.980882670497782, 0.9811496055337625, 0.9819105695915575, 0.9812826746412513, 0.980742430001267, 0.9810500029083967, 0.9810372537723497, 0.9809511971040338, 0.9818707285414112, 0.9823281037970912, 0.9817990146511477, 0.9817296912238932, 0.9823432433961468, 0.9815520001402405, 0.9817966241881391

@@ -122,3 +122,34 @@ best validation Reverse AUROC steps
 /home/anuj/troy/gcs-backup/bucket/karm/outputs/histopathology/processed_onehot_tum_swap2/vit_dan_sweep/finetune/lr_0.001/dlc_3/layers_5/dim_256/0 : 0.5
 1
 done
+
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.1/grl_1/nl_5/hdim_256/0 : 0.501614757762431
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.3/grl_1/nl_2/hdim_256/0 : 0.5013294958433832
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.3/grl_1/nl_5/hdim_256/0 : 0.5015414502301617
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_0.3/grl_1/nl_5/hdim_512/0 : 0.5016848780106886
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_1/grl_1/nl_5/hdim_256/0 : 0.5014808918339393
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_1/grl_1/nl_5/hdim_512/0 : 0.5017733251420134
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_3/grl_1/nl_2/hdim_256/0 : 0.5
+1
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_3/grl_1/nl_3/hdim_512/0 : 0.5018808959774086
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.0001/dlc_3/grl_1/nl_5/hdim_512/0 : 0.5010848717954847
+480
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grl_1/nl_2/hdim_256/0 : 0.5
+1
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grl_1/nl_3/hdim_512/0 : 0.5
+1
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_0.1/grl_1/nl_5/hdim_256/0 : 0.5
+1
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_1/grl_1/nl_2/hdim_256/0 : 0.5
+1
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_3/grl_1/nl_2/hdim_256/0 : 0.5055582249059154
+1920
+/data/home/karmpatel/karm_8T/outputs/histopathology/processed_onehot_tum_swap2/vit_dan/lr_0.001/dlc_3/grl_1/nl_5/hdim_512/0 : 0.5
+1
