@@ -36,7 +36,11 @@ if __name__ == '__main__':
     # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan/lr_0.001/dlc_0.01/grc_1/nl_3/hdim_256', ''),
     # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan/lr_*/dlc_*/grc_*/nl_3/hdim_256', ''),
     # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_cmd/lr_0.001/clc_0.3/cmo_8', ''),
-    (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan_iw/lr_*/dlc_*/nl_*/hdim_*', ''), # this is dan+iw
+    # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan_iw/lr_*/dlc_*/nl_*/hdim_*', ''), # this is dan+iw
+	# (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan/lr_*/dlc_*/grl_1/nl_*/hdim_*', ''), # this is dan+iw
+
+    (f'/data/home/karmpatel/karm_8T/outputs/isic/upper_extremity/vit_dan_iw/lr_*/dlc_*/nl_*/hdim_*', ''), # this is dan+iw
+
     
     # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan_intermed/grl_2/', ''),
     # (f'/data/home/karmpatel/karm_8T/outputs/histopathology/{organ}/vit_dan_intermed/grl_5/', ''),
@@ -52,8 +56,10 @@ if __name__ == '__main__':
 		# print('destination:', dest_dir)
 
 		print('fetching file list', file = sys.stderr)
-		# y_path_regex = os.path.join(src_dir, '*', 'in_domain_test', 'eval_results*', 'y_true.npy')
-		y_path_regex = os.path.join(src_dir, '*', 'in_domain_validation', 'eval_results*', 'y_true.npy')
+		if "isic" in src_dir:
+			y_path_regex = os.path.join(src_dir, '*', 'in_domain_test', 'eval_results*', 'y_true.npy')
+		else:
+			y_path_regex = os.path.join(src_dir, '*', 'in_domain_validation', 'eval_results*', 'y_true.npy')
   
 		y_list = list(filter(None, os.popen(f'ls {y_path_regex}').read().split('\n')))
 
@@ -74,8 +80,12 @@ if __name__ == '__main__':
 
 			with open(pred_file, 'rb') as f:
 				pred = np.load(f)
-        
-			auroc = skm.roc_auc_score(y_true, pred)
+
+			try:
+				auroc = skm.roc_auc_score(y_true, pred)
+			except Exception as e:
+				print(f"{e} - {y_file}")
+				continue
 
 			best[key] = max(
 				best.get(key, (-1, '_')),

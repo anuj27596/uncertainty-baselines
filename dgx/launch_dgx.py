@@ -13,11 +13,13 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 import os
 import sys
+import multiprocessing as mp
 # from check_gpus import check_gpu_availability
 
 def check_gpu_availability(required_space_gb=25, required_gpus=2, exlude_ids = [], include_ids = list(range(8))):
     while True:
         # Run nvidia-smi command to get GPU info in XML format
+        print(f"checking gpus excluding {exlude_ids}...")
         nvidia_smi_output = subprocess.run(['nvidia-smi', '-q', '-x'], stdout=subprocess.PIPE, check=True).stdout
         root = ET.fromstring(nvidia_smi_output)
 
@@ -214,8 +216,9 @@ for run in runs:
 with open(f'.logs/{exp_dir}/cmds.txt', "w") as fp:
     fp.write(cmds)
 
-Q = [6]
+Q = []
 lock = threading.Lock()
+
 
 def create_cmd_sh(run):
     global Q
@@ -225,8 +228,10 @@ def create_cmd_sh(run):
     lock.acquire()
     try:
         # Safely perform operations on Q
-        gpu = Q[0]
-        Q.append(Q.pop(0))
+        gpu = check_gpu_availability(21, 1, exlude_ids=Q)[0]
+        Q.append(gpu)
+        print(f"GPUS occupied.... {Q}")
+        
     finally:
         # Always release the lock, even if an error occurs
         lock.release()
@@ -245,7 +250,9 @@ def create_cmd_sh(run):
         with open(f'.logs/{exp_dir}/succ_{id}.txt', "w") as fp:
             fp.write(str(id) + '\n')
             fp.write(cmd + "\n")
-        
+    
+    # free that gpu
+    Q.remove(gpu)
 
 # runs_to_execute = list(range(5,16)) # gpu 6
 # runs_to_execute = list(range(16,32)) # gpu 3
@@ -253,14 +260,15 @@ def create_cmd_sh(run):
 # 1 to 5 and 11 done isic_dan_iw
 # runs_to_execute = [3, 4, 12, 18, 23, 28, 30, 34, 35, 39, 40, 41, 42, 45, 47] # histo dan left
 # runs_to_execute = list(range(3,48))
-runs_to_execute = list(range(20,50)) #[13, 14, 15, 17, 18] + list(range(19, 50))
+runs_to_execute = [44] # isic_dan_iw
 
-print("checking GPU availability....")
-Q = check_gpu_availability(21, 6, exlude_ids=[])
+# print("checking GPU availability....")
+# Q = check_gpu_availability(21, 6, exlude_ids=[])
 # Q = [2,4,6]
-print(f"GPUS occupied.... {Q}")
+
+MAX_GPUS = 6
 filtered_runs = [run for run in runs if run['run_id'] in runs_to_execute]  
 print(f'running {len(filtered_runs)}......')    
-with ThreadPoolExecutor(max_workers=len(Q)) as executor:
+with ThreadPoolExecutor(max_workers=MAX_GPUS) as executor:
     executor.map(create_cmd_sh, filtered_runs)
     print("running")
