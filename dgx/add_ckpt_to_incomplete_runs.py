@@ -43,11 +43,14 @@ run_setting =  	('baselines.chest_xray.jax_finetune_impwt', {
  }
  )
 
-which_runs = list(range(20,26))
+which_runs = list(range(20,31))
 
 for run_id in which_runs:
     op_dir = run_to_op_dir(run_setting, run_id)
     ckpts = os.listdir(os.path.join(op_dir, "checkpoints"))
     steps_done = list(map(lambda x: int(x.split("_")[-1].replace(".npz", "")) if "_" in x else 0 ,ckpts))
     max_step = max(steps_done)
-    os.system(f"ln -s {os.path.join(op_dir, "checkpoints", f"checkpoint_{max_step}.npz")} {os.path.join(op_dir, "checkpoints", "checkpoint.npz")}")
+    cmd = f'ln -s {os.path.join(op_dir, "checkpoints", f"checkpoint_{max_step}.npz")} {os.path.join(op_dir, "checkpoints", "checkpoint.npz")}'
+    print(f'{run_id} \n{cmd}')
+    rep = os.system(cmd)
+    print(rep)
